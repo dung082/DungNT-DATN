@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YbADXHsnNaDXT1pYvUuDdndtXFZP+9UZxqLVC0I55mwLgaFmdyAQADyOY7WDTdWLYJWIgm4rSOI12S636Za+dg==",
+  "dgSpecHash": "7igdL7wDxSe0rqgys4solTgXssxk9zuOTHKYwEEEQtREBCOA7kiGPOkTSr7bOJwWKRWiVTgf5UtC6HZD2P6q3w==",
   "success": true,
-  "projectFilePath": "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj",
+  "projectFilePath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\admin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\admin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

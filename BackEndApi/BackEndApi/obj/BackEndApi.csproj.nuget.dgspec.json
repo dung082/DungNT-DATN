@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DungNT-DATN-BackEnd\\BackEndApi\\BackEndApi\\BackEndApi.csproj": {}
+    "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\BackEndApi.csproj": {}
   },
   "projects": {
-    "D:\\DungNT-DATN-BackEnd\\BackEndApi\\BackEndApi\\BackEndApi.csproj": {
+    "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\BackEndApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DungNT-DATN-BackEnd\\BackEndApi\\BackEndApi\\BackEndApi.csproj",
+        "projectUniqueName": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\BackEndApi.csproj",
         "projectName": "BackEndApi",
-        "projectPath": "D:\\DungNT-DATN-BackEnd\\BackEndApi\\BackEndApi\\BackEndApi.csproj",
+        "projectPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\BackEndApi.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\DungNT-DATN-BackEnd\\BackEndApi\\BackEndApi\\obj\\",
+        "outputPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj": {
-                "projectPath": "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj"
+              "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj": {
+                "projectPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj"
               }
             }
           }
@@ -109,14 +109,14 @@
         }
       }
     },
-    "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj": {
+    "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj",
+        "projectUniqueName": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj",
         "projectName": "BackEndData",
-        "projectPath": "D:\\DungNT-DATN-BackEnd\\BackEndData\\BackEndData.csproj",
+        "projectPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\BackEndData.csproj",
         "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "D:\\DungNT-DATN-BackEnd\\BackEndData\\obj\\",
+        "outputPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

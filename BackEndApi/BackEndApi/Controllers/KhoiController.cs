@@ -33,5 +33,19 @@ namespace BackEndApi.Controllers
         {
             return _ikhoiRepository.CreateKhoi(khoiDto);
         }
+
+        [HttpPost]
+        [Route("UpdateKhoi")]
+        public IActionResult UpdateKhoi(Khoi khoi)
+        {
+            return _ikhoiRepository.UpdateKhoi(khoi);
+        }
+
+        [HttpPost]
+        [Route("DeleteKhoi")]
+        public IActionResult DeleteKhoi(Guid id)
+        {
+            return _ikhoiRepository.DeleteKhoi(id);
+        }
     }
 }
