@@ -16,9 +16,9 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("CreateNamHoc")]
-        public IActionResult CreateNamHoc(NamHocDto namHocDto)
+        public IActionResult ThemNamHoc(NamHocDto namHocDto)
         {
-            return _iNamHocRepository.CreateNamHoc(namHocDto);
+            return _iNamHocRepository.ThemNamHoc(namHocDto);
         }
     }
 }

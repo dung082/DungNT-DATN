@@ -20,32 +20,32 @@ namespace BackEndApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllKhoi")]
-        public async Task<ActionResult<List<Khoi>>> getAllKhoi()
+        [Route("LayTatCaKhoi")]
+        public async Task<ActionResult<List<Khoi>>> LayTatCaKhoi()
         {
-            var listKhoi = await _ikhoiRepository.GetAllKhoi();
+            var listKhoi = await _ikhoiRepository.LayTatCaKhoi();
             return Ok(listKhoi);
         }
 
         [HttpPost]
-        [Route("CreateKhoi")]
-        public IActionResult CreateKhoi(KhoiDto khoiDto)
+        [Route("ThemKhoi")]
+        public IActionResult ThemKhoi(KhoiDto khoiDto)
         {
-            return _ikhoiRepository.CreateKhoi(khoiDto);
+            return _ikhoiRepository.ThemKhoi(khoiDto);
         }
 
         [HttpPost]
-        [Route("UpdateKhoi")]
-        public IActionResult UpdateKhoi(Khoi khoi)
+        [Route("SuaKhoi")]
+        public IActionResult SuaKhoi(Khoi khoi)
         {
-            return _ikhoiRepository.UpdateKhoi(khoi);
+            return _ikhoiRepository.SuaKhoi(khoi);
         }
 
         [HttpPost]
-        [Route("DeleteKhoi")]
-        public IActionResult DeleteKhoi(Guid id)
+        [Route("XoaKhoi")]
+        public IActionResult XoaKhoi(Guid id)
         {
-            return _ikhoiRepository.DeleteKhoi(id);
+            return _ikhoiRepository.XoaKhoi(id);
         }
     }
 }

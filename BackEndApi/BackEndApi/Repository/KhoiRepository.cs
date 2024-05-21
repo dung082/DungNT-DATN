@@ -15,7 +15,7 @@ namespace BackEndApi.Repository
         {
             _context = context;
         }
-        public IActionResult CreateKhoi(KhoiDto khoidto)
+        public IActionResult ThemKhoi(KhoiDto khoidto)
         {
             if (_context.Khois != null && _context.Khois.Any(item => item.MaKhoi == khoidto.MaKhoi))
             {
@@ -39,7 +39,7 @@ namespace BackEndApi.Repository
             return new JsonResult(khoi);
         }
 
-        public IActionResult DeleteKhoi(Guid id)
+        public IActionResult XoaKhoi(Guid id)
         {
             if (string.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -52,16 +52,16 @@ namespace BackEndApi.Repository
             }
             _context.Khois.Remove(khoi);
             _context.SaveChanges();
-            return new JsonResult("Xóa khối thành công");
+            return new JsonResult(khoi);
         }
 
-        public async Task<ActionResult<List<Khoi>>> GetAllKhoi()
+        public async Task<ActionResult<List<Khoi>>> LayTatCaKhoi()
         {
             var listKhoi = await _context.Khois.ToListAsync();
             return listKhoi;
         }
 
-        public IActionResult UpdateKhoi(Khoi khoi)
+        public IActionResult SuaKhoi(Khoi khoi)
         {
             var khoiEx = _context.Khois.FirstOrDefault(item => item.Id == khoi.Id);
             if(khoiEx == null)

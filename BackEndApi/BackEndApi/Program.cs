@@ -5,7 +5,7 @@ using BackEndData;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 builder.Services.AddScoped<IKhoiRepository,KhoiRepository>();
 builder.Services.AddScoped<ILopRepository,LopRepository>();
@@ -14,6 +14,15 @@ builder.Services.AddScoped<INguoiDungRepository,NguoiDungRepository>();
 builder.Services.AddScoped<IChiTietLopHocRepository,ChiTietLopHocRepository>();
 builder.Services.AddScoped<INamHocRepository,NamHocRepository>();
 builder.Services.AddScoped<ITaiKhoanRepository,TaiKhoanRepository>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyOrigin();
+                      });
+});
 //builder.Services.AddTransient(typeof(ILogger<>), typeof(Logger<>));
 //builder.Services.AddSingleton(typeof(ILogger), typeof(Logger));
 builder.Services.AddLogging();
@@ -35,8 +44,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
-
+}app.UseCors(MyAllowSpecificOrigins);
+app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

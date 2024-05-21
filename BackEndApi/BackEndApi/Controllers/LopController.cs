@@ -21,15 +21,15 @@ namespace BackEndApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllLop")]
-        public async Task<ActionResult<List<Lop>>> GetAllLop()
+        [Route("LayTatCaLop")]
+        public async Task<ActionResult<List<Lop>>> LayTatCaLop()
         {
-            var listLop = await _ilopRepository.GetAllLop();
+            var listLop = await _ilopRepository.LayTatCaLop();
             return Ok(listLop);
         }
         [HttpPost]
-        [Route("CreateLop")]
-        public async Task<ActionResult> CreateLop(LopDto lopDto)
+        [Route("ThemLop")]
+        public async Task<ActionResult> ThemLop(LopDto lopDto)
         {
 
             if (String.IsNullOrEmpty(lopDto.MaLop))
@@ -44,22 +44,22 @@ namespace BackEndApi.Controllers
             {
                 throw new Exception("Tên lớp không được để trống");
             }
-            var result = await _ilopRepository.CreateLop(lopDto);
+            var result = await _ilopRepository.ThemLop(lopDto);
             return Ok(result);
         }
 
         [HttpPost]
-        [Route("UpdateLop")]
-        public IActionResult UpdateLop(Lop lop)
+        [Route("SuaLop")]
+        public IActionResult SuaLop(Lop lop)
         {
-            return _ilopRepository.UpdateLop(lop);
+            return _ilopRepository.SuaLop(lop);
         }
 
         [HttpPost]
-        [Route("DeleteLop")]
-        public IActionResult DeleteLop(Guid id)
+        [Route("XoaLop")]
+        public IActionResult XoaLop(Guid id)
         {
-            return _ilopRepository.DeleteLop(id);
+            return _ilopRepository.XoaLop(id);
         }
     }
 }

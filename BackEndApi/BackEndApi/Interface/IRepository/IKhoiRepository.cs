@@ -6,9 +6,9 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface IKhoiRepository
     {
-        public Task<ActionResult<List<Khoi>>> GetAllKhoi();
-        public IActionResult CreateKhoi(KhoiDto khoidto);
-        public IActionResult UpdateKhoi(Khoi khoi);
-        public IActionResult DeleteKhoi(Guid id);
+        public Task<ActionResult<List<Khoi>>> LayTatCaKhoi();
+        public IActionResult ThemKhoi(KhoiDto khoidto);
+        public IActionResult SuaKhoi(Khoi khoi);
+        public IActionResult XoaKhoi(Guid id);
     }
 }

@@ -15,7 +15,7 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public async Task<IActionResult> CreateLop(LopDto lopDto)
+        public async Task<IActionResult> ThemLop(LopDto lopDto)
         {
             if (_context.Lops.Any(item => item.MaLop == lopDto.MaLop))
             {
@@ -43,7 +43,7 @@ namespace BackEndApi.Repository
             return new JsonResult(lop);
         }
 
-        public IActionResult DeleteLop(Guid id)
+        public IActionResult XoaLop(Guid id)
         {
             if (string.IsNullOrWhiteSpace(id.ToString()))
             {
@@ -56,16 +56,16 @@ namespace BackEndApi.Repository
             }
             _context.Lops.Remove(lop);
             _context.SaveChanges();
-            return new JsonResult("Xóa lớp thành công");
+            return new JsonResult(lop);
         }
 
-        public async Task<ActionResult<List<Lop>>> GetAllLop()
+        public async Task<ActionResult<List<Lop>>> LayTatCaLop()
         {
             var listLop = await _context.Lops.ToListAsync();
             return listLop;
         }
 
-        public IActionResult UpdateLop(Lop lop)
+        public IActionResult SuaLop(Lop lop)
         {
             var lopEx = _context.Lops.FirstOrDefault(item => item.Id == lop.Id);
             if (lopEx == null)

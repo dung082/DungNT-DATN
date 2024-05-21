@@ -13,7 +13,7 @@ namespace BackEndApi.Repository
         {
             _context = context;
         }
-        public IActionResult CreateNamHoc(NamHocDto namHocDto)
+        public IActionResult ThemNamHoc(NamHocDto namHocDto)
         {
             if(String.IsNullOrWhiteSpace(namHocDto.NameHoc))
             {

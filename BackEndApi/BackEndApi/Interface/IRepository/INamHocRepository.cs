@@ -5,6 +5,6 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface INamHocRepository
     {
-        public IActionResult CreateNamHoc(NamHocDto namHocDto);
+        public IActionResult ThemNamHoc(NamHocDto namHocDto);
     }
 }

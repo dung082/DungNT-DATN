@@ -20,27 +20,51 @@ namespace BackEndApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllNguoiDung")]
-        public async Task<ActionResult<List<NguoiDung>>> GetAllLop()
+        [Route("LayTatCaNguoiDung")]
+        public async Task<ActionResult<List<NguoiDung>>> LayTatCaNguoiDung()
         {
-            var listLop = await _iNguoiDungRepository.GetAllNguoiDung();
+            var listLop = await _iNguoiDungRepository.LayTatCaNguoiDung();
             return Ok(listLop);
         }
 
         [HttpGet]
-        [Route("GetNguoiDungByIdLop")]
-        public async Task<ActionResult<List<NguoiDung>>> GetNguoiDungByIdLop(Guid idLop)
+        [Route("LayNguoiDungTheoIdLop")]
+        public async Task<ActionResult<List<NguoiDung>>> LayNguoiDungTheoIdLop(Guid idLop)
         {
-            var listLop = await _iNguoiDungRepository.GetNguoiDungByIdLop(idLop);
+            var listLop = await _iNguoiDungRepository.LayNguoiDungTheoIdLop(idLop);
             return Ok(listLop);
         }
 
         [HttpPost]
-        [Route("CreateNguoiDung")]
-        public IActionResult CreateNguoiDung(NguoiDungDto nguoiDungDto)
+        [Route("ThemNguoiDung")]
+        public IActionResult ThemNguoiDung(NguoiDungDto nguoiDungDto)
         {
-            var result = _iNguoiDungRepository.CreateNguoiDung(nguoiDungDto);
+            var result = _iNguoiDungRepository.ThemNguoiDung(nguoiDungDto);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("SuaNguoiDung")]
+        public IActionResult SuaNguoiDung(NguoiDung nguoiDung)
+        {
+            var result = _iNguoiDungRepository.SuaNguoiDung(nguoiDung);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("XoaNguoiDung")]
+        public IActionResult XoaNguoiDung(Guid idNguoiDung)
+        {
+            var result = _iNguoiDungRepository.XoaNguoiDung(idNguoiDung);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("LayThongTinTaiKhoanDangNhap")]
+        public async Task<ActionResult<NguoiDung>> GetUserInfo(string username)
+        {
+            var nguoiDung = await _iNguoiDungRepository.LayThongTinTaiKhoanDangNhap(username);
+            return Ok(nguoiDung);
         }
     }
 }

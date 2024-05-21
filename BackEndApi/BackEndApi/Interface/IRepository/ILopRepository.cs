@@ -6,9 +6,9 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface ILopRepository
     {
-        public Task<ActionResult<List<Lop>>> GetAllLop() ;
-        public Task<IActionResult> CreateLop(LopDto lopDto);
-        public IActionResult UpdateLop(Lop lop);
-        public IActionResult DeleteLop(Guid id);
+        public Task<ActionResult<List<Lop>>> LayTatCaLop() ;
+        public Task<IActionResult> ThemLop(LopDto lopDto);
+        public IActionResult SuaLop(Lop lop);
+        public IActionResult XoaLop(Guid id);
     }
 }

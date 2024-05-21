@@ -15,7 +15,7 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public IActionResult CreateDanToc(DanTocDto dantocDto)
+        public IActionResult ThemDanToc(DanTocDto dantocDto)
         {
             if(String.IsNullOrWhiteSpace(dantocDto.TenDanToc))
             {
@@ -31,17 +31,17 @@ namespace BackEndApi.Repository
             return new JsonResult(dantoc);
         }
 
-        public IActionResult DeleteDanToc(Guid id)
+        public IActionResult XoaDanToc(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<ActionResult<List<DanToc>>> GetAllDanToc()
+        public async Task<ActionResult<List<DanToc>>> LayToanBoDanToc()
         {
             return await _context.DanTocs.ToListAsync();
         }
 
-        public IActionResult UpdateDanToc(DanToc dantoc)
+        public IActionResult SuaDanToc(DanToc dantoc)
         {
             throw new NotImplementedException();
         }

@@ -6,9 +6,9 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface IDantocRepository
     {
-        public Task<ActionResult<List<DanToc>>> GetAllDanToc();
-        public IActionResult CreateDanToc(DanTocDto dantocDto);
-        public IActionResult UpdateDanToc(DanToc dantoc);
-        public IActionResult DeleteDanToc(Guid id);
+        public Task<ActionResult<List<DanToc>>> LayToanBoDanToc();
+        public IActionResult ThemDanToc(DanTocDto dantocDto);
+        public IActionResult SuaDanToc(DanToc dantoc);
+        public IActionResult XoaDanToc(Guid id);
     }
 }

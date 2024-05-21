@@ -19,10 +19,19 @@ namespace BackEndApi.Controllers
         }
 
         [HttpPost]
-        [Route("CreateChiTietLopHoc")]
-        public IActionResult CreateChiTietLopHoc(ChiTietLopHocDto chiTietLopHocDto)
+        [Route("ThemHocSinhVaoLop")]
+        public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto)
         {
-            return _iChiTietLopHocRepository.CreateChiTietLopHoc(chiTietLopHocDto);
+            return _iChiTietLopHocRepository.ThemHocSinhVaoLop(chiTietLopHocDto);
         }
+
+        [HttpPost]
+        [Route("ChuyenLop")]
+        public IActionResult ChuyenLop(ChiTietLopHocDto chiTietLopHocDto)
+        {
+            return _iChiTietLopHocRepository.ChuyenLop(chiTietLopHocDto);
+        }
+
+
     }
 }

@@ -5,6 +5,8 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface IChiTietLopHocRepository
     {
-        public IActionResult CreateChiTietLopHoc(ChiTietLopHocDto chiTietLopHocDto);
+        public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto);
+        public IActionResult ChuyenLop(ChiTietLopHocDto chiTietLopHocDto);
+        public IActionResult XoaHocSinhTrongLop(Guid chiTietLopHocId);
     }
 }

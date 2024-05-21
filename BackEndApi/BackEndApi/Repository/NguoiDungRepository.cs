@@ -58,7 +58,7 @@ namespace BackEndApi.Repository
         {
             _context = context;
         }
-        public IActionResult CreateNguoiDung(NguoiDungDto nguoiDungDto)
+        public IActionResult ThemNguoiDung(NguoiDungDto nguoiDungDto)
         {
             if (String.IsNullOrWhiteSpace(nguoiDungDto.HoTen))
             {
@@ -91,6 +91,18 @@ namespace BackEndApi.Repository
                 throw new Exception("Tài khoản đã tồn tại");
             }
 
+            var emailReverst = usernameRevert + "@thcshb.edu.vn";
+
+            if (_context.NguoiDungs.Any(item => item.Email == emailReverst))
+            {
+                throw new Exception("Email đã tồn tại");
+            }
+
+            if (!String.IsNullOrWhiteSpace(nguoiDungDto.SoDienThoai) && _context.NguoiDungs.Any(item => item.SoDienThoai == nguoiDungDto.SoDienThoai))
+            {
+                throw new Exception("Số điện thoại đã tồn tại");
+            }
+
             var passwordHash = HashPassword("");
             NguoiDung nguoiDung = new NguoiDung()
             {
@@ -100,7 +112,7 @@ namespace BackEndApi.Repository
                 DanTocId = nguoiDungDto.DanTocId,
                 GioiTinh = nguoiDungDto.GioiTinh,
                 NgaySinh = nguoiDungDto.NgaySinh,
-                Email = nguoiDungDto.Email,
+                Email = emailReverst,
                 SoDienThoai = nguoiDungDto.SoDienThoai,
                 Propeties = nguoiDungDto.Propeties,
                 UserType = nguoiDungDto.UserType,
@@ -120,23 +132,31 @@ namespace BackEndApi.Repository
             _context.TaiKhoans.Add(taiKhoan);
             _context.SaveChanges();
 
-            return new JsonResult("Tạo mới người dùng thành công");
-
-
-            throw new NotImplementedException();
+            return new JsonResult(nguoiDung);
         }
 
-        public IActionResult DeleteNguoiDung(Guid idNguoiDung)
+        public IActionResult XoaNguoiDung(Guid idNguoiDung)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(idNguoiDung.ToString()))
+            {
+                throw new Exception("Không được để trống mã người dùng");
+            }
+            var nguoiDung = _context.NguoiDungs.FirstOrDefault(item => item.Id == idNguoiDung);
+            if (nguoiDung == null)
+            {
+                throw new Exception("Người dùng bạn muốn xóa không tồn tại");
+            }
+            _context.NguoiDungs.Remove(nguoiDung);
+            _context.SaveChanges();
+            return new JsonResult(nguoiDung);
         }
 
-        public async Task<ActionResult<List<NguoiDung>>> GetAllNguoiDung()
+        public async Task<ActionResult<List<NguoiDung>>> LayTatCaNguoiDung()
         {
             return await _context.NguoiDungs.ToListAsync();
         }
 
-        public async Task<ActionResult<List<NguoiDung>>> GetNguoiDungByIdLop(Guid idLop)
+        public async Task<ActionResult<List<NguoiDung>>> LayNguoiDungTheoIdLop(Guid idLop)
         {
             var listNguoiDungLop = _context.ChiTietLops.Where(item => item.LopId == idLop).ToList();
             var listNguoiDung = nguoiDungInLop(listNguoiDungLop);
@@ -144,9 +164,53 @@ namespace BackEndApi.Repository
             return listNguoiDung;
         }
 
-        public IActionResult UpdateNguoiDung(NguoiDung nguoiDung)
+        public IActionResult SuaNguoiDung(NguoiDung nguoiDung)
         {
-            throw new NotImplementedException();
+            var user = _context.NguoiDungs.FirstOrDefault(item => item.Id == nguoiDung.Id);
+            if (String.IsNullOrWhiteSpace(nguoiDung.HoTen))
+            {
+                throw new Exception("Họ và tên không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(nguoiDung.NgaySinh.ToString()))
+            {
+                throw new Exception("Ngày sinh không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(nguoiDung.DiaChi.ToString()))
+            {
+                throw new Exception("Địa chỉ không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(nguoiDung.GioiTinh.ToString()))
+            {
+                throw new Exception("Giới tính không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(nguoiDung.DanTocId.ToString()))
+            {
+                throw new Exception("Dân tộc không được để trống");
+            }
+
+            if (!String.IsNullOrWhiteSpace(nguoiDung.Email) && _context.NguoiDungs.Any(item => item.Email == nguoiDung.Email))
+            {
+                throw new Exception("Email đã tồn tại");
+            }
+
+            if (!String.IsNullOrWhiteSpace(nguoiDung.SoDienThoai) && _context.NguoiDungs.Any(item => item.SoDienThoai == nguoiDung.SoDienThoai))
+            {
+                throw new Exception("Số điện thoại đã tồn tại");
+            }
+
+            user.DanTocId = nguoiDung.DanTocId;
+            user.DiaChi = nguoiDung.DiaChi;
+            user.Status = nguoiDung.Status;
+            user.Email = nguoiDung.Email;
+            user.SoDienThoai = nguoiDung.SoDienThoai;
+            user.Propeties = nguoiDung.Propeties;
+            user.HoTen = nguoiDung.HoTen;
+            user.NgaySinh = nguoiDung.NgaySinh;
+
+            _context.NguoiDungs.Update(nguoiDung);
+            _context.SaveChanges();
+
+            return new JsonResult(nguoiDung);
         }
 
         public string RevertUserName(string username)
@@ -202,7 +266,7 @@ namespace BackEndApi.Repository
         {
             if (String.IsNullOrWhiteSpace(password))
             {
-                password = "deafaultPassword@123";
+                password = "hb@2024";
             }
             byte[] data = System.Text.Encoding.ASCII.GetBytes(password);
             data = System.Security.Cryptography.MD5.Create().ComputeHash(data);
@@ -221,6 +285,13 @@ namespace BackEndApi.Repository
                 }
             }
 
+            return nguoiDung;
+        }
+
+        public async Task<ActionResult<NguoiDung>> LayThongTinTaiKhoanDangNhap(string username)
+        {
+            NguoiDung nguoiDung = new NguoiDung();
+            nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == username);
             return nguoiDung;
         }
     }

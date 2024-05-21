@@ -18,18 +18,18 @@ namespace BackEndApi.Controllers
             _idantocRepository = idantocRepository;
         }
         [HttpGet]
-        [Route("GetAllDanToc")]
-        public async Task<ActionResult<List<DanToc>>> GetAllDanToc()
+        [Route("LayToanBoDanToc")]
+        public async Task<ActionResult<List<DanToc>>> LayToanBoDanToc()
         {
-            var listDanToc = await _idantocRepository.GetAllDanToc();
+            var listDanToc = await _idantocRepository.LayToanBoDanToc();
             return Ok(listDanToc);
         }
 
         [HttpPost]
-        [Route("CreateDanToc")]
-        public IActionResult CreateDanToc(DanTocDto dantocDto)
+        [Route("ThemDanToc")]
+        public IActionResult ThemDanToc(DanTocDto dantocDto)
         {
-            return _idantocRepository.CreateDanToc(dantocDto);
+            return _idantocRepository.ThemDanToc(dantocDto);
         }
     }
 }
