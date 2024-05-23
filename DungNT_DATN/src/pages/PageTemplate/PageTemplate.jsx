@@ -1,87 +1,171 @@
-import { Menu } from "antd";
-
+import {
+  HomeOutlined,
+  LogoutOutlined,
+  ReadOutlined,
+  SoundOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Dropdown, Layout, Menu, Space } from "antd";
+import { Footer } from "antd/es/layout/layout";
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
+const { Header, Sider, Content } = Layout;
 export default function PageTemplate() {
+  const navigate = useNavigate();
+  const handleMenuClick = (e) => {
+    if (e.key === "1") {
+      navigate("/Info");
+    } else if (e.key === "2") {
+      logout();
+    }
+  };
+
+  const logout = () => {
+    console.log("1");
+    sessionStorage.removeItem("userInfo");
+    navigate("/Login");
+  };
   const items = [
     {
-      label: "Trang chủ",
-      key: "home",
+      key: "1",
+      label: "Thông tin cá nhân",
+      icons: <UserOutlined />,
+      onclick: () => {
+        navigate("/Info");
+      },
     },
     {
-      label: "Thông tin chung",
-      key: "info",
-      children: [
-        {
-          label: "Thông tin cá nhân",
-          key: "infomation",
-        },
-      ],
-    },
-    {
-      label: "Học tập",
-      key: "study",
-      children: [
-        {
-          label: "Thời khóa biểu",
-          key: "sheet",
-        },
-      ],
-    },
-    {
-      label: "Thông báo",
-      key: "notice",
+      key: "2",
+      label: "Đăng xuất",
+      icons: <LogoutOutlined />,
+      onclick: logout,
     },
   ];
+  const [collapsed, setCollapsed] = useState(false);
   // const { Search } = Input;
   return (
     <>
       <div className="h-screen w-screen">
-        <div className="" style={{ borderBottom: "1px solid #e9e6e6" }}>
-          <div className="w-[1300px] m-auto min-h-[60px] flex justify-between items-center ">
-            <div className="flex items-center">
-              <div className="flex items-center cursor-pointer">
-                <div>
-                  <span className="material-icons" style={{ fontSize: 60 }}>
-                    school
-                  </span>
-                </div>
-                <div className="ml-2">
-                  <div className="text-xl">TRƯỜNG THCS HÒA BÌNH</div>
-                  <div>HOA BINH SECONDARY SCHOOL</div>
-                </div>
-              </div>
-              {/* <div>
-                <Search
-                  placeholder="input search text"
-                  className="ml-4"
-                  // onSearch={onSearch}
-                  style={{
-                    width: 400,
+        <Layout className="h-full">
+          <Sider
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            className="sider"
+          >
+            <div
+              className={
+                collapsed
+                  ? "logo-menu h-[60px] flex items-center justify-center "
+                  : "logo-menu h-[60px] flex items-center justify-center"
+              }
+            >
+              {collapsed ? (
+                <button
+                  onClick={() => {
+                    setCollapsed(!collapsed);
                   }}
-                />
-              </div> */}
+                >
+                  <span className="material-icons text-white md-36">
+                    chevron_left
+                  </span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    setCollapsed(!collapsed);
+                  }}
+                >
+                  {" "}
+                  <span className="material-icons text-white md-36">
+                    chevron_right
+                  </span>
+                </button>
+              )}
             </div>
-            <div className="flex items-center">
+            <Menu
+              mode="inline"
+              selectedKeys={
+                window.location.pathname === "/"
+                  ? "Home"
+                  : window.location.pathname
+              }
+              // defaultSelectedKeys={["1"]}
+              items={[
+                {
+                  key: "/Home",
+                  label: "Trang chủ",
+                  icon: <HomeOutlined />,
+                  onClick: () => {
+                    navigate("/Home");
+                  },
+                },
+                {
+                  key: "sub2",
+                  label: "Thông tin chung",
+                  icon: <UserOutlined />,
+                  children: [
+                    {
+                      key: "/Info",
+                      label: "Thông tin cá nhân",
+                      onClick: () => {
+                        navigate("/Info");
+                      },
+                    },
+                    {
+                      key: "/ChangePassword",
+                      label: "Đổi mật khẩu",
+                      onClick: () => {
+                        navigate("/ChangePassword");
+                      },
+                    },
+                  ],
+                },
+                {
+                  key: "sub3",
+                  label: "Học tập",
+                  icon: <ReadOutlined />,
+                  children: [
+                    { key: "7", label: "Thời khóa biểu" },
+                    { key: "8", label: "Chương trình khung" },
+                  ],
+                },
+                {
+                  key: "sub4",
+                  label: "Thông báo",
+                  icon: <SoundOutlined />,
+                },
+              ]}
+            />
+          </Sider>
+          <Layout className="bg-[#d7d6d6]">
+            <Header className="h-[60px] bg-white flex justify-end ">
               <div>
-                <Menu
-                  mode="horizontal"
-                  className="p-0 border-none "
-                  items={items}
-                />
+                <Dropdown
+                  menu={{
+                    items,
+                    onClick: handleMenuClick,
+                  }}
+                >
+                  <a>
+                    <Space>Xin chào ...</Space>
+                  </a>
+                </Dropdown>
               </div>
-              <div className="cursor-pointer ml-2">Chào mừng</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-[#f0f2f5] pt-5" style={{height : "calc(100vh - 155px"}}>
-          <div className="w-[1300px] m-auto min-h-[600px] bg-white rounded-md">
-              
-          </div>
-        </div>
-
-        <div className="text-center py-[30px] px-[70px]">
-              Một sản phẩm của DungNT
-        </div>
+            </Header>
+            <Content className="min-h-[300px]  p-8">
+              <div
+                className="bg-white rounded-md w-full h-full"
+                style={{ background: "#fff" }}
+              >
+                <Outlet />
+              </div>
+            </Content>
+            <Footer className="text-center">
+              Một sản phẩm của Nguyễn Tiến Dũng
+            </Footer>
+          </Layout>
+        </Layout>
       </div>
     </>
   );
