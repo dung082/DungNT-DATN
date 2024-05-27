@@ -3,6 +3,7 @@ using BackEndApi.Interface.IRepository;
 using BackEndApi.Repository;
 using BackEndData;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -14,6 +15,8 @@ builder.Services.AddScoped<INguoiDungRepository,NguoiDungRepository>();
 builder.Services.AddScoped<IChiTietLopHocRepository,ChiTietLopHocRepository>();
 builder.Services.AddScoped<INamHocRepository,NamHocRepository>();
 builder.Services.AddScoped<ITaiKhoanRepository,TaiKhoanRepository>();
+builder.Services.AddScoped<IKhoaHocRepository,KhoaHocRepository>();
+builder.Services.AddScoped<IUploadImageRepository,UploadImageRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -48,6 +51,12 @@ if (app.Environment.IsDevelopment())
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+          Path.Combine(Directory.GetCurrentDirectory(), "image")),
+    RequestPath = "/image"
+});
 app.UseAuthorization();
 
 app.MapControllers();

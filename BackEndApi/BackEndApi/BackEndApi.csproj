@@ -26,4 +26,8 @@
     <ProjectReference Include="..\..\BackEndData\BackEndData.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="image\" />
+  </ItemGroup>
+
 </Project>

@@ -8,8 +8,9 @@
         public int GioiTinh { get; set; }
         public int UserType { get; set; }
         public string SoDienThoai { get; set; }
-        public string Email { get; set; }
+        public string KhoaHoc { get; set; } 
         public Guid DanTocId { get; set; }
         public string Propeties { get; set; }
+        public string Avatar { get; set; }
     }
 }

@@ -11,14 +11,14 @@ namespace BackEndApi.Repository
         public TaiKhoanRepository(ApplicationDbContext context) { _context = context; }
         public IActionResult Login(TaiKhoanDto taiKhoanDto)
         {
-            var taiKhoan = _context.TaiKhoans.Where(item => item.Username == item.Username && item.Password == HashPassword(taiKhoanDto.Password)).FirstOrDefault();
+            var taiKhoan = _context.TaiKhoans.Where(item => item.Username == taiKhoanDto.Username && item.Password == HashPassword(taiKhoanDto.Password)).FirstOrDefault();
             if(taiKhoan == null )
             {
                 throw new Exception("Tài khoản hoặc mật khẩu không chính xác");
             }
             
             NguoiDung nguoiDung = new NguoiDung();
-            nguoiDung = _context.NguoiDungs.Where(item => item.Username == taiKhoanDto.Username).FirstOrDefault();
+            nguoiDung = _context.NguoiDungs.FirstOrDefault(item => item.Username == taiKhoanDto.Username);
             return new JsonResult(nguoiDung);
         }
 

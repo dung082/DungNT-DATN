@@ -1,5 +1,6 @@
 ﻿using BackEndApi.Dto;
 using BackEndApi.Interface.IRepository;
+using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
@@ -15,10 +16,17 @@ namespace BackEndApi.Controllers
         }
 
         [HttpPost]
-        [Route("CreateNamHoc")]
+        [Route("ThemNamHoc")]
         public IActionResult ThemNamHoc(NamHocDto namHocDto)
         {
             return _iNamHocRepository.ThemNamHoc(namHocDto);
         }
+
+        //[HttpGet]
+        //[Route("LayNamHocTheoKhoaHocId")]
+        //public Task<ActionResult<List<NamHoc>>> LayNamHocTheoKhoaHocId(Guid khoaHocId)
+        //{
+        //    return _iNamHocRepository.LayNamHocTheoKhoaHocId(khoaHocId);
+        //}
     }
 }

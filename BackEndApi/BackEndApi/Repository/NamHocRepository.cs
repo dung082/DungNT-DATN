@@ -3,6 +3,7 @@ using BackEndApi.Interface.IRepository;
 using BackEndData;
 using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BackEndApi.Repository
 {
@@ -13,14 +14,17 @@ namespace BackEndApi.Repository
         {
             _context = context;
         }
+
+        //public async Task<ActionResult<List<NamHoc>>> LayNamHocTheoKhoaHocId(Guid khoaHocId)
+        //{
+        //    return await _context.NamHocs.Where(item => item.KhoaHoc == khoaHocId).ToListAsync();
+        //}
+
         public IActionResult ThemNamHoc(NamHocDto namHocDto)
         {
-            if(String.IsNullOrWhiteSpace(namHocDto.NameHoc))
+            if (String.IsNullOrWhiteSpace(namHocDto.NameHoc))
             {
                 throw new Exception("Năm học không được để trống");
-            }
-            if (_context.NamHocs.Any(item => item.NameHoc == namHocDto.NameHoc)) {
-                throw new Exception("Năm học đã tồn tại");
             }
 
             NamHoc namhoc = new NamHoc()
@@ -29,8 +33,8 @@ namespace BackEndApi.Repository
                 NameHoc = namHocDto.NameHoc,
             };
             _context.NamHocs.Add(namhoc);
-            _context.SaveChanges(); 
-            return new JsonResult( namhoc);
+            _context.SaveChanges();
+            return new JsonResult(namhoc);
         }
     }
 }

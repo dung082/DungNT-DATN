@@ -58,6 +58,21 @@ namespace BackEndData.Migrations
                     b.ToTable("DanTocs");
                 });
 
+            modelBuilder.Entity("BackEndData.Entities.KhoaHoc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("TenKhoaHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KhoaHocs");
+                });
+
             modelBuilder.Entity("BackEndData.Entities.Khoi", b =>
                 {
                     b.Property<Guid>("Id")
@@ -139,6 +154,9 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("DanTocId")
                         .HasColumnType("char(36)");
 
@@ -147,7 +165,6 @@ namespace BackEndData.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("GioiTinh")
@@ -157,11 +174,13 @@ namespace BackEndData.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("KhoaHoc")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("NgaySinh")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Propeties")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SoDienThoai")

@@ -66,5 +66,14 @@ namespace BackEndApi.Controllers
             var nguoiDung = await _iNguoiDungRepository.LayThongTinTaiKhoanDangNhap(username);
             return Ok(nguoiDung);
         }
+
+        [HttpGet]
+        [Route("LayThongTinNguoiDung")]
+        public IActionResult LayThongTinNguoiDung(Guid id)
+        {
+            var nguoiDung = _iNguoiDungRepository.LayThongTinNguoiDung(id);
+            return Ok(nguoiDung);
+        }
+
     }
 }

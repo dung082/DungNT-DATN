@@ -80,16 +80,21 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Dân tộc không được để trống");
             }
+            if (String.IsNullOrWhiteSpace(nguoiDungDto.UserType.ToString()))
+            {
+                throw new Exception("Loại tài khoản không được để trống");
+            }
+            if (nguoiDungDto.UserType == 2 && String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHoc))
+            {
+                throw new Exception("Khóa học không được để trống");
+            }
             //if (String.IsNullOrWhiteSpace(nguoiDungDto.DanTocId.ToString()))
             //{
             //    throw new Exception("Dân tộc không được để trống");
             //}
 
-            var usernameRevert = RevertUserName(nguoiDungDto.HoTen);
-            if (_context.NguoiDungs.Any(item => item.Username == usernameRevert))
-            {
-                throw new Exception("Tài khoản đã tồn tại");
-            }
+            var usernameRevert = RevertUserName(nguoiDungDto.HoTen, nguoiDungDto.UserType);
+
 
             var emailReverst = usernameRevert + "@thcshb.edu.vn";
 
@@ -103,6 +108,11 @@ namespace BackEndApi.Repository
                 throw new Exception("Số điện thoại đã tồn tại");
             }
 
+            if (!String.IsNullOrWhiteSpace(nguoiDungDto.DanTocId.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDungDto.DanTocId))
+            {
+                throw new Exception("Mã dân tộc không tồn tại");
+            }
+
             var passwordHash = HashPassword("");
             NguoiDung nguoiDung = new NguoiDung()
             {
@@ -110,6 +120,7 @@ namespace BackEndApi.Repository
                 HoTen = nguoiDungDto.HoTen,
                 DiaChi = nguoiDungDto.DiaChi,
                 DanTocId = nguoiDungDto.DanTocId,
+                KhoaHoc = nguoiDungDto.KhoaHoc,
                 GioiTinh = nguoiDungDto.GioiTinh,
                 NgaySinh = nguoiDungDto.NgaySinh,
                 Email = emailReverst,
@@ -117,7 +128,7 @@ namespace BackEndApi.Repository
                 Propeties = nguoiDungDto.Propeties,
                 UserType = nguoiDungDto.UserType,
                 Username = usernameRevert,
-                Status = 2,
+                Status = 1,
             };
 
             TaiKhoan taiKhoan = new TaiKhoan()
@@ -213,7 +224,7 @@ namespace BackEndApi.Repository
             return new JsonResult(nguoiDung);
         }
 
-        public string RevertUserName(string username)
+        public string RevertUserName(string username, int userType)
         {
             string nameRevert = "";
             var NameSplit = username.Split(' ');
@@ -221,6 +232,18 @@ namespace BackEndApi.Repository
             for (int i = 0; i < NameSplit.Length - 1; i++)
             {
                 nameRevert += NameSplit[i].Substring(0, 1).ToLower();
+            }
+            if (userType == 0)
+            {
+                nameRevert = @"admin_truong_" + nameRevert;
+            }
+            else if (userType == 1)
+            {
+                nameRevert = @"gv_" + nameRevert;
+            }
+            else if (userType == 2)
+            {
+                nameRevert = @"hs_" + nameRevert;
             }
             List<int> nameId = new List<int>();
             foreach (var nguoiDung in _context.NguoiDungs)
@@ -293,6 +316,39 @@ namespace BackEndApi.Repository
             NguoiDung nguoiDung = new NguoiDung();
             nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == username);
             return nguoiDung;
+        }
+
+        public IActionResult LayThongTinNguoiDung(Guid id)
+        {
+            if (String.IsNullOrWhiteSpace(id.ToString()))
+            {
+                throw new Exception("Mã người dùng không được để trống");
+            }
+            NguoiDung nguoiDung = _context.NguoiDungs.FirstOrDefault(item => item.Id == id);
+            if (nguoiDung == null)
+            {
+                throw new Exception("Không tìm thấy người dùng");
+            }
+            var dantoc = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocId);
+            ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
+            {
+                Id = nguoiDung.Id,
+                Username = nguoiDung.Username,
+                Status = nguoiDung.Status,
+                HoTen = nguoiDung.HoTen,
+                NgaySinh = nguoiDung.NgaySinh,
+                DiaChi = nguoiDung.DiaChi,
+                GioiTinh = nguoiDung.GioiTinh,
+                SoDienThoai = nguoiDung.SoDienThoai,
+                UserType = nguoiDung.UserType,
+                Email = nguoiDung.Email,
+                Propeties = nguoiDung.Propeties,
+                DanTocId = nguoiDung.DanTocId,
+                TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
+                KhoaHoc = nguoiDung.KhoaHoc,
+                Avatar = nguoiDung.Avatar,
+            };
+            return new JsonResult(thongTinNguoiDung);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace BackEndApi.Interface.IRepository
         public IActionResult SuaNguoiDung(NguoiDung nguoiDung);
         public IActionResult XoaNguoiDung(Guid idNguoiDung);
         public Task<ActionResult<NguoiDung>> LayThongTinTaiKhoanDangNhap(string username);
+        public IActionResult LayThongTinNguoiDung(Guid id);
 
     }
 }

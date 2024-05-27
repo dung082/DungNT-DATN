@@ -20,5 +20,7 @@ namespace BackEndData
         public DbSet<NguoiDung> NguoiDungs { get; set; }
         public DbSet<ChiTietLop> ChiTietLops { get; set; }
         public DbSet<DanToc> DanTocs { get; set; }
+        public DbSet<KhoaHoc> KhoaHocs { get; set; }
+
     }
 }
