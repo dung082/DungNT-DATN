@@ -5,7 +5,10 @@ export default {
     extend: {
       colors: {
         colorthemes: "#0e79e7",
-        white : "#fff"
+        white: "#fff",
+        line: "#d3cfcf",
+        success : "#5cb85c",
+        error : "#f44336"
       },
     },
   },

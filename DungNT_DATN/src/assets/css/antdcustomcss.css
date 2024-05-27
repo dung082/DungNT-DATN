@@ -134,3 +134,11 @@
 .ant-menu-submenu.ant-menu-submenu-vertical.ant-menu-submenu-selected {
   background: white !important;
 }
+
+.bg-logo-menu {
+  background-image: url(../images/logotest.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 160px;
+  height: 60px;
+}

@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  line-height : 1.2
 }
 
 #root {
@@ -80,3 +81,6 @@
   color: rgba(255, 255, 255, 0.3);
 }
 
+.bottem-border-title {
+  border-bottom: 1px solid theme(colors.line);
+}

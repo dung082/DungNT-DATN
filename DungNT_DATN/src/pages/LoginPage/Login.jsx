@@ -4,10 +4,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { loginservice } from "../../services/loginSerivce/loginService";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../reducers/globalReducer/globalReducer";
 
 export default function Login() {
   const [statusMessage, setStatusMessage] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -30,7 +33,12 @@ export default function Login() {
       try {
         const response = await loginservice.login(user);
         if (response.status === 200) {
-          sessionStorage.setItem("userInfo", "dungnt");
+          console.log(response);
+          sessionStorage.setItem(
+            "userInfo",
+            JSON.stringify(response.data.value)
+          );
+          dispatch(setUserInfo(response.data.value));
           navigate("/");
         }
       } catch (err) {
