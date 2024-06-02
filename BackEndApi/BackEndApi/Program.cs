@@ -4,19 +4,21 @@ using BackEndApi.Repository;
 using BackEndData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
-builder.Services.AddScoped<IKhoiRepository,KhoiRepository>();
-builder.Services.AddScoped<ILopRepository,LopRepository>();
-builder.Services.AddScoped<IDantocRepository,DanTocRepository>();
-builder.Services.AddScoped<INguoiDungRepository,NguoiDungRepository>();
-builder.Services.AddScoped<IChiTietLopHocRepository,ChiTietLopHocRepository>();
-builder.Services.AddScoped<INamHocRepository,NamHocRepository>();
-builder.Services.AddScoped<ITaiKhoanRepository,TaiKhoanRepository>();
-builder.Services.AddScoped<IKhoaHocRepository,KhoaHocRepository>();
-builder.Services.AddScoped<IUploadImageRepository,UploadImageRepository>();
+builder.Services.AddScoped<IKhoiRepository, KhoiRepository>();
+builder.Services.AddScoped<ILopRepository, LopRepository>();
+builder.Services.AddScoped<IDantocRepository, DanTocRepository>();
+builder.Services.AddScoped<INguoiDungRepository, NguoiDungRepository>();
+builder.Services.AddScoped<IChiTietLopHocRepository, ChiTietLopHocRepository>();
+builder.Services.AddScoped<INamHocRepository, NamHocRepository>();
+builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
+builder.Services.AddScoped<IKhoaHocRepository, KhoaHocRepository>();
+builder.Services.AddScoped<IUploadImageRepository, UploadImageRepository>();
+builder.Services.AddScoped<ITonGiaoRepository, TonGiaoRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -33,7 +35,12 @@ builder.Services.AddLogging();
 var DefaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseMySql(DefaultConnection, ServerVersion.AutoDetect(DefaultConnection)));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new NullableGuidConverter());
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+}); ;
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -47,7 +54,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-}app.UseCors(MyAllowSpecificOrigins);
+}
+app.UseCors(MyAllowSpecificOrigins);
 app.UseCors(MyAllowSpecificOrigins);
 app.UseHttpsRedirection();
 

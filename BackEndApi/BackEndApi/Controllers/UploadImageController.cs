@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
-    public class UploadImageController : Controller
+    public class UploadImageController : ControllerBase
     {
         private readonly ILogger<UploadImageController> _logger;
         public IUploadImageRepository _iUploadImageRepository { get; set; }

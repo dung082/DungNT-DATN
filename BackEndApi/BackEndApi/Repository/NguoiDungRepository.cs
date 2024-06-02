@@ -80,6 +80,10 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Dân tộc không được để trống");
             }
+            if (String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoId.ToString()))
+            {
+                throw new Exception("Mã tôn giáo không được để trống");
+            }
             if (String.IsNullOrWhiteSpace(nguoiDungDto.UserType.ToString()))
             {
                 throw new Exception("Loại tài khoản không được để trống");
@@ -113,6 +117,101 @@ namespace BackEndApi.Repository
                 throw new Exception("Mã dân tộc không tồn tại");
             }
 
+            if (!String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoId.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDungDto.TonGiaoId))
+            {
+                throw new Exception("Mã tôn giáo không tồn tại");
+            }
+
+            if (nguoiDungDto.UserType == 2)
+            {
+                if (String.IsNullOrWhiteSpace(nguoiDungDto.HoTenCha) || String.IsNullOrWhiteSpace(nguoiDungDto.HoTenMe))
+                {
+                    throw new Exception("Vui lòng điền thông tin cha mẹ");
+                }
+                else
+                {
+                    if (!String.IsNullOrWhiteSpace(nguoiDungDto.HoTenCha))
+                    {
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.DanTocIdCha.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoIdCha.ToString()))
+                        {
+                            throw new Exception("Mã tôn giáo của không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.NamSinhCha.ToString()))
+                        {
+                            throw new Exception("Năm sinh cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.DiaChiCha.ToString()))
+                        {
+                            throw new Exception("Địa chỉ của cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.SoDienThoaiCha.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của cha không được để trống");
+                        }
+                        if (!String.IsNullOrWhiteSpace(nguoiDungDto.DanTocIdCha.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDungDto.DanTocIdCha))
+                        {
+                            throw new Exception("Mã dân tộc của cha không tồn tại");
+                        }
+
+                        if (!String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoIdCha.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDungDto.TonGiaoIdCha))
+                        {
+                            throw new Exception("Mã tôn giáo của cha không tồn tại");
+                        }
+                    }
+                    if (!String.IsNullOrWhiteSpace(nguoiDungDto.HoTenMe))
+                    {
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.DanTocIdMe.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoIdMe.ToString()))
+                        {
+                            throw new Exception("Mã tôn giáo của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.NamSinhMe.ToString()))
+                        {
+                            throw new Exception("Năm sinh mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.DiaChiMe.ToString()))
+                        {
+                            throw new Exception("Địa chỉ của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDungDto.SoDienThoaiMe.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không được để trống");
+                        }
+                        if (!String.IsNullOrWhiteSpace(nguoiDungDto.DanTocIdMe.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDungDto.DanTocIdMe))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không tồn tại");
+                        }
+
+                        if (!String.IsNullOrWhiteSpace(nguoiDungDto.TonGiaoIdMe.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDungDto.TonGiaoIdMe))
+                        {
+                            throw new Exception("Mã tôn giáo của mẹ không tồn tại");
+                        }
+                    }
+                }
+            }
+            else if (nguoiDungDto.UserType == 1)
+            {
+                if (String.IsNullOrEmpty(nguoiDungDto.CCCD))
+                {
+                    throw new Exception("Căn cước công dân của giáo viên không được để trống");
+                }
+                else
+                {
+                    if (_context.NguoiDungs.FirstOrDefault(item => item.CCCD == nguoiDungDto.CCCD) != null)
+                    {
+                        throw new Exception("Mã căn cước công dân đã tồn tại");
+                    }
+                }
+            }
+
+
             var passwordHash = HashPassword("");
             NguoiDung nguoiDung = new NguoiDung()
             {
@@ -129,6 +228,20 @@ namespace BackEndApi.Repository
                 UserType = nguoiDungDto.UserType,
                 Username = usernameRevert,
                 Status = 1,
+                TonGiaoId = nguoiDungDto.TonGiaoId,
+                CCCD = nguoiDungDto.CCCD,
+                HoTenCha = nguoiDungDto.HoTenCha,
+                NamSinhCha = nguoiDungDto.NamSinhCha,
+                DanTocIdCha = nguoiDungDto.DanTocIdCha,
+                DiaChiCha = nguoiDungDto.DiaChiCha,
+                SoDienThoaiCha = nguoiDungDto.SoDienThoaiCha,
+                TonGiaoIdCha = nguoiDungDto.TonGiaoIdCha,
+                HoTenMe = nguoiDungDto.HoTenMe,
+                NamSinhMe = nguoiDungDto.NamSinhMe,
+                DanTocIdMe = nguoiDungDto.DanTocIdMe,
+                DiaChiMe = nguoiDungDto.DiaChiMe,
+                SoDienThoaiMe = nguoiDungDto.SoDienThoaiMe,
+                TonGiaoIdMe = nguoiDungDto.TonGiaoIdMe,
             };
 
             TaiKhoan taiKhoan = new TaiKhoan()
@@ -178,6 +291,10 @@ namespace BackEndApi.Repository
         public IActionResult SuaNguoiDung(NguoiDung nguoiDung)
         {
             var user = _context.NguoiDungs.FirstOrDefault(item => item.Id == nguoiDung.Id);
+            if (user == null)
+            {
+                throw new Exception("Không tìm thấy người dùng được sửa thông tin");
+            }
             if (String.IsNullOrWhiteSpace(nguoiDung.HoTen))
             {
                 throw new Exception("Họ và tên không được để trống");
@@ -198,27 +315,140 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Dân tộc không được để trống");
             }
+            if (String.IsNullOrWhiteSpace(nguoiDung.TonGiaoId.ToString()))
+            {
+                throw new Exception("Tôn giáo không được để trống");
+            }
 
-            if (!String.IsNullOrWhiteSpace(nguoiDung.Email) && _context.NguoiDungs.Any(item => item.Email == nguoiDung.Email))
+            if (!String.IsNullOrWhiteSpace(nguoiDung.Email) && _context.NguoiDungs.Any(item => item.Email == nguoiDung.Email && item.Id != nguoiDung.Id))
             {
                 throw new Exception("Email đã tồn tại");
             }
 
-            if (!String.IsNullOrWhiteSpace(nguoiDung.SoDienThoai) && _context.NguoiDungs.Any(item => item.SoDienThoai == nguoiDung.SoDienThoai))
+            if (!String.IsNullOrWhiteSpace(nguoiDung.SoDienThoai) && _context.NguoiDungs.Any(item => item.SoDienThoai == nguoiDung.SoDienThoai && item.Id != nguoiDung.Id))
             {
                 throw new Exception("Số điện thoại đã tồn tại");
+
             }
 
+            if (!String.IsNullOrWhiteSpace(nguoiDung.TonGiaoId.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDung.TonGiaoId))
+            {
+                throw new Exception("Mã tôn giáo không tồn tại");
+            }
+
+            if (nguoiDung.UserType == 2)
+            {
+                if (String.IsNullOrWhiteSpace(nguoiDung.HoTenCha) || String.IsNullOrWhiteSpace(nguoiDung.HoTenMe))
+                {
+                    throw new Exception("Vui lòng điền thông tin cha mẹ");
+                }
+                else
+                {
+                    if (!String.IsNullOrWhiteSpace(nguoiDung.HoTenCha))
+                    {
+                        if (String.IsNullOrWhiteSpace(nguoiDung.DanTocIdCha.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.TonGiaoIdCha.ToString()))
+                        {
+                            throw new Exception("Mã tôn giáo của không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.NamSinhCha.ToString()))
+                        {
+                            throw new Exception("Năm sinh cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.DiaChiCha))
+                        {
+                            throw new Exception("Địa chỉ của cha không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.SoDienThoaiCha))
+                        {
+                            throw new Exception("Mã dân tộc của cha không được để trống");
+                        }
+                        if (!String.IsNullOrWhiteSpace(nguoiDung.DanTocIdCha.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDung.DanTocIdCha))
+                        {
+                            throw new Exception("Mã dân tộc của cha không tồn tại");
+                        }
+
+                        if (!String.IsNullOrWhiteSpace(nguoiDung.TonGiaoIdCha.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDung.TonGiaoIdCha))
+                        {
+                            throw new Exception("Mã tôn giáo của cha không tồn tại");
+                        }
+                    }
+                    if (!String.IsNullOrWhiteSpace(nguoiDung.HoTenMe))
+                    {
+                        if (String.IsNullOrWhiteSpace(nguoiDung.DanTocIdMe.ToString()))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.TonGiaoIdMe.ToString()))
+                        {
+                            throw new Exception("Mã tôn giáo của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.NamSinhMe.ToString()))
+                        {
+                            throw new Exception("Năm sinh mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.DiaChiMe))
+                        {
+                            throw new Exception("Địa chỉ của mẹ không được để trống");
+                        }
+                        if (String.IsNullOrWhiteSpace(nguoiDung.SoDienThoaiMe))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không được để trống");
+                        }
+                        if (!String.IsNullOrWhiteSpace(nguoiDung.DanTocIdMe.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDung.DanTocIdMe))
+                        {
+                            throw new Exception("Mã dân tộc của mẹ không tồn tại");
+                        }
+
+                        if (!String.IsNullOrWhiteSpace(nguoiDung.TonGiaoIdMe.ToString()) && !_context.TonGiaos.Any(item => item.Id == nguoiDung.TonGiaoIdMe))
+                        {
+                            throw new Exception("Mã tôn giáo của mẹ không tồn tại");
+                        }
+                    }
+                }
+            }
+            else if (nguoiDung.UserType == 1)
+            {
+                if (String.IsNullOrEmpty(nguoiDung.CCCD))
+                {
+                    throw new Exception("Căn cước công dân của giáo viên không được để trống");
+                }
+                else
+                {
+                    if (_context.NguoiDungs.FirstOrDefault(item => item.CCCD == nguoiDung.CCCD && item.Id != nguoiDung.Id) != null)
+                    {
+                        throw new Exception("Mã căn cước công dân đã tồn tại");
+                    }
+                }
+            }
+
+            
             user.DanTocId = nguoiDung.DanTocId;
             user.DiaChi = nguoiDung.DiaChi;
             user.Status = nguoiDung.Status;
-            user.Email = nguoiDung.Email;
             user.SoDienThoai = nguoiDung.SoDienThoai;
             user.Propeties = nguoiDung.Propeties;
             user.HoTen = nguoiDung.HoTen;
             user.NgaySinh = nguoiDung.NgaySinh;
+            user.Avatar = nguoiDung.Avatar;
+            user.CCCD = nguoiDung.CCCD;
+            user.HoTenCha = nguoiDung.HoTenCha;
+            user.NamSinhCha = nguoiDung.NamSinhCha;
+            user.DanTocIdCha = nguoiDung.DanTocIdCha;
+            user.DiaChiCha = nguoiDung.DiaChiCha;
+            user.SoDienThoaiCha = nguoiDung.SoDienThoaiCha;
+            user.TonGiaoIdCha = nguoiDung.TonGiaoIdCha;
+            user.HoTenMe = nguoiDung.HoTenMe;
+            user.NamSinhMe = nguoiDung.NamSinhMe;
+            user.DanTocIdMe = nguoiDung.DanTocIdMe;
+            user.DiaChiMe = nguoiDung.DiaChiMe;
+            user.SoDienThoaiMe = nguoiDung.SoDienThoaiMe;
+            user.TonGiaoIdMe = nguoiDung.TonGiaoIdMe;
 
-            _context.NguoiDungs.Update(nguoiDung);
+            _context.NguoiDungs.Update(user);
             _context.SaveChanges();
 
             return new JsonResult(nguoiDung);
@@ -330,6 +560,13 @@ namespace BackEndApi.Repository
                 throw new Exception("Không tìm thấy người dùng");
             }
             var dantoc = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocId);
+            var tongiao = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoId);
+            var dantocCha = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdCha);
+            var tongiaoCha = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoIdCha);
+            var dantocMe = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdMe);
+            var tongiaoMe = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoIdMe);
+
+
             ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
             {
                 Id = nguoiDung.Id,
@@ -345,8 +582,27 @@ namespace BackEndApi.Repository
                 Propeties = nguoiDung.Propeties,
                 DanTocId = nguoiDung.DanTocId,
                 TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
+                TonGiaoId = nguoiDung.TonGiaoId,
+                TenTonGiao = tongiao != null ? tongiao.TenTonGiao : "",
                 KhoaHoc = nguoiDung.KhoaHoc,
                 Avatar = nguoiDung.Avatar,
+                CCCD = nguoiDung.CCCD,
+                HoTenCha = nguoiDung.HoTenCha,
+                NamSinhCha = nguoiDung.NamSinhCha,
+                DiaChiCha = nguoiDung.DiaChiCha,
+                DanTocIdCha = nguoiDung.DanTocIdCha,
+                TenDanTocCha = dantocCha != null ? dantocCha.TenDanToc : "",
+                TonGiaoIdCha = nguoiDung.TonGiaoIdCha,
+                TenTonGiaoCha = tongiaoCha != null ? tongiaoCha.TenTonGiao : "",
+                HoTenMe = nguoiDung.HoTenMe,
+                NamSinhMe = nguoiDung.NamSinhMe,
+                DiaChiMe = nguoiDung.DiaChiMe,
+                DanTocIdMe = nguoiDung.DanTocIdMe,
+                TenDanTocMe = dantocMe != null ? dantocMe.TenDanToc : "",
+                TonGiaoIdMe = nguoiDung.TonGiaoIdMe,
+                SoDienThoaiCha = nguoiDung.SoDienThoaiCha,
+                SoDienThoaiMe = nguoiDung.SoDienThoaiMe,
+                TenTonGiaoMe = tongiaoMe != null ? tongiaoMe.TenTonGiao : "",
             };
             return new JsonResult(thongTinNguoiDung);
         }

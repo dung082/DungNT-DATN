@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
-    public class KhoaHocController
+    public class KhoaHocController : ControllerBase
     {
         private readonly ILogger<KhoaHocController> _logger;
         public IKhoaHocRepository _iKhoaHocRepository { get; set; }
