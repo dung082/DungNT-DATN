@@ -12,7 +12,7 @@ export const drawerSlice = createSlice({
         openDrawerAction: (state, action) => {
             state.visiable = true
             state.title = action.payload.title
-            state.DrawerComponent = action.payload.ModalComponent
+            state.DrawerComponent = action.payload.DrawerComponent
         }
         ,
         closeDrawerAction: (state) => {

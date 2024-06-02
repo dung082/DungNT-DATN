@@ -15,9 +15,8 @@ export default function DrawerComponent(props) {
     <Drawer
       open={visiable}
       title={title}
-      width={600}
+      width={800}
       onClose={() => {
-        console.log("tetst");
         dispatch(closeDrawerAction());
       }}
       okButtonProps={{ style: { display: "none" } }}

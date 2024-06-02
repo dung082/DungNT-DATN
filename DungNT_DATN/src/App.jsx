@@ -5,9 +5,9 @@ import DrawerComponent from "./assets/Component/DrawerComponent";
 import PopUpComponent from "./assets/Component/PopUpComponent";
 import "./assets/css/antdcustomcss.css";
 import Login from "./pages/LoginPage/Login";
-import HomePage from "./pages/PageContent/HomePage";
-import InfoPage from "./pages/PageContent/InfoPage";
 import PageTemplate from "./pages/PageTemplate/PageTemplate";
+import HomePage from "./pages/PageContent/HomePage/HomePage";
+import InfoPage from "./pages/PageContent/InfoPage/InfoPage";
 function App() {
   return (
     <>
