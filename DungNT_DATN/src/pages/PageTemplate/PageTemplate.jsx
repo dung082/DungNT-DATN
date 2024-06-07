@@ -43,7 +43,7 @@ export default function PageTemplate() {
       label: "Thông tin cá nhân",
       icons: <UserOutlined />,
       onClick: () => {
-        navigate("/Info");
+        navigate("/ThongTinCaNhan");
       },
     },
     {
@@ -102,7 +102,7 @@ export default function PageTemplate() {
               mode="inline"
               selectedKeys={
                 window.location.pathname === "/"
-                  ? "/Home"
+                  ? "/TrangChu"
                   : window.location.pathname
               }
               // defaultSelectedKeys={["1"]}
@@ -112,7 +112,7 @@ export default function PageTemplate() {
                   label: "Trang chủ",
                   icon: <HomeOutlined />,
                   onClick: () => {
-                    navigate("/Home");
+                    navigate("/TrangChu");
                   },
                 },
                 {
@@ -124,14 +124,14 @@ export default function PageTemplate() {
                       key: "/Info",
                       label: "Thông tin cá nhân",
                       onClick: () => {
-                        navigate("/Info");
+                        navigate("/ThongTinCaNhan");
                       },
                     },
                     {
                       key: "/ChangePassword",
                       label: "Đổi mật khẩu",
                       onClick: () => {
-                        navigate("/ChangePassword");
+                        navigate("/DoiMatKhau");
                       },
                     },
                   ],
@@ -142,7 +142,13 @@ export default function PageTemplate() {
                   icon: <ReadOutlined />,
                   children: [
                     { key: "7", label: "Thời khóa biểu" },
-                    { key: "8", label: "Chương trình khung" },
+                    {
+                      key: "8",
+                      label: "Chương trình học",
+                      onClick: () => {
+                        navigate("/ChuongTrinhHoc");
+                      },
+                    },
                   ],
                 },
                 {

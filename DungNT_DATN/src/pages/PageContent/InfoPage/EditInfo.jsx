@@ -18,17 +18,20 @@ import {
   tonGiaoState,
 } from "../../../reducers/tonGiaoReducer/tonGiaoReducer";
 import { openWarning } from "../../../templates/notification";
+import { getListKhoaHocAction, khoaHocState } from "../../../reducers/khoaHocReducer/khoaHocReducer";
 const { Dragger } = Upload;
 export default function EditInfo({ UserEdit }) {
   const dispatch = useDispatch();
   const { lstDanTocSelect } = useSelector(danTocState);
   const { listTonGiaoSelect } = useSelector(tonGiaoState);
+  const { listKhoaHocSelect } = useSelector(khoaHocState);
   const [namSinhCha, setNamSinhCha] = useState(dayjs(UserEdit.namSinhCha));
   const [namSinhMe, setNamSinhMe] = useState(dayjs(UserEdit.namSinhMe));
   const [linkAvtar, setLinkAvatar] = useState(UserEdit.avatar);
   useEffect(() => {
     dispatch(getListDanTocAction());
     dispatch(getListTonGiaoAction());
+    dispatch(getListKhoaHocAction())
   }, []);
 
   const refresh = () => {
@@ -49,7 +52,7 @@ export default function EditInfo({ UserEdit }) {
       email: UserEdit.email,
       tonGiaoId: UserEdit.tonGiaoId,
       danTocId: UserEdit.danTocId,
-      khoaHoc: UserEdit.khoaHoc,
+      khoaHocId: UserEdit.khoaHocId,
       propeties: UserEdit.propeties,
       avatar: UserEdit.avatar,
       cccd: UserEdit.cccd,
@@ -173,6 +176,19 @@ export default function EditInfo({ UserEdit }) {
           </Select>
         </div>
 
+        <div className="p-2">
+          <span>Khóa học</span>
+          <Select
+            disabled
+            className="w-full"
+            options={listKhoaHocSelect}
+            value={formik.values.khoaHocId}
+            onChange={(e) => {
+              formik.setFieldValue("khoaHocId", e);
+            }}
+            onBlur={formik.handleBlur}
+          />
+        </div>
         <div className="p-2">
           <span>Địa chỉ</span>
           <Input

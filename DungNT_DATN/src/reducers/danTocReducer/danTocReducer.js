@@ -37,4 +37,4 @@ export const getListDanTocAction = () => async (dispatch) => {
 
 export const { setListDanToc, setListDanTocSelect } = danTocSlice.actions;
 export const danTocState = (state) => state.dantoc;
-export default createSlice.reducer;
+export default danTocSlice.reducer;

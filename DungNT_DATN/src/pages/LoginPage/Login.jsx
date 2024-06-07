@@ -50,23 +50,27 @@ export default function Login() {
   return (
     <>
       <div
-        className="h-screen w-screen"
-        style={{
-          background:
-            "linear-gradient(#C6D7FF 100% , #F2EEFF 100% , #D2E0FF 100% , #E4DCFF 100%)",
-        }}
+        className="h-screen w-screen layout-login"
+        // style={{
+        //   background:
+        //     "linear-gradient(#C6D7FF 100% , #F2EEFF 100% , #D2E0FF 100% , #E4DCFF 100%)",
+        // }}
       >
         <div
-          className="w-[400px] bg-white absolute top-[50%] left-[50%] p-10 translate-x-[-50%] translate-y-[-50%] rounded-md"
+          className="w-[370px] bg-white absolute top-[50%] left-[50%] p-10 translate-x-[-50%] translate-y-[-50%] rounded-md"
           style={{ boxShadow: " 0px 0px 15px rgba(0, 0, 0, 0.16)" }}
         >
+          <div className="logo-login"></div>
           <div>
-            <h1 className="text-2xl text-center">ĐĂNG NHẬP</h1>
+            <h1 className="text-center">
+              Đồ án tốt nghiệp của Nguyễn Tiến Dũng
+            </h1>
           </div>
           <div className="mt-4">
             <span className="font-bold">Tên đăng nhập</span>
           </div>
           <Input
+            placeholder="Nhập tài khoản"
             onChange={(e) => {
               formik.handleChange(e);
               setStatusMessage("");
@@ -79,8 +83,8 @@ export default function Login() {
             name="username"
             className={
               formik.errors.username && formik.touched.username
-                ? "border-red-600"
-                : ""
+                ? "border-red-600 mt-1"
+                : "mt-1"
             }
           />
           {formik.errors.username && formik.touched.username && (
@@ -91,6 +95,7 @@ export default function Login() {
             <span className="font-bold">Mật khẩu</span>
           </div>
           <Input.Password
+            placeholder="Nhập mật khẩu"
             onChange={(e) => {
               formik.handleChange(e);
               setStatusMessage("");
@@ -103,8 +108,8 @@ export default function Login() {
             name="password"
             className={
               formik.errors.password && formik.touched.password
-                ? "border-red-600"
-                : ""
+                ? "border-red-600 mt-1"
+                : "mt-1"
             }
           />
           {formik.errors.password && formik.touched.password && (
@@ -116,8 +121,9 @@ export default function Login() {
               <span className="text-red-600"> {statusMessage}</span>
             )}
           </div>
+          <Button type="link" className="p-0">Quên mật khẩu</Button>
           <Button
-            className="mt-4 w-full"
+            className="mt-5 w-full h-[40px]"
             type="primary"
             onClick={() => formik.handleSubmit()}
           >

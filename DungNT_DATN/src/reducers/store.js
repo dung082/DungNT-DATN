@@ -5,6 +5,9 @@ import { infoSlice } from "./infoReducer/infoReducer";
 import { popUpSlice } from "./modalReducer/modalReducer";
 import { danTocSlice } from "./danTocReducer/danTocReducer";
 import { tonGiaoSlice } from "./tonGiaoReducer/tonGiaoReducer";
+import { khoaHocSlice } from "./khoaHocReducer/khoaHocReducer";
+import { chuongTrinhHocSlice } from "./chuongTrinhHocReducer/chuongTrinhHocReducer";
+import { khoiSlice } from "./khoiReducer/khoiReducer";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ const store = configureStore({
     drawer: drawerSlice.reducer,
     dantoc: danTocSlice.reducer,
     tongiao: tonGiaoSlice.reducer,
+    khoahoc: khoaHocSlice.reducer,
+    chuongtrinhhoc: chuongTrinhHocSlice.reducer,
+    khoi: khoiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

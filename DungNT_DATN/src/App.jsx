@@ -8,6 +8,7 @@ import Login from "./pages/LoginPage/Login";
 import PageTemplate from "./pages/PageTemplate/PageTemplate";
 import HomePage from "./pages/PageContent/HomePage/HomePage";
 import InfoPage from "./pages/PageContent/InfoPage/InfoPage";
+import ChuongTrinhHoc from "./pages/PageContent/ChuongTrinhHoc/ChuongTrinhHoc";
 function App() {
   return (
     <>
@@ -19,9 +20,10 @@ function App() {
           {/* <Route path="/" element={<AuthProvider />}> */}
           <Route path="/" element={<PageTemplate />}>
             <Route path="/" element={<HomePage />} />
-            <Route path="/Home" element={<HomePage />} />
-            <Route path="/Info" element={<InfoPage />} />
-            <Route path="/ChangePassword" element={<HomePage />} />
+            <Route path="/TrangChu" element={<HomePage />} />
+            <Route path="/ThongTinCaNhan" element={<InfoPage />} />
+            <Route path="/DoiMatKhau" element={<HomePage />} />
+            <Route path="/ChuongTrinhHoc" element={<ChuongTrinhHoc />} />
           </Route>
           {/* </Route> */}
         </Routes>

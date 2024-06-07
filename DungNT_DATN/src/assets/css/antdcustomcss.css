@@ -136,9 +136,27 @@
 }
 
 .bg-logo-menu {
-  background-image: url(../images/logotest.png);
+  background-image: url(../images/logoTemplate.png);
   background-size: cover;
   background-repeat: no-repeat;
-  width: 160px;
-  height: 60px;
+  width: 220px;
+  height: 48px;
+}
+
+.logo-login {
+  background-image: url(../images/logoLogin.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 290px;
+  height: 77px;
+}
+
+.layout-login {
+  background-image: url(../images/loginLayout.jpg);
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

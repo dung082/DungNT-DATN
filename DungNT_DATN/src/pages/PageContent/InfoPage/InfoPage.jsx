@@ -130,7 +130,7 @@ export default function InfoPage(props) {
                     <div className="mt-3">
                       <div className="">Khóa học: </div>
                       <div className=" font-bold">
-                        {userInfomation?.khoaHoc}
+                        {userInfomation?.tenKhoaHoc}
                       </div>
                     </div>
                   )}
