@@ -19,6 +19,9 @@ builder.Services.AddScoped<ITaiKhoanRepository, TaiKhoanRepository>();
 builder.Services.AddScoped<IKhoaHocRepository, KhoaHocRepository>();
 builder.Services.AddScoped<IUploadImageRepository, UploadImageRepository>();
 builder.Services.AddScoped<ITonGiaoRepository, TonGiaoRepository>();
+builder.Services.AddScoped<IMonHocRepository, MonHocRepository>();
+builder.Services.AddScoped<ICaHocRepository, CaHocRepository>();
+builder.Services.AddScoped<ITietHocRepository, TietHocRepository>();
 
 builder.Services.AddCors(options =>
 {

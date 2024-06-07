@@ -1,4 +1,4 @@
-﻿namespace BackEndApi.Interface.IRepository
+﻿namespace BackEndApi.Dto
 {
     public class TaiKhoanDto
     {

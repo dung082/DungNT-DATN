@@ -20,7 +20,7 @@ namespace BackEndData.Entities
         public string? Email { get; set; }
         public Guid TonGiaoId { get; set; }
         public Guid DanTocId { get; set; }
-        public string? KhoaHoc { get; set; }
+        public Guid? KhoaHocId { get; set; }
         public string? Propeties { get; set; }
         public string? Avatar { get; set; }
         public string? CCCD { get; set; }

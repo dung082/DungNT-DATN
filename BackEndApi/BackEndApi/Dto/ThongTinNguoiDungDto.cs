@@ -15,7 +15,8 @@
         public Guid DanTocId { get; set; }
         public string Avatar { get; set; }
         public string Propeties { get; set; }
-        public string KhoaHoc { get; set; }
+        public Guid? KhoaHocId { get; set; }
+        public string TenKhoaHoc { get; set; }
         public string TenDanToc { get; set; }
         public Guid TonGiaoId { get; set; }
         public string TenTonGiao { get; set; }

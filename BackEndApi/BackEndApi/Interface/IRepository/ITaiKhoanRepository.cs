@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BackEndApi.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Interface.IRepository
 {

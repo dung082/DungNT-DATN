@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class KhoaHocController : ControllerBase
     {
         private readonly ILogger<KhoaHocController> _logger;
@@ -24,9 +26,10 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayTatCaKhoaHoc")]
-        public Task<ActionResult<List<KhoaHoc>>> LayTatCaKhoaHoc()
+        public async Task<ActionResult<List<KhoaHoc>>> LayTatCaKhoaHoc()
         {
-            return _iKhoaHocRepository.LayTatCaKhoaHoc();
+            var listKhoaHoc = await  _iKhoaHocRepository.LayTatCaKhoaHoc();
+            return Ok(listKhoaHoc);
         }
     }
 }

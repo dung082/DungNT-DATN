@@ -22,6 +22,52 @@ namespace BackEndData.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("BackEndData.Entities.CaHoc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("TenCaHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CaHocs");
+                });
+
+            modelBuilder.Entity("BackEndData.Entities.ChiTietKyThi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("KhoiId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("KyThiId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonThiId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("ThoiGianBatDau")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ThoiGianKetThuc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ThoiGianThi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ChiTietKyThis");
+                });
+
             modelBuilder.Entity("BackEndData.Entities.ChiTietLop", b =>
                 {
                     b.Property<Guid>("Id")
@@ -92,6 +138,54 @@ namespace BackEndData.Migrations
                     b.ToTable("Khois");
                 });
 
+            modelBuilder.Entity("BackEndData.Entities.KyHoc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("NamHocId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("NgayBatDau")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("NgayKetThuc")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TenKyHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KyHocs");
+                });
+
+            modelBuilder.Entity("BackEndData.Entities.KyThi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("KyHocId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("NgayBatDau")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("NgayKetThuc")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("TenKyThi")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("KyThis");
+                });
+
             modelBuilder.Entity("BackEndData.Entities.Lop", b =>
                 {
                     b.Property<Guid>("Id")
@@ -120,7 +214,17 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid>("KhoiId")
+                        .HasColumnType("char(36)");
+
                     b.Property<string>("MaMonHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("SoTietHoc")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenHocKy")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -130,7 +234,7 @@ namespace BackEndData.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MonHocs");
+                    b.ToTable("MonHoc");
                 });
 
             modelBuilder.Entity("BackEndData.Entities.NamHoc", b =>
@@ -195,8 +299,8 @@ namespace BackEndData.Migrations
                     b.Property<string>("HoTenMe")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("KhoaHoc")
-                        .HasColumnType("longtext");
+                    b.Property<Guid?>("KhoaHocId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int?>("NamSinhCha")
                         .HasColumnType("int");
@@ -263,6 +367,61 @@ namespace BackEndData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TaiKhoans");
+                });
+
+            modelBuilder.Entity("BackEndData.Entities.ThoiKhoaBieu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("GiaoVienId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("LopId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonHocId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("NamHoc")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("NgayHoc")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("TietHocId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ThoiKhoaBieus");
+                });
+
+            modelBuilder.Entity("BackEndData.Entities.TietHoc", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CaHocId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("TenTietHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<TimeOnly>("ThoiGianBatDau")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeOnly>("ThoiGianKetThuc")
+                        .HasColumnType("time(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TietHocs");
                 });
 
             modelBuilder.Entity("BackEndData.Entities.TonGiao", b =>

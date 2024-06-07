@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class NamHocController
     {
         private readonly ILogger<NamHocController> _logger;

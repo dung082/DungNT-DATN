@@ -88,10 +88,6 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Loại tài khoản không được để trống");
             }
-            if (nguoiDungDto.UserType == 2 && String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHoc))
-            {
-                throw new Exception("Khóa học không được để trống");
-            }
             //if (String.IsNullOrWhiteSpace(nguoiDungDto.DanTocId.ToString()))
             //{
             //    throw new Exception("Dân tộc không được để trống");
@@ -124,6 +120,14 @@ namespace BackEndApi.Repository
 
             if (nguoiDungDto.UserType == 2)
             {
+                if(String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHocId.ToString()))
+                {
+                    throw new Exception("Khóa học không được để trống");
+                }
+                if (!String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHocId.ToString()) && !_context.KhoaHocs.Any(item => item.Id == nguoiDungDto.KhoaHocId))
+                {
+                    throw new Exception("Khóa học không tồn tại");
+                }
                 if (String.IsNullOrWhiteSpace(nguoiDungDto.HoTenCha) || String.IsNullOrWhiteSpace(nguoiDungDto.HoTenMe))
                 {
                     throw new Exception("Vui lòng điền thông tin cha mẹ");
@@ -219,7 +223,7 @@ namespace BackEndApi.Repository
                 HoTen = nguoiDungDto.HoTen,
                 DiaChi = nguoiDungDto.DiaChi,
                 DanTocId = nguoiDungDto.DanTocId,
-                KhoaHoc = nguoiDungDto.KhoaHoc,
+                KhoaHocId = nguoiDungDto.KhoaHocId,
                 GioiTinh = nguoiDungDto.GioiTinh,
                 NgaySinh = nguoiDungDto.NgaySinh,
                 Email = emailReverst,
@@ -338,6 +342,14 @@ namespace BackEndApi.Repository
 
             if (nguoiDung.UserType == 2)
             {
+                if (String.IsNullOrWhiteSpace(nguoiDung.KhoaHocId.ToString()))
+                {
+                    throw new Exception("Khóa học không được để trống");
+                }
+                if (!String.IsNullOrWhiteSpace(nguoiDung.KhoaHocId.ToString()) && !_context.KhoaHocs.Any(item => item.Id == nguoiDung.KhoaHocId))
+                {
+                    throw new Exception("Khóa học không tồn tại");
+                }
                 if (String.IsNullOrWhiteSpace(nguoiDung.HoTenCha) || String.IsNullOrWhiteSpace(nguoiDung.HoTenMe))
                 {
                     throw new Exception("Vui lòng điền thông tin cha mẹ");
@@ -433,6 +445,7 @@ namespace BackEndApi.Repository
             user.Propeties = nguoiDung.Propeties;
             user.HoTen = nguoiDung.HoTen;
             user.NgaySinh = nguoiDung.NgaySinh;
+            user.KhoaHocId = nguoiDung.KhoaHocId;
             user.Avatar = nguoiDung.Avatar;
             user.CCCD = nguoiDung.CCCD;
             user.HoTenCha = nguoiDung.HoTenCha;
@@ -561,6 +574,7 @@ namespace BackEndApi.Repository
             }
             var dantoc = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocId);
             var tongiao = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoId);
+            var khoahoc = _context.KhoaHocs.FirstOrDefault(item => item.Id == nguoiDung.KhoaHocId);
             var dantocCha = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdCha);
             var tongiaoCha = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoIdCha);
             var dantocMe = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdMe);
@@ -584,7 +598,8 @@ namespace BackEndApi.Repository
                 TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
                 TonGiaoId = nguoiDung.TonGiaoId,
                 TenTonGiao = tongiao != null ? tongiao.TenTonGiao : "",
-                KhoaHoc = nguoiDung.KhoaHoc,
+                KhoaHocId = nguoiDung.KhoaHocId,
+                TenKhoaHoc = khoahoc != null ? khoahoc.TenKhoaHoc : "",
                 Avatar = nguoiDung.Avatar,
                 CCCD = nguoiDung.CCCD,
                 HoTenCha = nguoiDung.HoTenCha,
