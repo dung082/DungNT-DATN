@@ -98,7 +98,6 @@ export default function EditInfo({ UserEdit }) {
       <div className="grid grid-cols-5">
         <div className="col-span-1 p-2">
           <Image
-            className="mt-3"
             width={120}
             height={180}
             src={formik.values.avatar}

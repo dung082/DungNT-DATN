@@ -5,7 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  line-height : 1.2
+  line-height: 1.2;
 }
 
 #root {
@@ -83,4 +83,47 @@
 
 .bottem-border-title {
   border-bottom: 1px solid theme(colors.line);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  max-height: 7px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #525965;
+  border: 0px none #ffffff;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #525965;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #525965;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track:active {
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

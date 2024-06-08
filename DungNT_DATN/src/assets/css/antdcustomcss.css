@@ -160,3 +160,47 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+table thead tr th {
+  background-color: theme(colors.colorthemes) !important;
+  color: white !important;
+  padding: 10px 10px !important;
+}
+
+table tbody tr td {
+  padding: 10px 10px !important;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+/* .ant-pagination {
+  list-style-type: none;
+}
+
+td.ant-table-column-sort {
+  background: transparent;
+}
+
+.ant-pagination-item-link {
+  line-height: 1;
+}
+
+.ant-table-tbody > tr > td {
+  padding: 5px;
+}
+
+.ant-table-column-sorters {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+} */
+
+.ant-pagination .ant-pagination-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

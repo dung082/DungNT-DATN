@@ -108,7 +108,7 @@ export default function PageTemplate() {
               // defaultSelectedKeys={["1"]}
               items={[
                 {
-                  key: "/Home",
+                  key: "/TrangChu",
                   label: "Trang chủ",
                   icon: <HomeOutlined />,
                   onClick: () => {
@@ -121,14 +121,14 @@ export default function PageTemplate() {
                   icon: <UserOutlined />,
                   children: [
                     {
-                      key: "/Info",
+                      key: "/ThongTinCaNhan",
                       label: "Thông tin cá nhân",
                       onClick: () => {
                         navigate("/ThongTinCaNhan");
                       },
                     },
                     {
-                      key: "/ChangePassword",
+                      key: "/DoiMatKhau",
                       label: "Đổi mật khẩu",
                       onClick: () => {
                         navigate("/DoiMatKhau");
@@ -141,12 +141,32 @@ export default function PageTemplate() {
                   label: "Học tập",
                   icon: <ReadOutlined />,
                   children: [
-                    { key: "7", label: "Thời khóa biểu" },
                     {
-                      key: "8",
+                      key: "/ChuongTrinhHoc",
                       label: "Chương trình học",
                       onClick: () => {
                         navigate("/ChuongTrinhHoc");
+                      },
+                    },
+                    {
+                      key: "/LichHocTheoTuan",
+                      label: "Thời khóa biểu",
+                      onClick: () => {
+                        navigate("/LichHocTheoTuan");
+                      },
+                    },
+                    {
+                      key: "/LichThi",
+                      label: "Lịch thi",
+                      onClick: () => {
+                        navigate("/LichThi");
+                      },
+                    },
+                    {
+                      key: "/ThongTinHocBa",
+                      label: "Học bạ",
+                      onClick: () => {
+                        navigate("/ThongTinHocBa");
                       },
                     },
                   ],
