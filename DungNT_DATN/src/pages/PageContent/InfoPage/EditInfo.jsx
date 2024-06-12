@@ -18,20 +18,27 @@ import {
   tonGiaoState,
 } from "../../../reducers/tonGiaoReducer/tonGiaoReducer";
 import { openWarning } from "../../../templates/notification";
-import { getListKhoaHocAction, khoaHocState } from "../../../reducers/khoaHocReducer/khoaHocReducer";
+import {
+  getListKhoaHocAction,
+  khoaHocState,
+} from "../../../reducers/khoaHocReducer/khoaHocReducer";
 const { Dragger } = Upload;
 export default function EditInfo({ UserEdit }) {
   const dispatch = useDispatch();
   const { lstDanTocSelect } = useSelector(danTocState);
   const { listTonGiaoSelect } = useSelector(tonGiaoState);
   const { listKhoaHocSelect } = useSelector(khoaHocState);
-  const [namSinhCha, setNamSinhCha] = useState(dayjs(UserEdit.namSinhCha));
-  const [namSinhMe, setNamSinhMe] = useState(dayjs(UserEdit.namSinhMe));
+  const [namSinhCha, setNamSinhCha] = useState(
+    UserEdit.namSinhCha ? dayjs(UserEdit.namSinhCha) : dayjs()
+  );
+  const [namSinhMe, setNamSinhMe] = useState(
+    UserEdit.namSinhMe ? dayjs(UserEdit.namSinhMe) : dayjs()
+  );
   const [linkAvtar, setLinkAvatar] = useState(UserEdit.avatar);
   useEffect(() => {
     dispatch(getListDanTocAction());
     dispatch(getListTonGiaoAction());
-    dispatch(getListKhoaHocAction())
+    dispatch(getListKhoaHocAction());
   }, []);
 
   const refresh = () => {

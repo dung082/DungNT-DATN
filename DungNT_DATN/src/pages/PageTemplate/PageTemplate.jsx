@@ -116,25 +116,12 @@ export default function PageTemplate() {
                   },
                 },
                 {
-                  key: "sub2",
-                  label: "Thông tin chung",
+                  key: "/ThongTinCaNhan",
+                  label: "Thông tin cá nhân",
+                  onClick: () => {
+                    navigate("/ThongTinCaNhan");
+                  },
                   icon: <UserOutlined />,
-                  children: [
-                    {
-                      key: "/ThongTinCaNhan",
-                      label: "Thông tin cá nhân",
-                      onClick: () => {
-                        navigate("/ThongTinCaNhan");
-                      },
-                    },
-                    {
-                      key: "/DoiMatKhau",
-                      label: "Đổi mật khẩu",
-                      onClick: () => {
-                        navigate("/DoiMatKhau");
-                      },
-                    },
-                  ],
                 },
                 {
                   key: "sub3",
@@ -167,6 +154,13 @@ export default function PageTemplate() {
                       label: "Học bạ",
                       onClick: () => {
                         navigate("/ThongTinHocBa");
+                      },
+                    },
+                    {
+                      key: "/DanhSachLopHoc",
+                      label: "Học bạ",
+                      onClick: () => {
+                        navigate("/DanhSachLopHoc");
                       },
                     },
                   ],
