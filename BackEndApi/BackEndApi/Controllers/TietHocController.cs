@@ -27,7 +27,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemTietHoc")]
-        public IActionResult ThemTietHoc(TietHocDto tietHocDto)
+        public IActionResult ThemTietHoc([FromBody] TietHocDto tietHocDto)
         {
             return _iTietHocRepository.ThemTietHoc(tietHocDto);
         }

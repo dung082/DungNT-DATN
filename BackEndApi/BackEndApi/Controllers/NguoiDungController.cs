@@ -37,7 +37,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemNguoiDung")]
-        public IActionResult ThemNguoiDung(NguoiDungDto nguoiDungDto)
+        public IActionResult ThemNguoiDung([FromBody] NguoiDungDto nguoiDungDto)
         {
             var result = _iNguoiDungRepository.ThemNguoiDung(nguoiDungDto);
             return Ok(result);
@@ -45,7 +45,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("SuaNguoiDung")]
-        public IActionResult SuaNguoiDung(NguoiDung nguoiDung)
+        public IActionResult SuaNguoiDung([FromBody] NguoiDung nguoiDung)
         {
             var result = _iNguoiDungRepository.SuaNguoiDung(nguoiDung);
             return Ok(result);

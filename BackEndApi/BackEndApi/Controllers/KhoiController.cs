@@ -29,14 +29,14 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemKhoi")]
-        public IActionResult ThemKhoi(KhoiDto khoiDto)
+        public IActionResult ThemKhoi([FromBody] KhoiDto khoiDto)
         {
             return _ikhoiRepository.ThemKhoi(khoiDto);
         }
 
         [HttpPost]
         [Route("SuaKhoi")]
-        public IActionResult SuaKhoi(Khoi khoi)
+        public IActionResult SuaKhoi([FromBody] Khoi khoi)
         {
             return _ikhoiRepository.SuaKhoi(khoi);
         }

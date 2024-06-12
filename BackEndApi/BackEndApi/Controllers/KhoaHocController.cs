@@ -19,7 +19,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemKhoaHoc")]
-        public IActionResult ThemKhoaHoc(KhoaHocDto khoaHocDto)
+        public IActionResult ThemKhoaHoc([FromBody] KhoaHocDto khoaHocDto)
         {
             return _iKhoaHocRepository.ThemKhoaHoc(khoaHocDto);
         }

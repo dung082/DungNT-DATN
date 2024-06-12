@@ -27,7 +27,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemCaHoc")]
-        public IActionResult ThemCaHoc(CaHocDto caHocDto)
+        public IActionResult ThemCaHoc([FromBody] CaHocDto caHocDto)
         {
             return _iCaHocRepository.ThemCaHoc(caHocDto);
         }

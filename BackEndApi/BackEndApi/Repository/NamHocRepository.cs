@@ -15,6 +15,11 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
+        public async Task<ActionResult<List<NamHoc>>> LayTatCaNamHoc()
+        {
+            return await _context.NamHocs.ToListAsync();
+        }
+
         //public async Task<ActionResult<List<NamHoc>>> LayNamHocTheoKhoaHocId(Guid khoaHocId)
         //{
         //    return await _context.NamHocs.Where(item => item.KhoaHoc == khoaHocId).ToListAsync();

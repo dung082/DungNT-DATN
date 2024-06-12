@@ -474,7 +474,7 @@ namespace BackEndApi.Repository
             nameRevert = RemoveSign4VietnameseString(NameSplit[NameSplit.Length - 1]).ToLower();
             for (int i = 0; i < NameSplit.Length - 1; i++)
             {
-                nameRevert += NameSplit[i].Substring(0, 1).ToLower();
+                nameRevert += RemoveSign4VietnameseString(NameSplit[i].Substring(0, 1).ToLower()).ToLower(); 
             }
             if (userType == 0)
             {

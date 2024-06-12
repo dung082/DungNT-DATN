@@ -20,14 +20,14 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemHocSinhVaoLop")]
-        public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto)
+        public IActionResult ThemHocSinhVaoLop([FromBody] ChiTietLopHocDto chiTietLopHocDto)
         {
             return _iChiTietLopHocRepository.ThemHocSinhVaoLop(chiTietLopHocDto);
         }
 
         [HttpPost]
         [Route("ChuyenLop")]
-        public IActionResult ChuyenLop(ChiTietLopHocDto chiTietLopHocDto)
+        public IActionResult ChuyenLop([FromBody] ChiTietLopHocDto chiTietLopHocDto)
         {
             return _iChiTietLopHocRepository.ChuyenLop(chiTietLopHocDto);
         }

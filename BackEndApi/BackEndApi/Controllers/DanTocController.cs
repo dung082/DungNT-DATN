@@ -27,7 +27,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemDanToc")]
-        public IActionResult ThemDanToc(DanTocDto dantocDto)
+        public IActionResult ThemDanToc([FromBody] DanTocDto dantocDto)
         {
             return _idantocRepository.ThemDanToc(dantocDto);
         }

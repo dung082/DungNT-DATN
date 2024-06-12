@@ -20,7 +20,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemTonGiao")]
-        public IActionResult ThemTonGiao(TonGiaoDto tonGiaoDto)
+        public IActionResult ThemTonGiao([FromBody] TonGiaoDto tonGiaoDto)
         {
             return _iTonGiaoRepository.ThemTonGiao(tonGiaoDto);
         }

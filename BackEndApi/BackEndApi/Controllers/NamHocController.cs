@@ -19,16 +19,16 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemNamHoc")]
-        public IActionResult ThemNamHoc(NamHocDto namHocDto)
+        public IActionResult ThemNamHoc([FromBody] NamHocDto namHocDto)
         {
             return _iNamHocRepository.ThemNamHoc(namHocDto);
         }
 
-        //[HttpGet]
-        //[Route("LayNamHocTheoKhoaHocId")]
-        //public Task<ActionResult<List<NamHoc>>> LayNamHocTheoKhoaHocId(Guid khoaHocId)
-        //{
-        //    return _iNamHocRepository.LayNamHocTheoKhoaHocId(khoaHocId);
-        //}
+        [HttpGet]
+        [Route("LayTatCaNamHoc")]
+        public Task<ActionResult<List<NamHoc>>> LayTatCaNamHoc()
+        {
+            return _iNamHocRepository.LayTatCaNamHoc();
+        }
     }
 }

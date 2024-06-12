@@ -4,7 +4,7 @@
     {
         public string TenTietHoc { get; set; }
         public Guid CaHocId { get; set; }
-        public TimeOnly ThoiGianBatDau { get; set; } = new TimeOnly();
-        public TimeOnly ThoiGianKetThuc { get; set; } = new TimeOnly();
+        public string ThoiGianBatDau { get; set; } 
+        public string ThoiGianKetThuc { get; set; }
     }
 }

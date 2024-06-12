@@ -11,7 +11,7 @@ namespace BackEndData.Entities
         public Guid Id { get; set; }
         public string TenTietHoc {  get; set; }
         public Guid CaHocId { get; set; }
-        public TimeOnly ThoiGianBatDau { get; set; }
-        public TimeOnly ThoiGianKetThuc { get; set; }
+        public string ThoiGianBatDau { get; set; }
+        public string ThoiGianKetThuc { get; set; }
     }
 }

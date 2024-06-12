@@ -29,7 +29,7 @@ namespace BackEndApi.Controllers
         }
         [HttpPost]
         [Route("ThemLop")]
-        public async Task<ActionResult> ThemLop(LopDto lopDto)
+        public async Task<ActionResult> ThemLop([FromBody] LopDto lopDto)
         {
 
             if (String.IsNullOrEmpty(lopDto.MaLop))
@@ -50,7 +50,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("SuaLop")]
-        public IActionResult SuaLop(Lop lop)
+        public IActionResult SuaLop([FromBody] Lop lop)
         {
             return _ilopRepository.SuaLop(lop);
         }

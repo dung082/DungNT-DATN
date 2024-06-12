@@ -15,16 +15,46 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public async Task<ActionResult<List<MonHoc>>> LayMonHocTheoKhoi(Guid? KhoiId)
+        public async Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(Guid? KhoiId)
         {
+            List<MonHocTheoKhoiDto> listMonHocTheoKhoi = new List<MonHocTheoKhoiDto>();
             if (String.IsNullOrWhiteSpace(KhoiId.ToString()))
             {
                 var khoi = await _context.Khois.FirstOrDefaultAsync(item => item.MaKhoi.ToLower().Contains("K10".ToLower()));
                 var listMonHocDefault = await _context.MonHocs.Where(item => item.KhoiId == khoi.Id).ToListAsync();
-                return listMonHocDefault;
+                foreach (var monHoc in listMonHocDefault)
+                {
+                    MonHocTheoKhoiDto monHocTheoKhoiDto = new MonHocTheoKhoiDto()
+                    {
+                        Id = monHoc.Id,
+                        MaMonHoc = monHoc.MaMonHoc,
+                        TenMonHoc = monHoc.TenMonHoc,
+                        KhoiId = monHoc.KhoiId,
+                        TenKhoi = khoi.TenKhoi,
+                        TenHocKy = monHoc.TenHocKy,
+                        SoTietHoc = monHoc.SoTietHoc,
+                    };
+                    listMonHocTheoKhoi.Add(monHocTheoKhoiDto);
+                }
+                return listMonHocTheoKhoi;
             }
             var listMonHoc = await _context.MonHocs.Where(item => item.KhoiId == KhoiId).ToListAsync();
-            return listMonHoc;
+            foreach (var monHoc in listMonHoc)
+            {
+                var khoi = await _context.Khois.FirstOrDefaultAsync(item => item.Id == monHoc.KhoiId);
+                MonHocTheoKhoiDto monHocTheoKhoiDto = new MonHocTheoKhoiDto()
+                {
+                    Id = monHoc.Id,
+                    MaMonHoc = monHoc.MaMonHoc,
+                    TenMonHoc = monHoc.TenMonHoc,
+                    KhoiId = monHoc.KhoiId,
+                    TenKhoi = khoi.TenKhoi,
+                    TenHocKy = monHoc.TenHocKy,
+                    SoTietHoc = monHoc.SoTietHoc,
+                };
+                listMonHocTheoKhoi.Add(monHocTheoKhoiDto);
+            }
+            return listMonHocTheoKhoi;
         }
 
         public async Task<ActionResult<List<MonHoc>>> LayTatCaMonHoc()
