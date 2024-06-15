@@ -8,7 +8,7 @@ namespace BackEndApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class ChiTietLopHocController
+    public class ChiTietLopHocController : ControllerBase
     {
         private readonly ILogger<ChiTietLopHocController> _logger;
         public IChiTietLopHocRepository _iChiTietLopHocRepository { get; set; }
@@ -30,6 +30,14 @@ namespace BackEndApi.Controllers
         public IActionResult ChuyenLop([FromBody] ChiTietLopHocDto chiTietLopHocDto)
         {
             return _iChiTietLopHocRepository.ChuyenLop(chiTietLopHocDto);
+        }
+
+        [HttpGet]
+        [Route("LayHocSinhTrongLop")]
+        public async Task<ActionResult> LayHocSinhTrongLop(Guid? namHocId, Guid? lopId)
+        {
+            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLop( namHocId , lopId);
+            return Ok(hocSinh);
         }
 
 

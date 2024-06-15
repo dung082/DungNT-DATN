@@ -3,6 +3,7 @@ using BackEndApi.Interface.IRepository;
 using BackEndData;
 using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 
 namespace BackEndApi.Repository
@@ -58,6 +59,56 @@ namespace BackEndApi.Repository
 
         }
 
+        public async Task<ActionResult> LayHocSinhTrongLop(Guid? namHocId, Guid? lopId)
+        {
+            string namhoc = "";
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            if (month >= 8)
+            {
+                namhoc = year + "-" + (year + 1);
+            }
+            else
+            {
+                namhoc = (year - 1) + "-" + year;
+            }
+            NamHoc namHoc = new NamHoc();
+            Lop lopHoc = new Lop();
+            if (String.IsNullOrWhiteSpace(namHocId.ToString()))
+            {
+                namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
+            }
+            else
+            {
+                namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.Id == namHocId);
+            }
+
+            if (String.IsNullOrWhiteSpace(lopId.ToString()))
+            {
+                throw new Exception("Mã lớp không được để trống");
+            }
+            else
+            {
+                lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == lopId);
+            }
+
+            
+            var listCtl = await _context.ChiTietLops.Where(item => item.NamHocId == namHoc.Id && item.LopId == lopId).ToListAsync();
+            List<NguoiDung> listNguoiDung = new List<NguoiDung>();
+            foreach (var hs in listCtl)
+            {
+                var nguoiDungHS = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == hs.Username && item.UserType == 2);
+                listNguoiDung.Add(nguoiDungHS);
+            }
+            var lstNguoiDungSort = listNguoiDung.OrderBy(u => u.HoTen).ToList();
+            var result = new
+            {
+                lopHocHienTai = lopHoc,
+                listHocSinh = lstNguoiDungSort
+            };
+            return new JsonResult(result);
+        }
+
         public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto)
         {
             if (String.IsNullOrWhiteSpace(chiTietLopHocDto.LopId.ToString()))
@@ -99,6 +150,11 @@ namespace BackEndApi.Repository
             _context.ChiTietLops.Add(ctl);
             _context.SaveChanges();
             return new JsonResult(ctl);
+        }
+
+        public Task<ActionResult> TimKiemHocSinhTrongLop(string username, Guid? namHocId, Guid? lopId)
+        {
+            throw new NotImplementedException();
         }
 
         public IActionResult XoaHocSinhTrongLop(Guid chiTietLopHocId)

@@ -19,7 +19,7 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login(TaiKhoanDto taiKhoanDto)
+        public async Task<ActionResult> Login(TaiKhoanDto taiKhoanDto)
         {
             if(String.IsNullOrWhiteSpace(taiKhoanDto.Username))
             {
@@ -29,7 +29,7 @@ namespace BackEndApi.Controllers
             {
                 throw new Exception("Mật khẩu không được để trống");
             }
-            var result = _iTaiKhoanRepository.Login(taiKhoanDto);
+            var result = await _iTaiKhoanRepository.Login(taiKhoanDto);
             return Ok(result);
         }
     }

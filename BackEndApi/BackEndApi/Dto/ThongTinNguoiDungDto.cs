@@ -19,6 +19,11 @@
         public string TenKhoaHoc { get; set; }
         public string TenDanToc { get; set; }
         public Guid TonGiaoId { get; set; }
+        public Guid? NamHocIdHienTai { get; set; }
+        public string? TenNamHocHienTai { get; set; }
+        public Guid? LopIdHienTai { get; set; }
+        public string? MaLopHienTai {  get; set; }
+        public string? TenLopHienTai { get; set; }
         public string TenTonGiao { get; set; }
         public string? CCCD { get; set; }
         public string? HoTenCha { get; set; }

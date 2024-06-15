@@ -561,25 +561,38 @@ namespace BackEndApi.Repository
             return nguoiDung;
         }
 
-        public IActionResult LayThongTinNguoiDung(Guid id)
+        public async Task<ActionResult> LayThongTinNguoiDung(Guid id)
         {
+            string namhoc = "";
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            if (month >= 8)
+            {
+                namhoc = year + "-" + (year + 1);
+            }
+            else
+            {
+                namhoc = (year - 1) + "-" + year;
+            }
             if (String.IsNullOrWhiteSpace(id.ToString()))
             {
                 throw new Exception("Mã người dùng không được để trống");
             }
-            NguoiDung nguoiDung = _context.NguoiDungs.FirstOrDefault(item => item.Id == id);
+            NguoiDung nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Id == id);
             if (nguoiDung == null)
             {
                 throw new Exception("Không tìm thấy người dùng");
             }
-            var dantoc = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocId);
-            var tongiao = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoId);
-            var khoahoc = _context.KhoaHocs.FirstOrDefault(item => item.Id == nguoiDung.KhoaHocId);
-            var dantocCha = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdCha);
-            var tongiaoCha = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoIdCha);
-            var dantocMe = _context.DanTocs.FirstOrDefault(item => item.Id == nguoiDung.DanTocIdMe);
-            var tongiaoMe = _context.TonGiaos.FirstOrDefault(item => item.Id == nguoiDung.TonGiaoIdMe);
-
+            var dantoc = await _context.DanTocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.DanTocId);
+            var tongiao = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoId);
+            var khoahoc = await _context.KhoaHocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.KhoaHocId);
+            var dantocCha = await _context.DanTocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.DanTocIdCha);
+            var tongiaoCha = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoIdCha);
+            var dantocMe = await _context.DanTocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.DanTocIdMe);
+            var tongiaoMe = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoIdMe);
+            var namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
+            var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHocId == namHoc.Id && item.Username == nguoiDung.Username);
+            var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
 
             ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
             {
@@ -598,6 +611,11 @@ namespace BackEndApi.Repository
                 TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
                 TonGiaoId = nguoiDung.TonGiaoId,
                 TenTonGiao = tongiao != null ? tongiao.TenTonGiao : "",
+                NamHocIdHienTai = namHoc != null ? namHoc.Id : null,
+                TenNamHocHienTai  = namHoc != null ? namHoc.NameHoc : "",
+                LopIdHienTai = lop != null ? lop.Id : null,
+                MaLopHienTai = lop != null ? lop.MaLop : "",
+                TenLopHienTai = lop != null ? lop.TenLop : "",
                 KhoaHocId = nguoiDung.KhoaHocId,
                 TenKhoaHoc = khoahoc != null ? khoahoc.TenKhoaHoc : "",
                 Avatar = nguoiDung.Avatar,
