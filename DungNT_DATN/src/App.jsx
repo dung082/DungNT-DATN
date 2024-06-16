@@ -31,7 +31,7 @@ function App() {
             <Route path="/LichHocTheoTuan" element={<LichHocTheoTuan />} />
             <Route path="/LichThi" element={<LichThi />} />
             <Route path="/ThongTinHocBa" element={<ThongTinHocBa />} />
-            <Route path="/DanhSachLopHoc" element={<DanhSachLopHoc />} />
+            <Route path="/DanhSachHocSinh" element={<DanhSachLopHoc />} />
           </Route>
           {/* </Route> */}
         </Routes>

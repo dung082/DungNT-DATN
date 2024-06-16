@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const CHUONG_TRINH_KHUNG_TABLE_CONFIG = [
   {
     title: "STT",
@@ -23,5 +25,47 @@ export const CHUONG_TRINH_KHUNG_TABLE_CONFIG = [
     title: "Số tiết học",
     dataIndex: "soTietHoc",
     key: "soTietHoc",
+  },
+];
+
+export const CHI_TIET_LOP_HOC_COLUMN_CONFIG = [
+  {
+    title: "STT",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
+    title: "Họ và tên",
+    dataIndex: "hoTen",
+    key: "hoTen",
+  },
+  {
+    title: "Giới tính",
+    dataIndex: "gioiTinh",
+    key: "gioiTinh",
+    render: (_, record) => {
+      if (record.gioiTinh === 0) {
+        return "Nữ";
+      } else {
+        return "Nam";
+      }
+    },
+  },
+  {
+    title: "Ngày sinh",
+    dataIndex: "ngaySinh",
+    key: "ngaySinh",
+    render: (_, record) => {
+      try {
+        return dayjs(record.ngaySinh).format("DD/MM/YYYY");
+      } catch (err) {
+        return record.ngaySinh;
+      }
+    },
+  },
+  {
+    title: "Địa chỉ",
+    dataIndex: "diaChi",
+    key: "diaChi",
   },
 ];

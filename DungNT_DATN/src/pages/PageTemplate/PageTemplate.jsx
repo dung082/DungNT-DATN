@@ -21,7 +21,6 @@ export default function PageTemplate() {
       navigate("/Login");
       // }
     }
-    console.log(userInfo);
   }, []);
 
   const handleMenuClick = (e) => {
@@ -157,10 +156,10 @@ export default function PageTemplate() {
                       },
                     },
                     {
-                      key: "/DanhSachLopHoc",
-                      label: "Học bạ",
+                      key: "/DanhSachHocSinh",
+                      label: "Danh sách học sinh",
                       onClick: () => {
-                        navigate("/DanhSachLopHoc");
+                        navigate("/DanhSachHocSinh");
                       },
                     },
                   ],

@@ -36,9 +36,9 @@ export default function Login() {
           console.log(response);
           sessionStorage.setItem(
             "userInfo",
-            JSON.stringify(response.data.value)
+            JSON.stringify(response.data.value.value)
           );
-          dispatch(setUserInfo(response.data.value));
+          dispatch(setUserInfo(response.data.value.value));
           navigate("/");
         }
       } catch (err) {
