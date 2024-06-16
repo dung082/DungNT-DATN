@@ -34,9 +34,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayHocSinhTrongLop")]
-        public async Task<ActionResult> LayHocSinhTrongLop(Guid? namHocId, Guid? lopId)
+        public async Task<ActionResult> LayHocSinhTrongLop(string username)
         {
-            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLop( namHocId , lopId);
+            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLop(username);
             return Ok(hocSinh);
         }
 

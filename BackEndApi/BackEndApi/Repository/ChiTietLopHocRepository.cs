@@ -59,7 +59,7 @@ namespace BackEndApi.Repository
 
         }
 
-        public async Task<ActionResult> LayHocSinhTrongLop(Guid? namHocId, Guid? lopId)
+        public async Task<ActionResult> LayHocSinhTrongLop(string username)
         {
             string namhoc = "";
             var month = DateTime.Now.Month;
@@ -74,26 +74,32 @@ namespace BackEndApi.Repository
             }
             NamHoc namHoc = new NamHoc();
             Lop lopHoc = new Lop();
-            if (String.IsNullOrWhiteSpace(namHocId.ToString()))
+            ChiTietLop ctl = new ChiTietLop();
+            namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
+            if (String.IsNullOrWhiteSpace(username))
             {
-                namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
+                throw new Exception("Cần truyền tên đăng nhập");
             }
             else
             {
-                namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.Id == namHocId);
+                ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHocId == namHoc.Id && item.Username == username);
             }
 
-            if (String.IsNullOrWhiteSpace(lopId.ToString()))
+            if (ctl == null)
             {
-                throw new Exception("Mã lớp không được để trống");
-            }
-            else
-            {
-                lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == lopId);
+                var resultNone = new
+                {
+                    lopHocHienTai = "Tài khoản hiện tại chưa được phân lớp",
+                    namHocHienTai = namHoc,
+                    listHocSinh = new List<NguoiDung>(),
+                };
+                return new JsonResult(resultNone);
             }
 
-            
-            var listCtl = await _context.ChiTietLops.Where(item => item.NamHocId == namHoc.Id && item.LopId == lopId).ToListAsync();
+            lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
+            var listCtl = await _context.ChiTietLops.Where(item => item.NamHocId == namHoc.Id && item.LopId == ctl.LopId).ToListAsync();
+
+
             List<NguoiDung> listNguoiDung = new List<NguoiDung>();
             foreach (var hs in listCtl)
             {
@@ -104,6 +110,7 @@ namespace BackEndApi.Repository
             var result = new
             {
                 lopHocHienTai = lopHoc,
+                namHocHienTai = namHoc,
                 listHocSinh = lstNguoiDungSort
             };
             return new JsonResult(result);

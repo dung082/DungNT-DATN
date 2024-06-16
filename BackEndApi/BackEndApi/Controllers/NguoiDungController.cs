@@ -69,9 +69,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayThongTinNguoiDung")]
-        public IActionResult LayThongTinNguoiDung(Guid id)
+        public async Task<ActionResult> LayThongTinNguoiDung(Guid id)
         {
-            var nguoiDung = _iNguoiDungRepository.LayThongTinNguoiDung(id);
+            var nguoiDung = await _iNguoiDungRepository.LayThongTinNguoiDung(id);
             return Ok(nguoiDung);
         }
 
