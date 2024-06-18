@@ -4,6 +4,6 @@
     {
         public Guid LopId { get; set; }
         public string Username { get; set; }
-        public Guid NamHocId { get; set; }
+        public string NamHoc{ get; set; }
     }
 }

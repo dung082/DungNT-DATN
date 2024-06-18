@@ -15,13 +15,13 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public async Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(Guid? KhoiId)
+        public async Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(int khoi)
         {
             List<MonHocTheoKhoiDto> listMonHocTheoKhoi = new List<MonHocTheoKhoiDto>();
-            if (String.IsNullOrWhiteSpace(KhoiId.ToString()))
+            if (String.IsNullOrWhiteSpace(khoi.ToString()) || khoi == 0)
             {
-                var khoi = await _context.Khois.FirstOrDefaultAsync(item => item.MaKhoi.ToLower().Contains("K10".ToLower()));
-                var listMonHocDefault = await _context.MonHocs.Where(item => item.KhoiId == khoi.Id).ToListAsync();
+                //var khoi = await _context.Khois.FirstOrDefaultAsync(item => item.MaKhoi.ToLower().Contains("K10".ToLower()));
+                var listMonHocDefault = await _context.MonHocs.Where(item => item.Khoi == 10).ToListAsync();
                 foreach (var monHoc in listMonHocDefault)
                 {
                     MonHocTheoKhoiDto monHocTheoKhoiDto = new MonHocTheoKhoiDto()
@@ -29,8 +29,7 @@ namespace BackEndApi.Repository
                         Id = monHoc.Id,
                         MaMonHoc = monHoc.MaMonHoc,
                         TenMonHoc = monHoc.TenMonHoc,
-                        KhoiId = monHoc.KhoiId,
-                        TenKhoi = khoi.TenKhoi,
+                        Khoi = khoi,
                         TenHocKy = monHoc.TenHocKy,
                         SoTietHoc = monHoc.SoTietHoc,
                     };
@@ -38,17 +37,15 @@ namespace BackEndApi.Repository
                 }
                 return listMonHocTheoKhoi;
             }
-            var listMonHoc = await _context.MonHocs.Where(item => item.KhoiId == KhoiId).ToListAsync();
+            var listMonHoc = await _context.MonHocs.Where(item => item.Khoi == khoi).ToListAsync();
             foreach (var monHoc in listMonHoc)
             {
-                var khoi = await _context.Khois.FirstOrDefaultAsync(item => item.Id == monHoc.KhoiId);
                 MonHocTheoKhoiDto monHocTheoKhoiDto = new MonHocTheoKhoiDto()
                 {
                     Id = monHoc.Id,
                     MaMonHoc = monHoc.MaMonHoc,
                     TenMonHoc = monHoc.TenMonHoc,
-                    KhoiId = monHoc.KhoiId,
-                    TenKhoi = khoi.TenKhoi,
+                    Khoi = monHoc.Khoi,
                     TenHocKy = monHoc.TenHocKy,
                     SoTietHoc = monHoc.SoTietHoc,
                 };
@@ -73,9 +70,9 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Tên môn học không được để trống");
             }
-            if (String.IsNullOrWhiteSpace(monHocDto.KhoiId.ToString()))
+            if (String.IsNullOrWhiteSpace(monHocDto.Khoi.ToString()))
             {
-                throw new Exception("Mã khối học không được để trống");
+                throw new Exception("Khối học không được để trống");
             }
             if (String.IsNullOrWhiteSpace(monHocDto.TenHocKy))
             {
@@ -92,7 +89,7 @@ namespace BackEndApi.Repository
                 MaMonHoc = monHocDto.MaMonHoc,
                 TenMonHoc = monHocDto.TenMonHoc,
                 TenHocKy = monHocDto.TenHocKy,
-                KhoiId = monHocDto.KhoiId,
+                Khoi = monHocDto.Khoi,
                 SoTietHoc = monHocDto.SoTietHoc,
             };
 

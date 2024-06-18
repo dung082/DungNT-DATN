@@ -17,6 +17,18 @@ namespace BackEndApi.Repository
 
         public async Task<IActionResult> ThemLop(LopDto lopDto)
         {
+            if (String.IsNullOrWhiteSpace(lopDto.MaLop))
+            {
+                throw new Exception("Mã lớp không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(lopDto.TenLop))
+            {
+                throw new Exception("Tên lớp không được để trống");
+            }
+            if (String.IsNullOrWhiteSpace(lopDto.Khoi.ToString()))
+            {
+                throw new Exception("Khối không được để trống");
+            }
             if (_context.Lops.Any(item => item.MaLop == lopDto.MaLop))
             {
                 throw new Exception("Mã lớp đã tồn tại");
@@ -25,16 +37,13 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Tên lớp đã tồn tại");
             }
-            if (!_context.Khois.Any(item => item.Id == lopDto.IdKhoi))
-            {
-                throw new Exception("Mã lớp không tồn tại");
-            }
+
             Lop lop = new Lop()
             {
                 Id = new Guid(),
                 TenLop = lopDto.TenLop,
                 MaLop = lopDto.MaLop,
-                IdKhoi = lopDto.IdKhoi,
+                Khoi = lopDto.Khoi,
             };
 
             _context.Lops.Add(lop);
@@ -80,7 +89,7 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Mã lớp không được để trống");
             }
-            if (String.IsNullOrWhiteSpace(lop.IdKhoi.ToString()))
+            if (String.IsNullOrWhiteSpace(lop.Khoi.ToString()))
             {
                 throw new Exception("Mã khối không được để trống");
             }
@@ -94,7 +103,7 @@ namespace BackEndApi.Repository
             }
             lopEx.MaLop = lop.MaLop;
             lopEx.TenLop = lop.TenLop;
-            lopEx.IdKhoi = lop.IdKhoi;
+            lopEx.Khoi = lop.Khoi;
             _context.Lops.Update(lopEx);
             _context.SaveChanges();
             return new JsonResult(lopEx);

@@ -10,7 +10,7 @@ namespace BackEndData.Entities
     {
         public Guid Id { get; set; }
         public Guid KyThiId { get; set; }
-        public Guid KhoiId { get; set; }
+        public int Khoi{ get; set; }
         public Guid MonThiId { get; set; }
         public int ThoiGianThi { set; get; }
         public string ThoiGianBatDau {  get; set; }

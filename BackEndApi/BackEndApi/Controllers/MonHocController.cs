@@ -26,7 +26,7 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayTatCaMonHoc")]
-        public async Task<ActionResult<List<KhoaHoc>>> LayTatCaMonHoc()
+        public async Task<ActionResult<List<MonHoc>>> LayTatCaMonHoc()
         {
             var listKhoaHoc = await _iMonHocRepository.LayTatCaMonHoc();
             return Ok(listKhoaHoc);
@@ -34,9 +34,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayMonHocTheoKhoi")]
-        public async Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(Guid? KhoiId)
+        public async Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(int khoi)
         {
-            var listKhoaHoc = await _iMonHocRepository.LayMonHocTheoKhoi(KhoiId);
+            var listKhoaHoc = await _iMonHocRepository.LayMonHocTheoKhoi(khoi);
             return Ok(listKhoaHoc);
         }
     }

@@ -29,6 +29,7 @@ namespace BackEndData
         public DbSet<CaHoc> CaHocs { get; set; }
         public DbSet<TietHoc> TietHocs { get; set; }
         public DbSet<ThoiKhoaBieu> ThoiKhoaBieus { get; set; }
+        public DbSet<HocBa> HocBas { get; set; }
 
     }
 }

@@ -590,8 +590,7 @@ namespace BackEndApi.Repository
             var tongiaoCha = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoIdCha);
             var dantocMe = await _context.DanTocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.DanTocIdMe);
             var tongiaoMe = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoIdMe);
-            var namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
-            var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHocId == namHoc.Id && item.Username == nguoiDung.Username);
+            var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == namhoc && item.Username == nguoiDung.Username);
             var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
 
             ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
@@ -611,8 +610,7 @@ namespace BackEndApi.Repository
                 TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
                 TonGiaoId = nguoiDung.TonGiaoId,
                 TenTonGiao = tongiao != null ? tongiao.TenTonGiao : "",
-                NamHocIdHienTai = namHoc != null ? namHoc.Id : null,
-                TenNamHocHienTai  = namHoc != null ? namHoc.NameHoc : "",
+                NamHocIdHienTai = namhoc,
                 LopIdHienTai = lop != null ? lop.Id : null,
                 MaLopHienTai = lop != null ? lop.MaLop : "",
                 TenLopHienTai = lop != null ? lop.TenLop : "",

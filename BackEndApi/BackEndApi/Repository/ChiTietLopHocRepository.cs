@@ -26,9 +26,9 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Tên tài khoản không được để trống");
             }
-            if (String.IsNullOrWhiteSpace(chiTietLopHocDto.NamHocId.ToString()))
+            if (String.IsNullOrWhiteSpace(chiTietLopHocDto.NamHoc))
             {
-                throw new Exception("Mã năm học không được để trống");
+                throw new Exception("Năm học không được để trống");
             }
             if (!_context.Lops.Any(item => item.Id == chiTietLopHocDto.LopId))
             {
@@ -38,15 +38,11 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Không tồn tại tên tài khoản");
             }
-            if (!_context.NamHocs.Any(item => item.Id == chiTietLopHocDto.NamHocId))
-            {
-                throw new Exception("Không tồn tại mã năm học");
-            }
-            if (_context.ChiTietLops.Any(item => item.LopId == chiTietLopHocDto.LopId && item.Username == chiTietLopHocDto.Username && item.NamHocId == chiTietLopHocDto.NamHocId))
+            if (_context.ChiTietLops.Any(item => item.LopId == chiTietLopHocDto.LopId && item.Username == chiTietLopHocDto.Username && item.NamHoc == chiTietLopHocDto.NamHoc))
             {
                 throw new Exception("Học sinh đã có ở trong lớp");
             }
-            var ct = _context.ChiTietLops.FirstOrDefault(item => item.Username == chiTietLopHocDto.Username && item.NamHocId == chiTietLopHocDto.NamHocId);
+            var ct = _context.ChiTietLops.FirstOrDefault(item => item.Username == chiTietLopHocDto.Username && item.Username == chiTietLopHocDto.Username);
             if (ct == null)
             {
                 throw new Exception("Bạn không thể chuyển lớp");
@@ -72,17 +68,15 @@ namespace BackEndApi.Repository
             {
                 namhoc = (year - 1) + "-" + year;
             }
-            NamHoc namHoc = new NamHoc();
             Lop lopHoc = new Lop();
             ChiTietLop ctl = new ChiTietLop();
-            namHoc = await _context.NamHocs.FirstOrDefaultAsync(item => item.NameHoc == namhoc);
             if (String.IsNullOrWhiteSpace(username))
             {
                 throw new Exception("Cần truyền tên đăng nhập");
             }
             else
             {
-                ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHocId == namHoc.Id && item.Username == username);
+                ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == namhoc && item.Username == username);
             }
 
             if (ctl == null)
@@ -90,14 +84,14 @@ namespace BackEndApi.Repository
                 var resultNone = new
                 {
                     lopHocHienTai = "Tài khoản hiện tại chưa được phân lớp",
-                    namHocHienTai = namHoc,
+                    namHocHienTai = namhoc,
                     listHocSinh = new List<NguoiDung>(),
                 };
                 return new JsonResult(resultNone);
             }
 
             lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
-            var listCtl = await _context.ChiTietLops.Where(item => item.NamHocId == namHoc.Id && item.LopId == ctl.LopId).ToListAsync();
+            var listCtl = await _context.ChiTietLops.Where(item => item.NamHoc ==  namhoc && item.LopId == ctl.LopId).ToListAsync();
 
 
             List<NguoiDung> listNguoiDung = new List<NguoiDung>();
@@ -106,11 +100,11 @@ namespace BackEndApi.Repository
                 var nguoiDungHS = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == hs.Username && item.UserType == 2);
                 listNguoiDung.Add(nguoiDungHS);
             }
-            var lstNguoiDungSort = listNguoiDung.OrderBy(u => u.HoTen).ToList();
+            var lstNguoiDungSort = listNguoiDung.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1 ]).ToList();
             var result = new
             {
                 lopHocHienTai = lopHoc,
-                namHocHienTai = namHoc,
+                namHocHienTai = namhoc,
                 listHocSinh = lstNguoiDungSort
             };
             return new JsonResult(result);
@@ -126,9 +120,9 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Tên tài khoản không được để trống");
             }
-            if (String.IsNullOrWhiteSpace(chiTietLopHocDto.NamHocId.ToString()))
+            if (String.IsNullOrWhiteSpace(chiTietLopHocDto.NamHoc))
             {
-                throw new Exception("Mã năm học không được để trống");
+                throw new Exception("Năm học không được để trống");
             }
             if (!_context.Lops.Any(item => item.Id == chiTietLopHocDto.LopId))
             {
@@ -138,11 +132,7 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Không tồn tại tên tài khoản");
             }
-            if (!_context.NamHocs.Any(item => item.Id == chiTietLopHocDto.NamHocId))
-            {
-                throw new Exception("Không tồn tại mã năm học");
-            }
-            if (_context.ChiTietLops.Any(item => item.LopId == chiTietLopHocDto.LopId && item.Username == chiTietLopHocDto.Username && item.NamHocId == chiTietLopHocDto.NamHocId))
+            if (_context.ChiTietLops.Any(item => item.LopId == chiTietLopHocDto.LopId && item.Username == chiTietLopHocDto.Username && item.NamHoc == chiTietLopHocDto.NamHoc))
             {
                 throw new Exception("Học sinh đã có ở trong lớp");
             }
@@ -152,7 +142,7 @@ namespace BackEndApi.Repository
                 Id = new Guid(),
                 LopId = chiTietLopHocDto.LopId,
                 Username = chiTietLopHocDto.Username,
-                NamHocId = chiTietLopHocDto.NamHocId,
+                NamHoc = chiTietLopHocDto.NamHoc,
             };
             _context.ChiTietLops.Add(ctl);
             _context.SaveChanges();

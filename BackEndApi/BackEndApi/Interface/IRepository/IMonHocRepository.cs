@@ -7,7 +7,7 @@ namespace BackEndApi.Interface.IRepository
     public interface IMonHocRepository
     {
         public Task<ActionResult<List<MonHoc>>> LayTatCaMonHoc();
-        public Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(Guid? KhoiId);
+        public Task<ActionResult<List<MonHocTheoKhoiDto>>> LayMonHocTheoKhoi(int khoi);
         public IActionResult ThemMonHoc(MonHocDto monHocDto);
     }
 }

@@ -43,8 +43,8 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("KhoiId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("Khoi")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("KyThiId")
                         .HasColumnType("char(36)");
@@ -77,8 +77,9 @@ namespace BackEndData.Migrations
                     b.Property<Guid>("LopId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("NamHocId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("NamHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -144,8 +145,9 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("NamHocId")
-                        .HasColumnType("char(36)");
+                    b.Property<string>("NamHoc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("NgayBatDau")
                         .HasColumnType("datetime(6)");
@@ -192,8 +194,8 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("IdKhoi")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("Khoi")
+                        .HasColumnType("int");
 
                     b.Property<string>("MaLop")
                         .IsRequired()
@@ -214,8 +216,8 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("KhoiId")
-                        .HasColumnType("char(36)");
+                    b.Property<int>("Khoi")
+                        .HasColumnType("int");
 
                     b.Property<string>("MaMonHoc")
                         .IsRequired()

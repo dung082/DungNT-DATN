@@ -40,7 +40,7 @@ namespace BackEndApi.Controllers
             {
                 throw new Exception("Tên lớp không được để trống");
             }
-            if (String.IsNullOrEmpty(lopDto.IdKhoi.ToString()))
+            if (String.IsNullOrEmpty(lopDto.Khoi.ToString()))
             {
                 throw new Exception("Tên lớp không được để trống");
             }

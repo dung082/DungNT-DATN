@@ -13,6 +13,6 @@ namespace BackEndData.Entities
         public Guid Id { get; set; }
         public string MaLop { get; set; }
         public string TenLop { get; set; }
-        public Guid IdKhoi { get; set; }
+        public int Khoi{ get; set; }
     }
 }
