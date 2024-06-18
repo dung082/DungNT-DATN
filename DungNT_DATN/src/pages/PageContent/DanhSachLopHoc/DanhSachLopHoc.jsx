@@ -52,7 +52,7 @@ export default function DanhSachLopHoc(props) {
               <span>
                 Năm học :{" "}
                 <span className="font-bold">
-                  {listHs?.namHocHienTai?.nameHoc}
+                  {listHs?.namHocHienTai}
                 </span>
               </span>
             </div>

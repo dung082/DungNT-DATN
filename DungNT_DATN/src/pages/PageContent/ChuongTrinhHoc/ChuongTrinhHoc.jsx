@@ -21,6 +21,21 @@ export default function ChuongTrinhHoc(props) {
   const dispatch = useDispatch();
 
   const [defaultKhoi, setDefaultKhoi] = useState();
+
+  const lstKhoiSelect = [
+    {
+      value : 10,
+      label : "Khối 10"
+    },
+    {
+      value : 11,
+      label : "Khối 11"
+    },
+    {
+      value : 12,
+      label : "Khối 12"
+    },
+  ]
   useEffect(() => {
     dispatch(getListKhoiAction());
     dispatch(getListChuongTrinhHocAction(""));
@@ -40,7 +55,7 @@ export default function ChuongTrinhHoc(props) {
         <div className="flex justify-end mt-3">
           <Select
             // allowClear
-            options={listKhoiSelect}
+            options={lstKhoiSelect}
             className="w-[200px]"
             placeholder="--Chọn khối--"
             onChange={(e) => {

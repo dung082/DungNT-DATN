@@ -6,7 +6,7 @@ export class ChuongTrinhHocService extends baseService {
   };
 
   getChuongTrinhHocTheoKhoi = (KhoiId) => {
-    return this.get(`MonHoc/LayMonHocTheoKhoi?KhoiId=${KhoiId}`);
+    return this.get(`MonHoc/LayMonHocTheoKhoi?Khoi=${KhoiId}`);
   };
 }
 
