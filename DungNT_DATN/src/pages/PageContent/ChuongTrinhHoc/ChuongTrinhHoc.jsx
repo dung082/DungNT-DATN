@@ -38,7 +38,7 @@ export default function ChuongTrinhHoc(props) {
   ]
   useEffect(() => {
     dispatch(getListKhoiAction());
-    dispatch(getListChuongTrinhHocAction(""));
+    dispatch(getListChuongTrinhHocAction(10));
   }, []);
   return (
     <>
@@ -55,12 +55,13 @@ export default function ChuongTrinhHoc(props) {
         <div className="flex justify-end mt-3">
           <Select
             // allowClear
+            defaultValue={10}
             options={lstKhoiSelect}
             className="w-[200px]"
             placeholder="--Chọn khối--"
             onChange={(e) => {
               if (typeof e === "undefined") {
-                dispatch(getListChuongTrinhHocAction(""));
+                dispatch(getListChuongTrinhHocAction(10));
               } else {
                 dispatch(getListChuongTrinhHocAction(e));
               }

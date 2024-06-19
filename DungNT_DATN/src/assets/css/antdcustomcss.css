@@ -204,3 +204,25 @@ td.ant-table-column-sort {
   justify-content: center;
   align-items: center;
 }
+
+.ant-input.ant-input-disabled {
+  color: #3e3838;
+}
+
+
+.tabs-hocba .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list {
+  width: 100%;
+}
+
+.tabs-hocba .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab {
+  width: calc(100% / 3);
+}
+
+.tabs-hocba .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-tab div {
+  text-align :center; 
+  width: 100%;
+}
+
+.tabs-hocba .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+  width : calc(100% / 3) !important;
+}
