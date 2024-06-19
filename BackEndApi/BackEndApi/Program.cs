@@ -22,6 +22,11 @@ builder.Services.AddScoped<ITonGiaoRepository, TonGiaoRepository>();
 builder.Services.AddScoped<IMonHocRepository, MonHocRepository>();
 builder.Services.AddScoped<ICaHocRepository, CaHocRepository>();
 builder.Services.AddScoped<ITietHocRepository, TietHocRepository>();
+builder.Services.AddScoped<IKyHocRepository, KyHocRepository>();
+builder.Services.AddScoped<IHocBaRepository, HocBaRepository>();
+builder.Services.AddScoped<IKyThiRepository, KyThiRepository>();
+builder.Services.AddScoped<IDiemThiRepository, DiemThiRepository>();
+builder.Services.AddScoped<IChiTietKyThiRepository, ChiTietKyThiRepository>();
 
 builder.Services.AddCors(options =>
 {
