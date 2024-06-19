@@ -1,43 +1,16 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\",
+  "WorkspaceRootPath": "D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618133020_newMigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618134357_newContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\dto\\kyhocdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\dto\\kyhocdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_datn_backend\\dungnt-datn\\backendapi\\backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\dto\\kythidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\dto\\kythidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\dto\\chitietkythidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\dto\\chitietkythidto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F52BBCE-284E-4564-87C9-E9092AE5D6F0}|..\\BackEndData\\BackEndData.csproj|d:\\dungnt_backend\\dungnt-datn\\backenddata\\entities\\chitietkythi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\repository\\chitietkythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\repository\\chitietkythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\interface\\irepository\\ichitietkythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\interface\\irepository\\ichitietkythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\repository\\kythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\repository\\kythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|d:\\dungnt_backend\\dungnt-datn\\backendapi\\backendapi\\interface\\irepository\\ikythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A8C98CBA-6938-4930-A730-3EB9D67F229E}|BackEndApi\\BackEndApi.csproj|solutionrelative:backendapi\\interface\\irepository\\ikythirepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F52BBCE-284E-4564-87C9-E9092AE5D6F0}|..\\BackEndData\\BackEndData.csproj|d:\\dungnt_backend\\dungnt-datn\\backenddata\\entities\\kythi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\DungNT_DATN_backend\\DungNT-DATN\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -52,124 +25,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "20240618133020_newMigration.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618133020_newMigration.cs",
-              "RelativeDocumentMoniker": "..\\BackEndData\\Migrations\\20240618133020_newMigration.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618133020_newMigration.cs",
-              "RelativeToolTip": "..\\BackEndData\\Migrations\\20240618133020_newMigration.cs",
-              "ViewState": "AQIAACsAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Title": "20240618134357_newContext.cs",
+              "DocumentMoniker": "D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618134357_newContext.cs",
+              "RelativeDocumentMoniker": "..\\BackEndData\\Migrations\\20240618134357_newContext.cs",
+              "ToolTip": "D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndData\\Migrations\\20240618134357_newContext.cs",
+              "RelativeToolTip": "..\\BackEndData\\Migrations\\20240618134357_newContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:30:21.111Z",
+              "WhenOpened": "2024-06-18T13:43:57.792Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "KyHocDto.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\KyHocDto.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Dto\\KyHocDto.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\KyHocDto.cs",
-              "RelativeToolTip": "BackEndApi\\Dto\\KyHocDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:24:15.8Z",
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\appsettings.json",
+              "RelativeDocumentMoniker": "BackEndApi\\appsettings.json",
+              "ToolTip": "D:\\DungNT_DATN_backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\appsettings.json",
+              "RelativeToolTip": "BackEndApi\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-18T13:43:46.263Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ChiTietKyThi.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Entities\\ChiTietKyThi.cs",
-              "RelativeDocumentMoniker": "..\\BackEndData\\Entities\\ChiTietKyThi.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Entities\\ChiTietKyThi.cs",
-              "RelativeToolTip": "..\\BackEndData\\Entities\\ChiTietKyThi.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:17:51.23Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ChiTietKyThiDto.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\ChiTietKyThiDto.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Dto\\ChiTietKyThiDto.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\ChiTietKyThiDto.cs",
-              "RelativeToolTip": "BackEndApi\\Dto\\ChiTietKyThiDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:17:44.78Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IChiTietKyThiRepository.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Interface\\IRepository\\IChiTietKyThiRepository.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Interface\\IRepository\\IChiTietKyThiRepository.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Interface\\IRepository\\IChiTietKyThiRepository.cs",
-              "RelativeToolTip": "BackEndApi\\Interface\\IRepository\\IChiTietKyThiRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:17:13.827Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ChiTietKyThiRepository.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Repository\\ChiTietKyThiRepository.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Repository\\ChiTietKyThiRepository.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Repository\\ChiTietKyThiRepository.cs",
-              "RelativeToolTip": "BackEndApi\\Repository\\ChiTietKyThiRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAABBAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:16:57.278Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "KyThiRepository.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Repository\\KyThiRepository.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Repository\\KyThiRepository.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Repository\\KyThiRepository.cs",
-              "RelativeToolTip": "BackEndApi\\Repository\\KyThiRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAzAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:16:11.29Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "IKyThiRepository.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Interface\\IRepository\\IKyThiRepository.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Interface\\IRepository\\IKyThiRepository.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Interface\\IRepository\\IKyThiRepository.cs",
-              "RelativeToolTip": "BackEndApi\\Interface\\IRepository\\IKyThiRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:15:53.614Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "KyThi.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Entities\\KyThi.cs",
-              "RelativeDocumentMoniker": "..\\BackEndData\\Entities\\KyThi.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndData\\Entities\\KyThi.cs",
-              "RelativeToolTip": "..\\BackEndData\\Entities\\KyThi.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:15:27.866Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "KyThiDto.cs",
-              "DocumentMoniker": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\KyThiDto.cs",
-              "RelativeDocumentMoniker": "BackEndApi\\Dto\\KyThiDto.cs",
-              "ToolTip": "D:\\DungNT_Backend\\DungNT-DATN\\BackEndApi\\BackEndApi\\Dto\\KyThiDto.cs",
-              "RelativeToolTip": "BackEndApi\\Dto\\KyThiDto.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAxAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-18T13:15:06.94Z"
+              "Title": ".gitignore",
+              "DocumentMoniker": "D:\\DungNT_DATN_backend\\DungNT-DATN\\.gitignore",
+              "RelativeDocumentMoniker": "..\\.gitignore",
+              "ToolTip": "D:\\DungNT_DATN_backend\\DungNT-DATN\\.gitignore",
+              "RelativeToolTip": "..\\.gitignore",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-06-18T13:42:05.731Z",
+              "EditorCaption": ""
             }
           ]
         }
