@@ -45,6 +45,10 @@ namespace BackEndApi.Repository
                     kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.Id == kyThiId);
                     diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kyThiId);
                 }
+                if (diemthi == null)
+                {
+                    return new JsonResult($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1]}");
+                }
                 lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemthi.LopId);
 
                 var result = new
@@ -71,7 +75,10 @@ namespace BackEndApi.Repository
                     foreach (var item in lstHs)
                     {
                         var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item => username == item.Username && item.KyThiId == kythi.Id);
-                        lstDiemThi.Add(diemThi);
+                        if (diemThi != null)
+                        {
+                            lstDiemThi.Add(diemThi);
+                        }
                     }
                 }
                 else
@@ -81,7 +88,10 @@ namespace BackEndApi.Repository
                     foreach (var item in lstHs)
                     {
                         var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item => username == item.Username && item.KyThiId == kythi.Id);
-                        lstDiemThi.Add(diemThi);
+                        if (diemThi != null)
+                        {
+                            lstDiemThi.Add(diemThi);
+                        }
                     }
                 }
 
