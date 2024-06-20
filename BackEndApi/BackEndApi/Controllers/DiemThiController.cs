@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class DiemThiController : ControllerBase
     {
         private readonly ILogger<DiemThiController> _logger;
@@ -17,9 +19,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayDiemThi")]
-        public async Task<ActionResult> LayDiemThi(int type, string? username, Guid? lopId, Guid? kyThiId)
+        public async Task<ActionResult> LayDiemThi(int type, string? username, Guid? kyThiId)
         {
-            var result = await _iDiemThiRepository.LayDiemThi(type, username, lopId, kyThiId);
+            var result = await _iDiemThiRepository.LayDiemThi(type, username, kyThiId);
             return Ok(result);
         }
 

@@ -36,7 +36,10 @@ namespace BackEndApi.Repository
 
                 listKyHoc = await _context.KyHocs.Where(item => item.NamHoc == namhoc).ToListAsync();
             }
-            listKyHoc = await _context.KyHocs.Where(item => item.NamHoc == namHoc).ToListAsync();
+            else
+            {
+                listKyHoc = await _context.KyHocs.Where(item => item.NamHoc == namHoc).ToListAsync();
+            }
             if (listKyHoc.Count == 0)
             {
                 throw new Exception("Không có kỳ học nào trong năm");
