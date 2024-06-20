@@ -226,3 +226,7 @@ td.ant-table-column-sort {
 .tabs-hocba .ant-tabs-nav .ant-tabs-nav-wrap .ant-tabs-nav-list .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
   width : calc(100% / 3) !important;
 }
+
+table.table-diem thead tr th{
+  border : 1px solid #ccc;
+}

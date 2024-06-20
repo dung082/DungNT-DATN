@@ -135,6 +135,20 @@ export default function PageTemplate() {
                       },
                     },
                     {
+                      key: "/ThongTinHocBa",
+                      label: "Học bạ",
+                      onClick: () => {
+                        navigate("/ThongTinHocBa");
+                      },
+                    },
+                    {
+                      key: "/DanhSachHocSinh",
+                      label: "Danh sách học sinh",
+                      onClick: () => {
+                        navigate("/DanhSachHocSinh");
+                      },
+                    },
+                    {
                       key: "/LichHocTheoTuan",
                       label: "Thời khóa biểu",
                       onClick: () => {
@@ -149,17 +163,10 @@ export default function PageTemplate() {
                       },
                     },
                     {
-                      key: "/ThongTinHocBa",
-                      label: "Học bạ",
+                      key: "/XemDiemThi",
+                      label: "Xem điểm thi",
                       onClick: () => {
-                        navigate("/ThongTinHocBa");
-                      },
-                    },
-                    {
-                      key: "/DanhSachHocSinh",
-                      label: "Danh sách học sinh",
-                      onClick: () => {
-                        navigate("/DanhSachHocSinh");
+                        navigate("/XemDiemThi");
                       },
                     },
                   ],

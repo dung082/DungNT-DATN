@@ -13,6 +13,7 @@ import LichHocTheoTuan from "./pages/PageContent/LichHocTheoTuan/LichHocTheoTuan
 import LichThi from "./pages/PageContent/LichThi/LichThi";
 import ThongTinHocBa from "./pages/PageContent/ThongTinHocBa/ThongTinHocBa";
 import DanhSachLopHoc from "./pages/PageContent/DanhSachLopHoc/DanhSachLopHoc";
+import DiemThi from "./pages/PageContent/DiemThi/DiemThi";
 function App() {
   return (
     <>
@@ -30,6 +31,7 @@ function App() {
             <Route path="/ChuongTrinhHoc" element={<ChuongTrinhHoc />} />
             <Route path="/LichHocTheoTuan" element={<LichHocTheoTuan />} />
             <Route path="/LichThi" element={<LichThi />} />
+            <Route path="/XemDiemThi" element={<DiemThi />} />
             <Route path="/ThongTinHocBa" element={<ThongTinHocBa />} />
             <Route path="/DanhSachHocSinh" element={<DanhSachLopHoc />} />
           </Route>
