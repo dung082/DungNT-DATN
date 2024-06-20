@@ -25,9 +25,9 @@ namespace BackEndApi.Controllers
 
         [HttpPost]
         [Route("ThemDiemThi")]
-        public IActionResult ThemDiemThi(DiemThiDto diemThiDto)
+        public  async Task<ActionResult> ThemDiemThi([FromBody] DiemThiDto diemThiDto)
         {
-            var result = _iDiemThiRepository.ThemDiemThi(diemThiDto);
+            var result =await _iDiemThiRepository.ThemDiemThi(diemThiDto);
             return Ok(result);
         }
     }

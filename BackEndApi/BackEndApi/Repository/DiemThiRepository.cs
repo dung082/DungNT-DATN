@@ -119,7 +119,10 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Kỳ học không tồn tại");
             }
-
+            if(await _context.DiemThis.FirstOrDefaultAsync(item => item.KyThiId == diemThiDto.KyThiId && item.Username == diemThiDto.Username && item.LopId == item.LopId) != null)
+            {
+                throw new Exception("Điểm thi của bạn đã có trong danh sách");
+            }
             var hs = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == diemThiDto.Username && item.LopId == diemThiDto.LopId);
             if (hs == null)
             {
