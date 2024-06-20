@@ -1,9 +1,9 @@
-.vs/
-.vscode/
-bin/
-node_modules/
-logs/
-obj/
+*/.vs/
+*/.vscode/
+*/bin/
+*/node_modules/
+*/logs/
+*/obj/
 *.logs
 *.zip
 *.rar
