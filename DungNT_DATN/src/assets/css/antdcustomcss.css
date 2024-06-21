@@ -230,3 +230,11 @@ td.ant-table-column-sort {
 table.table-diem thead tr th{
   border : 1px solid #ccc;
 }
+
+.ant-select.ant-select-disabled .ant-select-selector .ant-select-selection-item {
+  color: #3e3838;
+}
+
+.ant-select.ant-select-disabled .ant-select-arrow {
+  color: #3e3838;
+}

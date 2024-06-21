@@ -21,6 +21,29 @@ export default function ChiTietHocBa(props) {
             label: "Yếu",
         },
     ]
+
+    const hocluc = [
+        {
+            value: 1,
+            label: "Giỏi",
+        },
+        {
+            value: 2,
+            label: "Khá",
+        },
+        {
+            value: 3,
+            label: "Trung bình",
+        },
+        {
+            value: 4,
+            label: "Yếu",
+        },
+        {
+            value: 5,
+            label: "Chưa thể loại",
+        },
+    ]
     return (
         <>
             {
@@ -54,15 +77,15 @@ export default function ChiTietHocBa(props) {
                             <div className="grid grid-cols-3">
                                 <div className="p-2">
                                     <span>Học kỳ I</span>
-                                    <Input disabled value={hocba?.hocBa?.diemTKHK1} />
+                                    <Select disabled value={hocba?.hocBa?.hocLucHK1} options={hocluc} className="w-full" />
                                 </div>
                                 <div className="p-2">
                                     <span>Học kỳ II</span>
-                                    <Input disabled value={hocba?.hocBa?.diemTKHK2} />
+                                    <Select disabled value={hocba?.hocBa?.hocLucHK2} options={hocluc} className="w-full" />
                                 </div>
                                 <div className="p-2">
                                     <span>Cả năm</span>
-                                    <Input disabled value={hocba?.hocBa?.diemTKCN} />
+                                    <Select disabled value={hocba?.hocBa?.hocLucCN} options={hocluc} className="w-full" />
                                 </div>
                             </div>
                         </div>
