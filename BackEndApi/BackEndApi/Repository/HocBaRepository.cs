@@ -97,7 +97,7 @@ namespace BackEndApi.Repository
             {
                 Username = userName,
                 DiemTKHK1 = hocba1.DiemTKHK1,
-                DiemTKHK2 = hocba1.DiemHKHK2,
+                DiemTKHK2 = hocba1.DiemTKHK2,
                 DiemTKCN = hocba1.DiemTKCN,
                 DiemHKHK1 = hocba1.DiemHKHK1,
                 DiemHKHK2 = hocba1.DiemHKHK2,
@@ -111,7 +111,7 @@ namespace BackEndApi.Repository
                 DiemToanHK1 = hocba1.DiemToanHK1,
                 DiemToanHK2 = hocba1.DiemToanHK2,
                 DiemToanCN = hocba1.DiemToanCN,
-                DiemVanHK1 = hocba1.DiemToanHK1,
+                DiemVanHK1 = hocba1.DiemVanHK1,
                 DiemVanHK2 = hocba1.DiemVanHK2,
                 DiemVanCN = hocba1.DiemVanCN,
                 SinhHK1 = hocba1.SinhHK1,
@@ -129,6 +129,9 @@ namespace BackEndApi.Repository
                 NgoaiNguHK1 = hocba1.NgoaiNguHK1,
                 NgoaiNguHK2 = hocba1.NgoaiNguHK2,
                 NgoaiNguCN = hocba1.NgoaiNguCN,
+                HocLucHK1 = hocba1.HocLucHK1,
+                HocLucHK2 = hocba1.HocLucHK2,
+                HocLucCN = hocba1.HocLucCN,
                 Lop = lop,
                 HoTen = nguoiDung.HoTen,
                 NgaySinh = nguoiDung.NgaySinh,
@@ -192,10 +195,35 @@ namespace BackEndApi.Repository
                 DiemTKHK2 = System.Math.Round((hocBaDto.DiemToanHK2 + hocBaDto.DiemVanHK2 + hocBaDto.DiemLyHK2 + hocBaDto.DiemHoaHK2 + hocBaDto.SinhHK2 + hocBaDto.LichSuHK2 + hocBaDto.DiaHK2 + hocBaDto.GDCDHK2 + hocBaDto.NgoaiNguHK2) / 9, 2),
                 DiemTKCN = System.Math.Round((((hocBaDto.DiemToanHK1 + hocBaDto.DiemVanHK1 + hocBaDto.DiemLyHK1 + hocBaDto.DiemHoaHK1 + hocBaDto.SinhHK1 + hocBaDto.LichSuHK1 + hocBaDto.DiaHK1 + hocBaDto.GDCDHK1 + hocBaDto.NgoaiNguHK1) / 9) + ((hocBaDto.DiemToanHK2 + hocBaDto.DiemVanHK2 + hocBaDto.DiemLyHK2 + hocBaDto.DiemHoaHK2 + hocBaDto.SinhHK2 + hocBaDto.LichSuHK2 + hocBaDto.DiaHK2 + hocBaDto.GDCDHK2 + hocBaDto.NgoaiNguHK2) / 9) * 2) / 3, 2),
             };
+            hocba.HocLucHK1 = XepLoaiHocLuc(hocba.DiemTKHK1);
+            hocba.HocLucHK2 = XepLoaiHocLuc(hocba.DiemTKHK2);
+            hocba.HocLucCN = XepLoaiHocLuc(hocba.DiemTKCN);
+
 
             _context.HocBas.Add(hocba);
             _context.SaveChanges();
             return new JsonResult(hocba);
+        }
+
+        private int XepLoaiHocLuc(decimal diemhk)
+        {
+            if (diemhk > 8.5M)
+            {
+                return 1;
+            }
+            else if (6.5M <= diemhk && diemhk < 8.5M)
+            {
+                return 2;
+            }
+            else if (5 <= diemhk && diemhk < 6.5M)
+            {
+                return 3;
+            }
+            else if (diemhk < 5)
+            {
+                return 4;
+            }
+            return 5;
         }
     }
 

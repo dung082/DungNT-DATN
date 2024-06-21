@@ -43,6 +43,9 @@ namespace BackEndData.Entities
         public decimal GDCDCN { get; set; }
         public decimal NgoaiNguHK1 { get; set; }
         public decimal NgoaiNguHK2 { get; set; }
-        public decimal NgoaiNguCN {  get; set; }
+        public decimal NgoaiNguCN { get; set; }
+        public int HocLucHK1 { get; set; }
+        public int HocLucHK2 {  get; set; }
+        public int HocLucCN {  get; set; }
     }
 }
