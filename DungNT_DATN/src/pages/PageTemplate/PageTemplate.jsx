@@ -56,7 +56,7 @@ export default function PageTemplate() {
   // const { Search } = Input;
   return (
     <>
-      <div className="h-screen w-screen">
+      <div className="w-screen">
         <Layout className="h-full">
           <Sider
             trigger={null}
