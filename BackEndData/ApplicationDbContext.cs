@@ -31,6 +31,7 @@ namespace BackEndData
         public DbSet<ThoiKhoaBieu> ThoiKhoaBieus { get; set; }
         public DbSet<HocBa> HocBas { get; set; }
         public DbSet<DiemThi> DiemThis { get; set; }
+        public DbSet<MonThi> MonThis { get; set; }
 
     }
 }

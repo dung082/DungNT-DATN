@@ -14,5 +14,6 @@ namespace BackEndData.Entities
         public string MaLop { get; set; }
         public string TenLop { get; set; }
         public int Khoi{ get; set; }
+        public string KhoiHoc { get; set; }
     }
 }

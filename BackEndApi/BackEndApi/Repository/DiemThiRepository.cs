@@ -19,156 +19,156 @@ namespace BackEndApi.Repository
 
         public async Task<ActionResult> LayDiemThi(int type, string? username, Guid? kyThiId)
         {
-            DiemThi diemthi = new DiemThi();
-            List<DiemThi> lstDiemThi = new List<DiemThi>();
+            //DiemThi diemthi = new DiemThi();
+            //List<DiemThi> lstDiemThi = new List<DiemThi>();
             
-            List<DiemThiDtoView> lstDiemThiView = new List<DiemThiDtoView>();
-            Lop lop = new Lop();
-            KyThi kythi = new KyThi();
-            KyHoc kyhoc = new KyHoc();
-            List<ChiTietLop> lstHs = new List<ChiTietLop>();
-            var listKyThi = await _context.KyThis.ToListAsync();
-            if (type == 0)
-            {
-                if (username == null)
-                {
-                    throw new Exception("Bạn phải nhập tên tài khoản cần xem điểm thi");
-                }
+            //List<DiemThiDtoView> lstDiemThiView = new List<DiemThiDtoView>();
+            //Lop lop = new Lop();
+            //KyThi kythi = new KyThi();
+            //KyHoc kyhoc = new KyHoc();
+            //List<ChiTietLop> lstHs = new List<ChiTietLop>();
+            //var listKyThi = await _context.KyThis.ToListAsync();
+            //if (type == 0)
+            //{
+            //    if (username == null)
+            //    {
+            //        throw new Exception("Bạn phải nhập tên tài khoản cần xem điểm thi");
+            //    }
 
-                if (kyThiId == null)
-                {
-                    //kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.NgayKetThuc < DateTime.Now);
-                    kythi = TimKyThiGanNhat(DateTime.Now, listKyThi);
-                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
+            //    if (kyThiId == null)
+            //    {
+            //        //kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.NgayKetThuc < DateTime.Now);
+            //        kythi = TimKyThiGanNhat(DateTime.Now, listKyThi);
+            //        diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
 
-                }
-                else
-                {
-                    kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.Id == kyThiId);
-                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kyThiId);
-                }
-                if (diemthi == null)
-                {
-                    throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
-                }
-                var hs =await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == username);
-                DiemThiDtoView diemthiView = new DiemThiDtoView()
-                {
-                    Id = diemthi.Id,
-                    Username = username,
-                    HoTen = hs.HoTen,
-                    LopId = diemthi.LopId,
-                    diemMonToan = diemthi.diemMonToan,
-                    diemMonVan = diemthi.diemMonVan,
-                    diemNgoaiNgu = diemthi.diemNgoaiNgu,
-                    diemVatLy = diemthi.diemVatLy,
-                    diemHoaHoc = diemthi.diemHoaHoc,
-                    diemSinhHoc = diemthi.diemSinhHoc,
-                    diemLichSu = diemthi.diemLichSu,
-                    diemDiaLi = diemthi.diemDiaLi,
-                    diemGDCD = diemthi.diemGDCD,
-                };
-                lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemthi.LopId);
-                kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
+            //    }
+            //    else
+            //    {
+            //        kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.Id == kyThiId);
+            //        diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kyThiId);
+            //    }
+            //    if (diemthi == null)
+            //    {
+            //        throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
+            //    }
+            //    var hs =await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == username);
+            //    DiemThiDtoView diemthiView = new DiemThiDtoView()
+            //    {
+            //        Id = diemthi.Id,
+            //        Username = username,
+            //        HoTen = hs.HoTen,
+            //        LopId = diemthi.LopId,
+            //        diemMonToan = diemthi.diemMonToan,
+            //        diemMonVan = diemthi.diemMonVan,
+            //        diemNgoaiNgu = diemthi.diemNgoaiNgu,
+            //        diemVatLy = diemthi.diemVatLy,
+            //        diemHoaHoc = diemthi.diemHoaHoc,
+            //        diemSinhHoc = diemthi.diemSinhHoc,
+            //        diemLichSu = diemthi.diemLichSu,
+            //        diemDiaLi = diemthi.diemDiaLi,
+            //        diemGDCD = diemthi.diemGDCD,
+            //    };
+            //    lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemthi.LopId);
+            //    kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
 
-                var result = new
-                {
-                    kythi = kythi,
-                    lop = lop,
-                    namhoc = kyhoc.NamHoc,
-                    diemthi = diemthiView,
-                };
-                return new JsonResult(result);
-            }
-            else if (type == 1)
-            {
+            //    var result = new
+            //    {
+            //        kythi = kythi,
+            //        lop = lop,
+            //        namhoc = kyhoc.NamHoc,
+            //        diemthi = diemthiView,
+            //    };
+            //    return new JsonResult(result);
+            //}
+            //else if (type == 1)
+            //{
 
-                if (kyThiId == null)
-                {
-                    //kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.NgayKetThuc <= DateTime.Now);
-                    kythi = TimKyThiGanNhat(DateTime.Now, listKyThi);
-                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
-                    if (diemthi == null)
-                    {
-                        throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
-                    }
-                    kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
-                    lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
-                    foreach (var item in lstHs)
-                    {
-                        var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyThiId == kythi.Id);
-                        if (diemThi != null)
-                        {
-                            var hsnew = await _context.NguoiDungs.FirstOrDefaultAsync(item2 => item2.Username == item.Username);
-                            DiemThiDtoView diemthiView = new DiemThiDtoView()
-                            {
-                                Id = diemthi.Id,
-                                Username = item.Username,
-                                HoTen = hsnew.HoTen,
-                                LopId = diemthi.LopId,
-                                diemMonToan = diemthi.diemMonToan,
-                                diemMonVan = diemthi.diemMonVan,
-                                diemNgoaiNgu = diemthi.diemNgoaiNgu,
-                                diemVatLy = diemthi.diemVatLy,
-                                diemHoaHoc = diemthi.diemHoaHoc,
-                                diemSinhHoc = diemthi.diemSinhHoc,
-                                diemLichSu = diemthi.diemLichSu,
-                                diemDiaLi = diemthi.diemDiaLi,
-                                diemGDCD = diemthi.diemGDCD,
-                            };
-                            lstDiemThiView.Add(diemthiView);
-                        }
-                    }
-                }
-                else
-                {
-                    kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.Id == kyThiId);
-                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kyThiId);
-                    if (diemthi == null)
-                    {
-                        throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
+            //    if (kyThiId == null)
+            //    {
+            //        //kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.NgayKetThuc <= DateTime.Now);
+            //        kythi = TimKyThiGanNhat(DateTime.Now, listKyThi);
+            //        diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
+            //        if (diemthi == null)
+            //        {
+            //            throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
+            //        }
+            //        kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
+            //        lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
+            //        foreach (var item in lstHs)
+            //        {
+            //            var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyThiId == kythi.Id);
+            //            if (diemThi != null)
+            //            {
+            //                var hsnew = await _context.NguoiDungs.FirstOrDefaultAsync(item2 => item2.Username == item.Username);
+            //                DiemThiDtoView diemthiView = new DiemThiDtoView()
+            //                {
+            //                    Id = diemthi.Id,
+            //                    Username = item.Username,
+            //                    HoTen = hsnew.HoTen,
+            //                    LopId = diemthi.LopId,
+            //                    diemMonToan = diemthi.diemMonToan,
+            //                    diemMonVan = diemthi.diemMonVan,
+            //                    diemNgoaiNgu = diemthi.diemNgoaiNgu,
+            //                    diemVatLy = diemthi.diemVatLy,
+            //                    diemHoaHoc = diemthi.diemHoaHoc,
+            //                    diemSinhHoc = diemthi.diemSinhHoc,
+            //                    diemLichSu = diemthi.diemLichSu,
+            //                    diemDiaLi = diemthi.diemDiaLi,
+            //                    diemGDCD = diemthi.diemGDCD,
+            //                };
+            //                lstDiemThiView.Add(diemthiView);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        kythi = await _context.KyThis.FirstOrDefaultAsync(item => item.Id == kyThiId);
+            //        diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kyThiId);
+            //        if (diemthi == null)
+            //        {
+            //            throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
 
-                    }
-                    kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
-                    lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
-                    foreach (var item in lstHs)
-                    {
-                        var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyThiId == kythi.Id);
-                        if (diemThi != null)
-                        {
-                            var hsnew = await _context.NguoiDungs.FirstOrDefaultAsync(item2 => item2.Username == item.Username);
-                            DiemThiDtoView diemthiView = new DiemThiDtoView()
-                            {
-                                Id = diemthi.Id,
-                                Username = item.Username,
-                                HoTen = hsnew.HoTen,
-                                LopId = diemthi.LopId,
-                                diemMonToan = diemthi.diemMonToan,
-                                diemMonVan = diemthi.diemMonVan,
-                                diemNgoaiNgu = diemthi.diemNgoaiNgu,
-                                diemVatLy = diemthi.diemVatLy,
-                                diemHoaHoc = diemthi.diemHoaHoc,
-                                diemSinhHoc = diemthi.diemSinhHoc,
-                                diemLichSu = diemthi.diemLichSu,
-                                diemDiaLi = diemthi.diemDiaLi,
-                                diemGDCD = diemthi.diemGDCD,
-                            };
-                            lstDiemThiView.Add(diemthiView);
-                        }
-                    }
-                }
+            //        }
+            //        kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kythi.KyHocId);
+            //        lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
+            //        foreach (var item in lstHs)
+            //        {
+            //            var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyThiId == kythi.Id);
+            //            if (diemThi != null)
+            //            {
+            //                var hsnew = await _context.NguoiDungs.FirstOrDefaultAsync(item2 => item2.Username == item.Username);
+            //                DiemThiDtoView diemthiView = new DiemThiDtoView()
+            //                {
+            //                    Id = diemthi.Id,
+            //                    Username = item.Username,
+            //                    HoTen = hsnew.HoTen,
+            //                    LopId = diemthi.LopId,
+            //                    diemMonToan = diemthi.diemMonToan,
+            //                    diemMonVan = diemthi.diemMonVan,
+            //                    diemNgoaiNgu = diemthi.diemNgoaiNgu,
+            //                    diemVatLy = diemthi.diemVatLy,
+            //                    diemHoaHoc = diemthi.diemHoaHoc,
+            //                    diemSinhHoc = diemthi.diemSinhHoc,
+            //                    diemLichSu = diemthi.diemLichSu,
+            //                    diemDiaLi = diemthi.diemDiaLi,
+            //                    diemGDCD = diemthi.diemGDCD,
+            //                };
+            //                lstDiemThiView.Add(diemthiView);
+            //            }
+            //        }
+            //    }
 
-                var lstDiemThiViewSort = lstDiemThiView.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
+            //    var lstDiemThiViewSort = lstDiemThiView.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
 
-                var result = new
-                {
-                    kythi = kythi,
-                    lop = lop,
-                    namhoc = kyhoc.NamHoc,
-                    lstDiemThi = lstDiemThiViewSort,
-                };
-                return new JsonResult(result);
-            }
+            //    var result = new
+            //    {
+            //        kythi = kythi,
+            //        lop = lop,
+            //        namhoc = kyhoc.NamHoc,
+            //        lstDiemThi = lstDiemThiViewSort,
+            //    };
+            //    return new JsonResult(result);
+            //}
             return new JsonResult(true);
 
         }
@@ -185,6 +185,16 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Kỳ học không tồn tại");
             }
+            var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemThiDto.LopId);
+            if(lop == null )
+            {
+                throw new Exception("Không tồn tại lớp để thêm điểm");
+            }
+            var monThi = await _context.MonThis.FirstOrDefaultAsync(item => item.Id == diemThiDto.MonThiId);
+            if(monThi == null)
+            {
+                throw new Exception("Môn thi không tồn tại");
+            }
             if (await _context.DiemThis.FirstOrDefaultAsync(item => item.KyThiId == diemThiDto.KyThiId && item.Username == diemThiDto.Username && item.LopId == item.LopId) != null)
             {
                 throw new Exception("Điểm thi của bạn đã có trong danh sách");
@@ -192,8 +202,13 @@ namespace BackEndApi.Repository
             var hs = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == diemThiDto.Username && item.LopId == diemThiDto.LopId);
             if (hs == null)
             {
-                throw new Exception("Không tồn tại học sinh trong lớp ở kỳ học hiện tịa để thêm điểm ");
+                throw new Exception("Không tồn tại học sinh trong lớp ở kỳ học hiện tại để thêm điểm ");
             }
+            if (monThi.KhoiThi != null && monThi.KhoiThi != lop.KhoiHoc)
+            {
+                throw new Exception("Môn học không có trong tổ hợp thi của bạn");
+            }
+
 
             DiemThi diemthi = new DiemThi()
             {
@@ -201,15 +216,8 @@ namespace BackEndApi.Repository
                 Username = diemThiDto.Username,
                 LopId = diemThiDto.LopId,
                 KyThiId = diemThiDto.KyThiId,
-                diemMonToan = diemThiDto.diemMonToan,
-                diemMonVan = diemThiDto.diemMonVan,
-                diemVatLy = diemThiDto.diemVatLy,
-                diemHoaHoc = diemThiDto.diemHoaHoc,
-                diemSinhHoc = diemThiDto.diemSinhHoc,
-                diemLichSu = diemThiDto.diemLichSu,
-                diemDiaLi = diemThiDto.diemDiaLi,
-                diemGDCD = diemThiDto.diemGDCD,
-                diemNgoaiNgu = diemThiDto.diemNgoaiNgu
+                MonThiId = diemThiDto.MonThiId,
+                Diem = diemThiDto.Diem,
             };
 
             _context.DiemThis.Add(diemthi);

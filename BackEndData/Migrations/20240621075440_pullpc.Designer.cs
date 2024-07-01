@@ -4,6 +4,7 @@ using BackEndData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEndData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240621075440_pullpc")]
+    partial class pullpc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,21 +114,42 @@ namespace BackEndData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<decimal>("Diem")
-                        .HasColumnType("decimal(65,30)");
-
                     b.Property<Guid>("KyThiId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("LopId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("MonThiId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<decimal>("diemDiaLi")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemGDCD")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemHoaHoc")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemLichSu")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemMonToan")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemMonVan")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemNgoaiNgu")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemSinhHoc")
+                        .HasColumnType("decimal(65,30)");
+
+                    b.Property<decimal>("diemVatLy")
+                        .HasColumnType("decimal(65,30)");
 
                     b.HasKey("Id");
 
@@ -350,10 +374,6 @@ namespace BackEndData.Migrations
                     b.Property<int>("Khoi")
                         .HasColumnType("int");
 
-                    b.Property<string>("KhoiHoc")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("MaLop")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -394,28 +414,6 @@ namespace BackEndData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MonHoc");
-                });
-
-            modelBuilder.Entity("BackEndData.Entities.MonThi", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("KhoiThi")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("MaMonThi")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("TenMonThi")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MonThis");
                 });
 
             modelBuilder.Entity("BackEndData.Entities.NamHoc", b =>
