@@ -614,6 +614,7 @@ namespace BackEndApi.Repository
                 LopIdHienTai = lop != null ? lop.Id : null,
                 MaLopHienTai = lop != null ? lop.MaLop : "",
                 TenLopHienTai = lop != null ? lop.TenLop : "",
+                KhoiHoc = lop.KhoiHoc,
                 KhoaHocId = nguoiDung.KhoaHocId,
                 TenKhoaHoc = khoahoc != null ? khoahoc.TenKhoaHoc : "",
                 Avatar = nguoiDung.Avatar,

@@ -23,6 +23,7 @@
         public Guid? LopIdHienTai { get; set; }
         public string? MaLopHienTai {  get; set; }
         public string? TenLopHienTai { get; set; }
+        public string? KhoiHoc { get; set; }
         public string TenTonGiao { get; set; }
         public string? CCCD { get; set; }
         public string? HoTenCha { get; set; }

@@ -19,9 +19,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayDiemThi")]
-        public async Task<ActionResult> LayDiemThi(int type, string? username, Guid? kyThiId)
+        public async Task<ActionResult> LayDiemThi(string? username, Guid? kyThiId, Guid? monThiId)
         {
-            var result = await _iDiemThiRepository.LayDiemThi(type, username, kyThiId);
+            var result = await _iDiemThiRepository.LayDiemThi( username, kyThiId , monThiId);
             return Ok(result);
         }
 
