@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { globalState } from '../../../reducers/globalReducer/globalReducer'
-import { diemThiState, getDiemThiAction, setAdvanceSearchDiemThi, setKyThi, setNamHoc, setTypeSearch } from '../../../reducers/diemThiReducer/diemThiReducer'
+import { diemThiState, getDiemThiAction, getListMonThiAction, setAdvanceSearchDiemThi, setKyThi, setMonThi, setNamHoc, setTypeSearch } from '../../../reducers/diemThiReducer/diemThiReducer'
 import { Button, Select } from 'antd'
 import dayjs from 'dayjs'
 import { getListKyThiAction, kyThiState } from '../../../reducers/kyThiReducer/kyThiReducer'
 import TableComponent from '../../../assets/Component/TableComponent'
 import { DIEM_THI_LOP } from '../../../templates/tableConfig'
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJs } from 'chart.js'
 export default function DiemThi(props) {
 
     const dispatch = useDispatch()
     const { userInfo } = useSelector(globalState)
-    const { diemThi, pageNumber, pageSize, typeSearch, kyThi, namHoc, errorMessage } = useSelector(diemThiState)
+    const { diemThi, pageNumber, pageSize, typeSearch, kyThi, namHoc, errorMessage, listMonThi, monThi } = useSelector(diemThiState)
     const { listKyThi } = useSelector(kyThiState)
-    const [typeState, setTypeState] = useState(0)
     const listTypeSearch = [{
         label: "Cá nhân",
         value: 0
@@ -38,8 +39,8 @@ export default function DiemThi(props) {
 
     useEffect(() => {
         dispatch(getListKyThiAction(""))
-        dispatch(getDiemThiAction(0, userInfo?.username, ""))
-
+        dispatch(getDiemThiAction(userInfo?.username, "", ""))
+        dispatch(getListMonThiAction(userInfo?.lopIdHienTai))
         return () => {
             dispatch(setTypeSearch(0))
         }
@@ -57,22 +58,49 @@ export default function DiemThi(props) {
                     </div>
                 </div>
             </div>
-            <div className="flex items-end justify-center">
-                <div className='w-[1000px] grid grid-cols-4'>
-                    <div className="p-2">
-                        <span>
-                            Xem điểm theo
-                        </span>
-                        <Select
-                            className='w-full'
-                            options={listTypeSearch}
-                            value={typeState}
-                            onChange={(e) => {
-                                setTypeState(e)
+
+            {
+                kyThi === "" ? (
+                    <div>
+                        <Doughnut
+                            data={{
+                                labels: [
+                                    "Kém",
+                                    "Yếu",
+                                    "Trung Bình",
+                                    "Khá",
+                                    "Giỏi"
+                                ],
+                                datasets: [
+                                    {
+                                        label: "Population (millions)",
+                                        backgroundColor: [
+                                            "#3e95cd",
+                                            "#8e5ea2",
+                                            "#3cba9f",
+                                            "#e8c3b9",
+                                            "#c45850"
+                                        ],
+                                        data: diemThi?.slDiemThiLop
+                                    }
+                                ]
+                            }}
+                            option={{
+                                title: {
+                                    display: true,
+                                    text: "Predicted world population (millions) in 2050"
+                                }
                             }}
                         />
                     </div>
+                ) : (<div>
+                    <div>
 
+                    </div>
+                </div>)
+            }
+            {/* <div className="flex items-end justify-center">
+                <div className='w-[1000px] grid grid-cols-4'>
                     <div className="p-2">
                         <span>
                             Năm học
@@ -93,10 +121,10 @@ export default function DiemThi(props) {
 
                     <div className="p-2">
                         <span>
-                            Kỳ thi
+                            Môn thi
                         </span>
                         <Select
-                            placeholder="Chọn kỳ thi"
+                            placeholder="Chọn môn thi"
                             className='w-full'
                             options={listKyThi}
                             value={kyThi}
@@ -106,10 +134,24 @@ export default function DiemThi(props) {
                         />
                     </div>
 
+                    <div className="p-2">
+                        <span>
+                            Kỳ thi
+                        </span>
+                        <Select
+                            placeholder="Chọn kỳ thi"
+                            className='w-full'
+                            options={listMonThi}
+                            value={monThi}
+                            onChange={(e) => {
+                                dispatch(setMonThi(e))
+                            }}
+                        />
+                    </div>
+
                     <div className="p-2 flex items-end">
                         <Button type="primary" onClick={() => {
-                            dispatch(setTypeSearch(typeState))
-                            dispatch(getDiemThiAction(typeState, userInfo?.username, kyThi))
+                            dispatch(getDiemThiAction(userInfo?.username, kyThi, monThi))
                         }}>Tra cứu</Button>
                     </div>
                 </div>
@@ -184,7 +226,7 @@ export default function DiemThi(props) {
                     <div className="font-bold mt-5 text-center text-xl">{errorMessage}</div>
                 )
 
-            }
-        </div>
-    </div>)
+            } */}
+        </div >
+    </div >)
 }

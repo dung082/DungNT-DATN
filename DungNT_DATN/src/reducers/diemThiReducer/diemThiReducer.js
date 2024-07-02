@@ -12,7 +12,9 @@ export const diemThiSlice = createSlice({
         pageSize: 10,
         kyThi: "",
         namHoc: "",
-        errorMessage: ""
+        errorMessage: "",
+        listMonThi: [],
+        monThi: ""
     },
     reducers: {
         setDiemThi: (state, action) => {
@@ -33,17 +35,24 @@ export const diemThiSlice = createSlice({
         },
         setErrorMessage: (state, action) => {
             state.errorMessage = action.payload
+        },
+        setListMonThi: (state, action) => {
+            state.listMonThi = action.payload
+        },
+        setMonThi: (state, action) => {
+            state.monThi = action.payload
         }
     },
 });
 
-export const getDiemThiAction = (type, username, kyThiId) => async (dispatch) => {
+export const getDiemThiAction = (username, kyThiId, monThiId) => async (dispatch) => {
     try {
-        const res = await diemthiservice.getDiemThi(type, username, kyThiId);
+        const res = await diemthiservice.getDiemThi(username, kyThiId, monThiId);
         if (res.status === 200) {
             dispatch(setDiemThi(res.data.value))
-            dispatch(setKyThi(res.data.value?.kythi?.id))
-            dispatch(setNamHoc(res.data.value?.namhoc))
+            dispatch(setKyThi(res.data.value?.kyThi?.id))
+            dispatch(setNamHoc(res.data.value?.kyHoc?.namHoc))
+            dispatch(setMonThi(monThiId))
         }
     }
     catch (err) {
@@ -53,6 +62,25 @@ export const getDiemThiAction = (type, username, kyThiId) => async (dispatch) =>
     }
 }
 
-export const { setDiemThi, setAdvanceSearchDiemThi, setTypeSearch, setKyThi, setNamHoc, setErrorMessage } = diemThiSlice.actions;
+export const getListMonThiAction = (khoiHoc) => async (dispatch) => {
+    try {
+        const res = await diemthiservice.getListMonThi(khoiHoc);
+        if (res.status === 200) {
+            let listSelect = res.data?.value?.map(item => {
+                return {
+                    value: item.Id,
+                    label: item.tenMonThi
+                }
+            })
+
+            dispatch(setListMonThi([...listSelect, { value: "", label: "Tổng quát" }]))
+        }
+    }
+    catch (err) {
+        console.log();
+    }
+}
+
+export const { setDiemThi, setAdvanceSearchDiemThi, setTypeSearch, setKyThi, setNamHoc, setErrorMessage, setListMonThi, setMonThi } = diemThiSlice.actions;
 export const diemThiState = (state) => state.diemthi;
 export default diemThiSlice.reducer;

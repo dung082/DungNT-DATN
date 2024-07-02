@@ -14,6 +14,9 @@ import LichThi from "./pages/PageContent/LichThi/LichThi";
 import ThongTinHocBa from "./pages/PageContent/ThongTinHocBa/ThongTinHocBa";
 import DanhSachLopHoc from "./pages/PageContent/DanhSachLopHoc/DanhSachLopHoc";
 import DiemThi from "./pages/PageContent/DiemThi/DiemThi";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 function App() {
   return (
     <>
