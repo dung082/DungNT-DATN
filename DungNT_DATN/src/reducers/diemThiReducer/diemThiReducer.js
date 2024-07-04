@@ -53,6 +53,7 @@ export const getDiemThiAction =
         dispatch(setDiemThi(res.data.value));
         dispatch(setKyThi(res.data.value?.kyThi?.id));
         dispatch(setNamHoc(res.data.value?.kyHoc?.namHoc));
+        dispatch(setErrorMessage(""));
         dispatch(setMonThi(monThiId));
       }
     } catch (err) {
