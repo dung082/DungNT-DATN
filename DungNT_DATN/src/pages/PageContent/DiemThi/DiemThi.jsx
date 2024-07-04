@@ -184,7 +184,7 @@ export default function DiemThi(props) {
                   <div className="text-center">{checkDiemThiTK(diemThi?.diemTbMon, "lớp", diemThi?.slDiemThiLop)}</div>
                   <div>
                     <Doughnut
-                      className="m-auto w-[500px] h-[500px] mt-3"
+                      className="m-auto w-[400px] h-[400px] mt-3"
                       data={{
                         labels: diemThi?.slDiemThiLop?.map((value, index) => {
                           const labelName = ["Giỏi", "Khá", "Trung Bình", "Yếu", "Kém"][index];
@@ -251,7 +251,7 @@ export default function DiemThi(props) {
 
                   <div>
                     <Doughnut
-                      className="m-auto w-[500px] h-[500px]"
+                      className="m-auto w-[400px] h-[400px] max-lg:w-[500px] max-lg:h-[500px]"
                       data={{
                         labels: diemThi?.slDiemThiKhoi?.map((value, index) => {
                           const labelName = ["Giỏi", "Khá", "Trung Bình", "Yếu", "Kém"][index];

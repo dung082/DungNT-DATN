@@ -44,7 +44,7 @@ export const CHI_TIET_LOP_HOC_COLUMN_CONFIG = [
     dataIndex: "gioiTinh",
     key: "gioiTinh",
     render: (_, record) => {
-      if (record.gioiTinh === 0) {
+      if (record.gioiTinh === 1) {
         return "Nữ";
       } else {
         return "Nam";
