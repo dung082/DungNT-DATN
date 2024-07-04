@@ -103,7 +103,7 @@ namespace BackEndApi.Repository
                                 diem += item1.Diem;
                             }
                             diem = System.Math.Round(diem / diemThi.Count, 2);
-                            if(diem < 4)
+                            if (diem < 4)
                             {
                                 diemThiLoaiKem++;
                             }
@@ -126,7 +126,7 @@ namespace BackEndApi.Repository
                         }
                     }
 
-                    int[] SLDiemThi = [diemThiLoaiKem, diemThiLoaiYeu, diemThiLoaiTB, diemThiLoaiKha, diemThiLoaiGioi];
+                    int[] SLDiemThi = [diemThiLoaiGioi, diemThiLoaiKha, diemThiLoaiTB, diemThiLoaiYeu, diemThiLoaiKem];
 
                     foreach (var item in lstHsKhoi)
                     {
@@ -162,7 +162,7 @@ namespace BackEndApi.Repository
                         }
                     }
 
-                    int[] SLDiemThiKhoi = [diemThiLoaiKemKhoi, diemThiLoaiYeuKhoi, diemThiLoaiTBKhoi, diemThiLoaiKhaKhoi, diemThiLoaiGioiKhoi];
+                    int[] SLDiemThiKhoi = [diemThiLoaiGioiKhoi, diemThiLoaiKhaKhoi, diemThiLoaiTBKhoi, diemThiLoaiYeuKhoi, diemThiLoaiKemKhoi ];
 
 
                     var result = new
@@ -173,13 +173,16 @@ namespace BackEndApi.Repository
                         listDT = listDiemThi,
                         diemTbMon = diemTBMon,
                         kyHoc = kyhoc,
-                        kyThi = kythi
+                        kyThi = kythi,
+                        diem = diemthi.Diem
                     };
 
                     return new JsonResult(result);
                 }
                 else
                 {
+                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id && item.MonThiId == monThiId);
+
                     //lop
                     foreach (var item in lstHs)
                     {
@@ -301,6 +304,7 @@ namespace BackEndApi.Repository
                         lop = lopHienTai,
                         kyThi = kythi,
                         kyHoc = kyhoc,
+                        diem = diemthi.Diem,
                     };
 
                     return new JsonResult(result);
@@ -371,7 +375,7 @@ namespace BackEndApi.Repository
                         }
                     }
 
-                    int[] SLDiemThi = [diemThiLoaiKem, diemThiLoaiYeu, diemThiLoaiTB, diemThiLoaiKha, diemThiLoaiGioi];
+                    int[] SLDiemThi = [diemThiLoaiGioi, diemThiLoaiKha, diemThiLoaiTB, diemThiLoaiYeu, diemThiLoaiKem];
 
                     foreach (var item in lstHsKhoi)
                     {
@@ -407,7 +411,7 @@ namespace BackEndApi.Repository
                         }
                     }
 
-                    int[] SLDiemThiKhoi = [diemThiLoaiKemKhoi, diemThiLoaiYeuKhoi, diemThiLoaiTBKhoi, diemThiLoaiKhaKhoi, diemThiLoaiGioiKhoi];
+                    int[] SLDiemThiKhoi = [diemThiLoaiGioiKhoi, diemThiLoaiKhaKhoi, diemThiLoaiTBKhoi, diemThiLoaiYeuKhoi, diemThiLoaiKemKhoi];
 
 
                     var result = new
@@ -418,13 +422,16 @@ namespace BackEndApi.Repository
                         listDT = listDiemThi,
                         diemTbMon = diemTBMon,
                         kyHoc = kyhoc,
-                        kyThi = kythi
+                        kyThi = kythi,
+                        diem = diemthi.Diem,
                     };
 
                     return new JsonResult(result);
                 }
                 else
                 {
+                    diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id && item.MonThiId == monThiId);
+
                     foreach (var item in lstHs)
                     {
                         var diemThi = await _context.DiemThis.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyThiId == kythi.Id && item1.MonThiId == monThiId);
@@ -546,6 +553,7 @@ namespace BackEndApi.Repository
                         lop = lopHienTai1,
                         kyThi = kythi,
                         kyHoc = kyhoc,
+                        diem = diemthi.Diem,
                     };
 
                     return new JsonResult(result);

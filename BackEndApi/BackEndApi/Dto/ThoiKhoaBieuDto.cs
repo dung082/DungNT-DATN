@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BackEndData.Entities
+﻿namespace BackEndApi.Dto
 {
-    public class ThoiKhoaBieu
+    public class ThoiKhoaBieuDto
     {
-        public Guid Id { get; set; }
         public Guid TietHocId { get; set; }
         public DateTime NgayHoc { get; set; }
         public DateTime NamHoc { get; set; }
