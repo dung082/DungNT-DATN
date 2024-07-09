@@ -79,7 +79,7 @@ namespace BackEndApi.Repository
         public async Task<ActionResult> ThemThoiKhoaBieu(ThoiKhoaBieuDto thoiKhoaBieuDto)
         {
             var tkb = await _context.ThoiKhoaBieus.FirstOrDefaultAsync(item => item.TietHocId == thoiKhoaBieuDto.TietHocId && item.NgayHoc == thoiKhoaBieuDto.NgayHoc);
-            if (tkb == null)
+            if (tkb != null)
             {
                 throw new Exception("Tiết học trong ngày đã có lịch học");
             }
