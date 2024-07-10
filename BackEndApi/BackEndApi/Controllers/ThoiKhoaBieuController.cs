@@ -19,9 +19,9 @@ namespace BackEndApi.Controllers
         }
         [HttpGet]
         [Route("LayThoiKhoaBieu")]
-        public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc)
+        public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, Guid lopId)
         {
-            var lstTkb = await _iThoiKhoaBieuRepository.LayThoiKhoaBieu(ngayHoc);
+            var lstTkb = await _iThoiKhoaBieuRepository.LayThoiKhoaBieu(ngayHoc , lopId);
             return Ok(lstTkb);
         }
 
@@ -30,6 +30,13 @@ namespace BackEndApi.Controllers
         public async Task<ActionResult> ThemThoiKhoaBieu(ThoiKhoaBieuDto thoiKhoaBieuDto)
         {
             return await _iThoiKhoaBieuRepository.ThemThoiKhoaBieu(thoiKhoaBieuDto);
+        }
+
+        [HttpPost]
+        [Route("ThemListThoiKhoaBieu")]
+        public async Task<ActionResult> ThemListThoiKhoaBieu(List<ThoiKhoaBieuDto> thoiKhoaBieuDto)
+        {
+            return await _iThoiKhoaBieuRepository.ThemListThoiKhoaBieu(thoiKhoaBieuDto);
         }
     }
 }
