@@ -149,10 +149,10 @@ export default function PageTemplate() {
                       },
                     },
                     {
-                      key: "/LichHocTheoTuan",
+                      key: "/ThoiKhoaBieu",
                       label: "Thời khóa biểu",
                       onClick: () => {
-                        navigate("/LichHocTheoTuan");
+                        navigate("/ThoiKhoaBieu");
                       },
                     },
                     {

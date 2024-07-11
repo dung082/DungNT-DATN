@@ -16,6 +16,7 @@ import DanhSachLopHoc from "./pages/PageContent/DanhSachLopHoc/DanhSachLopHoc";
 import DiemThi from "./pages/PageContent/DiemThi/DiemThi";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import ThoiKhoaBieu from "./pages/PageContent/ThoiKhoaBieu/ThoiKhoaBieu";
 
 ChartJS.register(ArcElement, Tooltip, Legend , ChartDataLabels);
 
@@ -34,7 +35,7 @@ function App() {
             <Route path="/ThongTinCaNhan" element={<InfoPage />} />
             <Route path="/DoiMatKhau" element={<HomePage />} />
             <Route path="/ChuongTrinhHoc" element={<ChuongTrinhHoc />} />
-            <Route path="/LichHocTheoTuan" element={<LichHocTheoTuan />} />
+            <Route path="/ThoiKhoaBieu" element={<ThoiKhoaBieu />} />
             <Route path="/LichThi" element={<LichThi />} />
             <Route path="/XemDiemThi" element={<DiemThi />} />
             <Route path="/ThongTinHocBa" element={<ThongTinHocBa />} />

@@ -238,3 +238,50 @@ table.table-diem thead tr th{
 .ant-select.ant-select-disabled .ant-select-arrow {
   color: #3e3838;
 }
+.table-tkb tr th:first-child {
+
+  border-left: 1px solid black;
+}
+
+.table-tkb tr th {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  padding : 5px;
+  min-width : 150px
+}
+
+.table-tkb tr td {
+  min-width : 150px
+}
+
+.table-tkb , .table-tkb tr:first-child th:last-child {
+  border-top-right-radius : 6px;
+}
+
+.table-tkb , .table-tkb tr:first-child th:first-child {
+  border-top-left-radius : 6px;
+}
+
+.table-tkb tr td:first-child {
+  border : 1px solid black !important;
+  padding : 10px;
+  font-weight : bold !important;
+  border-top : none;
+}
+
+.table-tkb  tr:nth-child(even) {
+  background-color: #fff;
+}
+.table-tkb tr td div{
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  padding : 5px;
+  min-width : 150px;
+  height : 40px;
+  cursor : pointer;
+}
+
+.ant-picker-content tbody tr:nth-child(even) {
+  background-color : #fff
+}

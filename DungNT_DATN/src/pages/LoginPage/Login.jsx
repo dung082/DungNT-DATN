@@ -13,8 +13,8 @@ export default function Login() {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      username: "",
-      password: "",
+      username: "hs_dungnt",
+      password: "hb@2024",
     },
     validationSchema: Yup.object().shape({
       username: Yup.string()
