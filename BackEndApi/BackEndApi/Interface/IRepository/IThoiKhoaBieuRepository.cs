@@ -8,6 +8,6 @@ namespace BackEndApi.Interface.IRepository
     {
         public Task<ActionResult> ThemThoiKhoaBieu(ThoiKhoaBieuDto thoiKhoaBieuDto);
         public Task<ActionResult> ThemListThoiKhoaBieu(List<ThoiKhoaBieuDto> listThoiKhoaBieuDto);
-        public Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, Guid lopId);
+        public Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, string username);
     }
 }

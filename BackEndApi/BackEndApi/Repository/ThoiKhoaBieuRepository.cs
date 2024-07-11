@@ -18,13 +18,15 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, Guid lopId)
+        public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, string username)
         {
 
             Dictionary<string, List<List<ThoiKhoaBieuViewDto>>> list = new Dictionary<string, List<List<ThoiKhoaBieuViewDto>>>();
             List<List<ThoiKhoaBieuViewDto>> listtkbViewSang = new List<List<ThoiKhoaBieuViewDto>>();
             List<List<ThoiKhoaBieuViewDto>> listtkbViewChieu = new List<List<ThoiKhoaBieuViewDto>>();
             DateOnly[] weekDays = new DateOnly[7];
+            string namhoc = "";
+            KyHoc kyHoc = new KyHoc();
             if (String.IsNullOrWhiteSpace(ngayHoc.ToString()))
             {
                 var today = DateTime.Now;
@@ -46,6 +48,17 @@ namespace BackEndApi.Repository
 
                 }
 
+                if (weekDays[0].Month >= 8)
+                {
+                    namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
+                }
+                else
+                {
+                    namhoc = (weekDays[0].Year - 1).ToString() + "-" + weekDays[0].Year.ToString();
+                }
+
+                kyHoc = await _context.KyHocs.FirstOrDefaultAsync(item => DateOnly.FromDateTime(item.NgayBatDau) < weekDays[0] && DateOnly.FromDateTime(item.NgayKetThuc) > weekDays[0]);
+
             }
             else
             {
@@ -64,11 +77,25 @@ namespace BackEndApi.Repository
                 {
                     weekDays[i] = weekStart.AddDays(i);
                 }
+
+                if (weekDays[0].Month >= 8)
+                {
+                    namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
+                }
+                else
+                {
+                    namhoc = (weekDays[0].Year - 1).ToString() + "-" + weekDays[0].Year.ToString();
+
+                }
+                kyHoc = await _context.KyHocs.FirstOrDefaultAsync(item => DateOnly.FromDateTime(item.NgayBatDau) < weekDays[0] && DateOnly.FromDateTime(item.NgayKetThuc) > weekDays[0]);
+
                 // Thiết lập thứ Hai là ngày đầu tuần
             }
+
             var IdCaSang = await _context.CaHocs.Where(item => item.TenCaHoc.Trim().ToLower() == "Ca sáng".ToLower()).Select(i => i.Id).FirstOrDefaultAsync();
             var IdCaChieu = await _context.CaHocs.FirstOrDefaultAsync(item => item.TenCaHoc.Trim().ToLower() == "Ca sáng".ToLower());
             var listTietHocSang = await _context.TietHocs.Where(item => item.CaHocId == IdCaSang).Select(i => i.Id).ToListAsync();
+            var lopId = await _context.ChiTietLops.Where(item => item.Username == username && item.NamHoc == namhoc).Select(i => i.LopId).FirstOrDefaultAsync();
             foreach (var item in weekDays)
             {
                 var lsttkb = await _context.ThoiKhoaBieus.Where(item1 => DateOnly.FromDateTime(item1.NgayHoc) == item && item1.LopId == lopId).ToListAsync();
@@ -121,10 +148,15 @@ namespace BackEndApi.Repository
 
             list.Add("S", listtkbViewSang);
             list.Add("C", listtkbViewChieu);
+
+            var lopHt = await _context.Lops.FirstOrDefaultAsync(item => item.Id == lopId);
             var result = new
             {
                 ngay = weekDays,
-                data = list
+                data = list,
+                lopObj = lopHt,
+                namHoc = namhoc,
+                kyhoc = kyHoc
             };
 
             return new JsonResult(result);
