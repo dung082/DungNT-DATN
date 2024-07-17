@@ -1,7 +1,7 @@
 ﻿using BackEndApi.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BackEndApi.Repository
+namespace BackEndApi.Interface.IRepository
 {
     public interface IMonThiRepository
     {

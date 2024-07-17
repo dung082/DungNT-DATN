@@ -32,6 +32,8 @@ namespace BackEndData
         public DbSet<HocBa> HocBas { get; set; }
         public DbSet<DiemThi> DiemThis { get; set; }
         public DbSet<MonThi> MonThis { get; set; }
+        public DbSet<MonTongKet> MonTongKets { get; set; }
+        public DbSet<DiemTongKet> DiemTongKets { get; set; }
 
     }
 }

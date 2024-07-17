@@ -38,5 +38,12 @@ namespace BackEndApi.Controllers
         {
             return await _iThoiKhoaBieuRepository.ThemListThoiKhoaBieu(thoiKhoaBieuDto);
         }
+
+        [HttpGet]
+        [Route("ChiTietThoiKhoaBieu")]
+        public async Task<ActionResult> ChiTietThoiKhoaBieu(Guid tkbId)
+        {
+            return await _iThoiKhoaBieuRepository.ChiTietThoiKhoaBieu(tkbId);
+        }
     }
 }

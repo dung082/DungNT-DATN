@@ -9,5 +9,6 @@ namespace BackEndApi.Interface.IRepository
         public Task<ActionResult> ThemThoiKhoaBieu(ThoiKhoaBieuDto thoiKhoaBieuDto);
         public Task<ActionResult> ThemListThoiKhoaBieu(List<ThoiKhoaBieuDto> listThoiKhoaBieuDto);
         public Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, string username);
+        public Task<ActionResult> ChiTietThoiKhoaBieu(Guid tkbId);
     }
 }

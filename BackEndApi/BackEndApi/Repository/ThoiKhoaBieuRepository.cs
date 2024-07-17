@@ -18,6 +18,57 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
+        public async Task<ActionResult> ChiTietThoiKhoaBieu(Guid tkbId)
+        {
+            var tkb = await _context.ThoiKhoaBieus.FirstOrDefaultAsync(item => item.Id == tkbId);
+            if (tkb == null)
+            {
+                throw new Exception("Lịch học không tồn tại");
+            }
+            var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == tkb.LopId);
+            var tiethoc = await _context.TietHocs.FirstOrDefaultAsync(item => item.Id == tkb.TietHocId);
+            var cahoc = await _context.CaHocs.FirstOrDefaultAsync(item => item.Id == tiethoc.CaHocId);
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == tkb.KyHocId);
+            var monhoc = await _context.MonHocs.FirstOrDefaultAsync(item => item.Id == tkb.MonHocId);
+            var gv = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Id == tkb.GiaoVienId);
+            ChiTietThoiKhoaBieuDto thoiKhoaBieuView = new ChiTietThoiKhoaBieuDto()
+            {
+                Id = tkb.Id,
+                GiaoVienId = tkb.GiaoVienId,
+                CaHocId = cahoc.Id,
+                KyHocId = tkb.KyHocId,
+                LopId = tkb.LopId,
+                MonHocId = tkb.MonHocId,
+                NamHoc = kyhoc.NamHoc,
+                NgayHoc = tkb.NgayHoc,
+                Status = tkb.Status,
+                TenCaHoc = cahoc.TenCaHoc,
+                TenGiaoVien = gv.HoTen,
+                TenKyHoc = kyhoc.TenKyHoc,
+                TenLop = lop.TenLop,
+                TenMonHoc = monhoc.TenMonHoc,
+                TenTietHoc = tiethoc.TenTietHoc,
+                TietHocId = tkb.TietHocId,
+                EmailGiaoVien = gv.Email,
+                SoDienThoaiGiaoVien = gv.SoDienThoai
+            };
+
+            var ctl = await _context.ChiTietLops.Where(item => item.LopId == tkb.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
+            List<NguoiDung> listNguoiDung = new List<NguoiDung>();
+            foreach(var item in ctl)
+            {
+                var nd = await _context.NguoiDungs.FirstOrDefaultAsync(item1 => item1.Username == item.Username);
+                listNguoiDung.Add(nd);
+            };
+            listNguoiDung = listNguoiDung.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
+            var result = new
+            {
+                cttkb = thoiKhoaBieuView,
+                lstnd = listNguoiDung,
+            };
+            return new JsonResult(result);
+        }
+
         public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, string username)
         {
 

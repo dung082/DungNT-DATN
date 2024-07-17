@@ -1,6 +1,5 @@
 ﻿using BackEndApi.Dto;
 using BackEndApi.Interface.IRepository;
-using BackEndApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers

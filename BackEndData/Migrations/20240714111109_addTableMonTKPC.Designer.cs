@@ -4,6 +4,7 @@ using BackEndData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEndData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240714111109_addTableMonTKPC")]
+    partial class addTableMonTKPC
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,33 +133,6 @@ namespace BackEndData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DiemThis");
-                });
-
-            modelBuilder.Entity("BackEndData.Entities.DiemTongKet", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<decimal>("Diem")
-                        .HasColumnType("decimal(65,30)");
-
-                    b.Property<int>("Khoi")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("KyHoc")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MonTongKet")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DiemTongKets");
                 });
 
             modelBuilder.Entity("BackEndData.Entities.HocBa", b =>
