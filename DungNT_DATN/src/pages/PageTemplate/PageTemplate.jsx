@@ -163,6 +163,13 @@ export default function PageTemplate() {
                       },
                     },
                     {
+                      key: "/LichThi",
+                      label: "Điểm danh,xin nghỉ",
+                      onClick: () => {
+                        navigate("/LichThi");
+                      },
+                    },
+                    {
                       key: "/XemDiemThi",
                       label: "Xem điểm thi",
                       onClick: () => {

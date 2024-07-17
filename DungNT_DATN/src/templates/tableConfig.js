@@ -70,6 +70,31 @@ export const CHI_TIET_LOP_HOC_COLUMN_CONFIG = [
   },
 ];
 
+export const HOC_SINH_CHI_TIET_THOI_KHOA_BIEU = [
+  {
+    title: "STT",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
+    title: "Họ và tên",
+    dataIndex: "hoTen",
+    key: "hoTen",
+  },
+  {
+    title: "Giới tính",
+    dataIndex: "gioiTinh",
+    key: "gioiTinh",
+    render: (_, record) => {
+      if (record.gioiTinh === 1) {
+        return "Nữ";
+      } else {
+        return "Nam";
+      }
+    },
+  },
+];
+
 export const DIEM_THI_LOP = [
   {
     title: "STT",
