@@ -1,0 +1,627 @@
+﻿using BackEndApi.Dto;
+using BackEndApi.Interface.IRepository;
+using BackEndData;
+using BackEndData.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace BackEndApi.Repository
+{
+    public class DiemTongKetRepository : IDiemTongKetRepository
+    {
+        private readonly ApplicationDbContext _context;
+
+        public DiemTongKetRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<ActionResult> LayDiemHocBa(string username ,int khoi)
+        {
+            var listLopTrongKhoi = await _context.Lops.Where(item => item.Khoi == khoi).Select(item => item.Id).ToListAsync();
+            var lopHoc = await _context.ChiTietLops.FirstOrDefaultAsync(item => listLopTrongKhoi.Contains(item.LopId) && item.Username == username);
+            return new JsonResult(true);
+        }
+
+        public async Task<ActionResult> LayDiemTongKet(string? username, Guid? kyHocId, Guid? monTongKetId)
+        {
+            Lop lop = new Lop();
+            KyHoc kyhoc = new KyHoc();
+            MonThi monThi = new MonThi();
+            List<ChiTietLop> lstHs = new List<ChiTietLop>();
+            List<ChiTietLop> lstHsKhoi = new List<ChiTietLop>();
+            DiemTongKet diemtongket = new DiemTongKet();
+            var listKyHoc = await _context.KyHocs.ToListAsync();
+            int diem01Lop = 0;
+            int diem12Lop = 0;
+            int diem23Lop = 0;
+            int diem34Lop = 0;
+            int diem45Lop = 0;
+            int diem56Lop = 0;
+            int diem67Lop = 0;
+            int diem78Lop = 0;
+            int diem89Lop = 0;
+            int diem910Lop = 0;
+            int diem01Khoi = 0;
+            int diem12Khoi = 0;
+            int diem23Khoi = 0;
+            int diem34Khoi = 0;
+            int diem45Khoi = 0;
+            int diem56Khoi = 0;
+            int diem67Khoi = 0;
+            int diem78Khoi = 0;
+            int diem89Khoi = 0;
+            int diem910Khoi = 0;
+            int diemThiLoaiGioi = 0;
+            int diemThiLoaiKha = 0;
+            int diemThiLoaiTB = 0;
+            int diemThiLoaiYeu = 0;
+            int diemThiLoaiKem = 0;
+            int diemThiLoaiGioiKhoi = 0;
+            int diemThiLoaiKhaKhoi = 0;
+            int diemThiLoaiTBKhoi = 0;
+            int diemThiLoaiYeuKhoi = 0;
+            int diemThiLoaiKemKhoi = 0;
+            decimal diemTBlop = 0;
+            decimal diemTBKhoi = 0;
+
+            if (String.IsNullOrWhiteSpace(kyHocId.ToString()))
+            {
+                kyhoc = TimKyHocGanNhat(DateTime.Now, listKyHoc);
+                if (kyhoc == null)
+                {
+                    throw new Exception("Kỳ học không tồn tại");
+                }
+                diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id);
+                if (diemtongket == null)
+                {
+                    throw new Exception($"Chưa có điểm tổng kết của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}");
+                }
+                lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemtongket.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
+                var lopHienTai = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemtongket.LopId);
+                var listLopCungKhoiThi = await _context.Lops.Where(item => item.Khoi == lopHienTai.Khoi && item.KhoiHoc == lopHienTai.KhoiHoc).Select(i => i.Id).ToListAsync();
+                lstHsKhoi = await _context.ChiTietLops.Where(item =>  item.NamHoc == kyhoc.NamHoc).ToListAsync();
+                if (String.IsNullOrWhiteSpace(monTongKetId.ToString()))
+                {
+                    var listDiemTongKet = await _context.DiemTongKets.Where(item => item.KyHocId == kyhoc.Id && item.Username == username).ToListAsync();
+                    decimal diemTBMon = 0;
+                    decimal diemTBMonLop = 0;
+                    decimal diemTBMonKhoi = 0;
+                    if (listDiemTongKet.Count > 0)
+                    {
+                        foreach (var item in listDiemTongKet)
+                        {
+                            diemTBMon += item.Diem;
+                        };
+                        diemTBMon = System.Math.Round(diemTBMon / listDiemTongKet.Count, 2);
+                    }
+                    foreach (var item in lstHs)
+                    {
+                        decimal diem = 0;
+                        var diemTongKet = await _context.DiemTongKets.Where(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id).ToListAsync();
+                        if (diemTongKet.Count > 0)
+                        {
+                            foreach (var item1 in diemTongKet)
+                            {
+                                diem += item1.Diem;
+                            }
+                            diem = System.Math.Round(diem / diemTongKet.Count, 2);
+                            if (diem < 4)
+                            {
+                                diemThiLoaiKem++;
+                            }
+                            else if (diem >= 4 && diem < 5.5M)
+                            {
+                                diemThiLoaiYeu++;
+                            }
+                            if (diem >= 5.5M && diem < 7M)
+                            {
+                                diemThiLoaiTB++;
+                            }
+                            if (diem >= 7 && diem < 8.5M)
+                            {
+                                diemThiLoaiKha++;
+                            }
+                            if (diem >= 8.5M && diem < 10)
+                            {
+                                diemThiLoaiGioi++;
+                            }
+                        }
+                    }
+
+                    int[] SLDiemThi = [diemThiLoaiGioi, diemThiLoaiKha, diemThiLoaiTB, diemThiLoaiYeu, diemThiLoaiKem];
+
+                    foreach (var item in lstHsKhoi)
+                    {
+                        decimal diem = 0;
+                        var diemTongKet = await _context.DiemTongKets.Where(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id).ToListAsync();
+                        if (diemTongKet.Count > 0)
+                        {
+                            foreach (var item1 in diemTongKet)
+                            {
+                                diem += item1.Diem;
+                            }
+                            diem = System.Math.Round(diem / diemTongKet.Count, 2);
+                            if (diem < 4)
+                            {
+                                diemThiLoaiKemKhoi++;
+                            }
+                            else if (diem >= 4 && diem < 5.5M)
+                            {
+                                diemThiLoaiYeuKhoi++;
+                            }
+                            if (diem >= 5.5M && diem < 7M)
+                            {
+                                diemThiLoaiTBKhoi++;
+                            }
+                            if (diem >= 7 && diem < 8.5M)
+                            {
+                                diemThiLoaiKhaKhoi++;
+                            }
+                            if (diem >= 8.5M && diem < 10)
+                            {
+                                diemThiLoaiGioiKhoi++;
+                            }
+                        }
+                    }
+
+                    int[] SLDiemThiKhoi = [diemThiLoaiGioiKhoi, diemThiLoaiKhaKhoi, diemThiLoaiTBKhoi, diemThiLoaiYeuKhoi, diemThiLoaiKemKhoi];
+
+
+                    var result = new
+                    {
+                        slDiemThiKhoi = SLDiemThiKhoi,
+                        slDiemThiLop = SLDiemThi,
+                        lop = lopHienTai,
+                        listDT = listDiemTongKet,
+                        diemTbMon = diemTBMon,
+                        kyHoc = kyhoc,
+                        diem = diemtongket.Diem
+                    };
+
+                    return new JsonResult(result);
+                }
+                else
+                {
+                    diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id && item.MonTongKetId == monTongKetId);
+
+                    //lop
+                    foreach (var item in lstHs)
+                    {
+                        var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id && item1.MonTongKetId == monTongKetId);
+                        if (diemTongKet == null)
+                        {
+                            diem01Lop++;
+                        }
+                        else
+                        {
+                            if (0 <= diemTongKet.Diem && diemTongKet.Diem < 1)
+                            {
+                                diem01Lop++;
+                            }
+                            else if (1 <= diemTongKet.Diem && diemTongKet.Diem < 2)
+                            {
+                                diem12Lop++;
+                            }
+                            else if (2 <= diemTongKet.Diem && diemTongKet.Diem < 3)
+                            {
+                                diem23Lop++;
+                            }
+                            else if (3 <= diemTongKet.Diem && diemTongKet.Diem < 4)
+                            {
+                                diem34Lop++;
+                            }
+                            else if (4 <= diemTongKet.Diem && diemTongKet.Diem < 5)
+                            {
+                                diem45Lop++;
+                            }
+                            else if (5 <= diemTongKet.Diem && diemTongKet.Diem < 6)
+                            {
+                                diem56Lop++;
+                            }
+                            else if (6 <= diemTongKet.Diem && diemTongKet.Diem < 7)
+                            {
+                                diem67Lop++;
+                            }
+                            else if (7 <= diemTongKet.Diem && diemTongKet.Diem < 8)
+                            {
+                                diem78Lop++;
+                            }
+                            else if (8 <= diemTongKet.Diem && diemTongKet.Diem < 9)
+                            {
+                                diem89Lop++;
+                            }
+                            else if (9 <= diemTongKet.Diem && diemTongKet.Diem <= 10)
+                            {
+                                diem910Lop++;
+                            }
+                            diemTBlop += diemTongKet.Diem;
+                        }
+                    }
+                    diemTBlop = System.Math.Round(diemTBlop / lstHs.Count, 2);
+                    int[] SLdiemTBLop = [diem01Lop, diem12Lop, diem23Lop, diem34Lop, diem45Lop, diem56Lop, diem67Lop, diem78Lop, diem89Lop, diem910Lop];
+                    //khoi
+                    foreach (var item in lstHsKhoi)
+                    {
+                        var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id && item1.MonTongKetId == monTongKetId);
+                        if (diemTongKet == null)
+                        {
+                            diem01Khoi++;
+                        }
+                        else
+                        {
+
+                            if (0 <= diemTongKet.Diem && diemTongKet.Diem < 1)
+                            {
+                                diem01Khoi++;
+                            }
+                            else if (1 <= diemTongKet.Diem && diemTongKet.Diem < 2)
+                            {
+                                diem12Khoi++;
+                            }
+                            else if (2 <= diemTongKet.Diem && diemTongKet.Diem < 3)
+                            {
+                                diem23Khoi++;
+                            }
+                            else if (3 <= diemTongKet.Diem && diemTongKet.Diem < 4)
+                            {
+                                diem34Khoi++;
+                            }
+                            else if (4 <= diemTongKet.Diem && diemTongKet.Diem < 5)
+                            {
+                                diem45Khoi++;
+                            }
+                            else if (5 <= diemTongKet.Diem && diemTongKet.Diem < 6)
+                            {
+                                diem56Khoi++;
+                            }
+                            else if (6 <= diemTongKet.Diem && diemTongKet.Diem < 7)
+                            {
+                                diem67Khoi++;
+                            }
+                            else if (7 <= diemTongKet.Diem && diemTongKet.Diem < 8)
+                            {
+                                diem78Khoi++;
+                            }
+                            else if (8 <= diemTongKet.Diem && diemTongKet.Diem < 9)
+                            {
+                                diem89Khoi++;
+                            }
+                            else if (9 <= diemTongKet.Diem && diemTongKet.Diem <= 10)
+                            {
+                                diem910Khoi++;
+                            }
+
+                            diemTBKhoi += diemTongKet.Diem;
+                        }
+                    }
+                    int[] SLdiemTBKhoi = [diem01Khoi, diem12Khoi, diem23Khoi, diem34Khoi, diem45Khoi, diem56Khoi, diem67Khoi, diem78Khoi, diem89Khoi, diem910Khoi];
+                    diemTBKhoi = System.Math.Round(diemTBKhoi / lstHsKhoi.Count, 2);
+                    var result = new
+                    {
+                        slDiemTBLop = SLdiemTBLop,
+                        slDiemTBKhoi = SLdiemTBKhoi,
+                        diemTblop = diemTBlop,
+                        diemTbKhoi = diemTBKhoi,
+                        lop = lopHienTai,
+                        kyHoc = kyhoc,
+                        diem = diemtongket.Diem,
+                    };
+
+                    return new JsonResult(result);
+                }
+            }
+            else
+            {
+                kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == kyHocId);
+                if (kyhoc == null)
+                {
+                    throw new Exception("Kỳ học không tồn tại");
+                }
+                diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id);
+                if (diemtongket == null)
+                {
+                    throw new Exception($"Chưa có điểm của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}");
+                }
+                lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemtongket.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
+                var lopHienTai1 = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemtongket.LopId);
+                var listLopCungKhoiThi1 = await _context.Lops.Where(item => item.Khoi == lopHienTai1.Khoi && item.KhoiHoc == lopHienTai1.KhoiHoc).Select(i => i.Id).ToListAsync();
+                lstHsKhoi = await _context.ChiTietLops.Where(item => item.NamHoc == kyhoc.NamHoc).ToListAsync();
+                if (String.IsNullOrWhiteSpace(monTongKetId.ToString()))
+                {
+                    var listDiemTongKet = await _context.DiemTongKets.Where(item => item.KyHocId == kyhoc.Id && item.Username == username).ToListAsync();
+                    decimal diemTBMon = 0;
+                    decimal diemTBMonLop = 0;
+                    decimal diemTBMonKhoi = 0;
+                    if (listDiemTongKet.Count > 0)
+                    {
+                        foreach (var item in listDiemTongKet)
+                        {
+                            diemTBMon += item.Diem;
+                        };
+                        diemTBMon = System.Math.Round(diemTBMon / listDiemTongKet.Count, 2);
+                    }
+                    foreach (var item in lstHs)
+                    {
+                        decimal diem = 0;
+                        var diemTongKet = await _context.DiemTongKets.Where(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id).ToListAsync();
+                        if (diemTongKet.Count > 0)
+                        {
+                            foreach (var item1 in diemTongKet)
+                            {
+                                diem += item1.Diem;
+                            }
+                            diem = System.Math.Round(diem / diemTongKet.Count, 2);
+                            if (diem < 4)
+                            {
+                                diemThiLoaiKem++;
+                            }
+                            else if (diem >= 4 && diem < 5.5M)
+                            {
+                                diemThiLoaiYeu++;
+                            }
+                            if (diem >= 5.5M && diem < 7M)
+                            {
+                                diemThiLoaiTB++;
+                            }
+                            if (diem >= 7 && diem < 8.5M)
+                            {
+                                diemThiLoaiKha++;
+                            }
+                            if (diem >= 8.5M && diem < 10)
+                            {
+                                diemThiLoaiGioi++;
+                            }
+                        }
+                    }
+
+                    int[] SLDiemThi = [diemThiLoaiGioi, diemThiLoaiKha, diemThiLoaiTB, diemThiLoaiYeu, diemThiLoaiKem];
+
+                    foreach (var item in lstHsKhoi)
+                    {
+                        decimal diem = 0;
+                        var diemTongKet = await _context.DiemTongKets.Where(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id).ToListAsync();
+                        if (diemTongKet.Count > 0)
+                        {
+                            foreach (var item1 in diemTongKet)
+                            {
+                                diem += item1.Diem;
+                            }
+                            diem = System.Math.Round(diem / diemTongKet.Count, 2);
+                            if (diem < 4)
+                            {
+                                diemThiLoaiKemKhoi++;
+                            }
+                            else if (diem >= 4 && diem < 5.5M)
+                            {
+                                diemThiLoaiYeuKhoi++;
+                            }
+                            if (diem >= 5.5M && diem < 7M)
+                            {
+                                diemThiLoaiTBKhoi++;
+                            }
+                            if (diem >= 7 && diem < 8.5M)
+                            {
+                                diemThiLoaiKhaKhoi++;
+                            }
+                            if (diem >= 8.5M && diem < 10)
+                            {
+                                diemThiLoaiGioiKhoi++;
+                            }
+                        }
+                    }
+
+                    int[] SLDiemThiKhoi = [diemThiLoaiGioiKhoi, diemThiLoaiKhaKhoi, diemThiLoaiTBKhoi, diemThiLoaiYeuKhoi, diemThiLoaiKemKhoi];
+
+
+                    var result = new
+                    {
+                        slDiemThiKhoi = SLDiemThiKhoi,
+                        slDiemThiLop = SLDiemThi,
+                        lop = lopHienTai1,
+                        listDT = listDiemTongKet,
+                        diemTbMon = diemTBMon,
+                        kyHoc = kyhoc,
+                        diem = diemtongket.Diem,
+                    };
+
+                    return new JsonResult(result);
+                }
+                else
+                {
+                    diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id && item.MonTongKetId == monTongKetId);
+
+                    foreach (var item in lstHs)
+                    {
+                        var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id && item1.MonTongKetId == monTongKetId);
+                        if (diemTongKet == null)
+                        {
+                            diem01Lop++;
+                        }
+                        else
+                        {
+
+                            if (0 <= diemTongKet.Diem && diemTongKet.Diem < 1)
+                            {
+                                diem01Lop++;
+                            }
+                            else if (1 <= diemTongKet.Diem && diemTongKet.Diem < 2)
+                            {
+                                diem12Lop++;
+                            }
+                            else if (2 <= diemTongKet.Diem && diemTongKet.Diem < 3)
+                            {
+                                diem23Lop++;
+                            }
+                            else if (3 <= diemTongKet.Diem && diemTongKet.Diem < 4)
+                            {
+                                diem34Lop++;
+                            }
+                            else if (4 <= diemTongKet.Diem && diemTongKet.Diem < 5)
+                            {
+                                diem45Lop++;
+                            }
+                            else if (5 <= diemTongKet.Diem && diemTongKet.Diem < 6)
+                            {
+                                diem56Lop++;
+                            }
+                            else if (6 <= diemTongKet.Diem && diemTongKet.Diem < 7)
+                            {
+                                diem67Lop++;
+                            }
+                            else if (7 <= diemTongKet.Diem && diemTongKet.Diem < 8)
+                            {
+                                diem78Lop++;
+                            }
+                            else if (8 <= diemTongKet.Diem && diemTongKet.Diem < 9)
+                            {
+                                diem89Lop++;
+                            }
+                            else if (9 <= diemTongKet.Diem && diemTongKet.Diem <= 10)
+                            {
+                                diem910Lop++;
+                            }
+                            diemTBlop += diemTongKet.Diem;
+                        }
+                    }
+                    diemTBlop = System.Math.Round(diemTBlop / lstHs.Count, 2);
+                    int[] SLdiemTBLop = [diem01Lop, diem12Lop, diem23Lop, diem34Lop, diem45Lop, diem56Lop, diem67Lop, diem78Lop, diem89Lop, diem910Lop];
+                    //khoi
+                    foreach (var item in lstHsKhoi)
+                    {
+                        var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(item1 => item1.Username == item.Username && item1.KyHocId == kyhoc.Id && item1.MonTongKetId == monTongKetId);
+                        if (diemTongKet == null)
+                        {
+                            diem01Khoi++;
+                        }
+                        else
+                        {
+
+                            if (0 <= diemTongKet.Diem && diemTongKet.Diem < 1)
+                            {
+                                diem01Khoi++;
+                            }
+                            else if (1 <= diemTongKet.Diem && diemTongKet.Diem < 2)
+                            {
+                                diem12Khoi++;
+                            }
+                            else if (2 <= diemTongKet.Diem && diemTongKet.Diem < 3)
+                            {
+                                diem23Khoi++;
+                            }
+                            else if (3 <= diemTongKet.Diem && diemTongKet.Diem < 4)
+                            {
+                                diem34Khoi++;
+                            }
+                            else if (4 <= diemTongKet.Diem && diemTongKet.Diem < 5)
+                            {
+                                diem45Khoi++;
+                            }
+                            else if (5 <= diemTongKet.Diem && diemTongKet.Diem < 6)
+                            {
+                                diem56Khoi++;
+                            }
+                            else if (6 <= diemTongKet.Diem && diemTongKet.Diem < 7)
+                            {
+                                diem67Khoi++;
+                            }
+                            else if (7 <= diemTongKet.Diem && diemTongKet.Diem < 8)
+                            {
+                                diem78Khoi++;
+                            }
+                            else if (8 <= diemTongKet.Diem && diemTongKet.Diem < 9)
+                            {
+                                diem89Khoi++;
+                            }
+                            else if (9 <= diemTongKet.Diem && diemTongKet.Diem <= 10)
+                            {
+                                diem910Khoi++;
+                            }
+
+                            diemTBKhoi += diemTongKet.Diem;
+                        }
+                    }
+                    int[] SLdiemTBKhoi = [diem01Khoi, diem12Khoi, diem23Khoi, diem34Khoi, diem45Khoi, diem56Khoi, diem67Khoi, diem78Khoi, diem89Khoi, diem910Khoi];
+                    diemTBKhoi = System.Math.Round(diemTBKhoi / lstHsKhoi.Count, 2);
+                    var result = new
+                    {
+                        slDiemTBLop = SLdiemTBLop,
+                        slDiemTBKhoi = SLdiemTBKhoi,
+                        diemTblop = diemTBlop,
+                        diemTbKhoi = diemTBKhoi,
+                        lop = lopHienTai1,
+                        kyHoc = kyhoc,
+                        diem = diemtongket.Diem,
+                    };
+
+                    return new JsonResult(result);
+                }
+            }
+            return new JsonResult(true);
+        }
+
+        public async Task<ActionResult> ThemDiemTongKet(DiemTongKetDto diemTongKetDto)
+        {
+
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(item => item.Id == diemTongKetDto.KyHocId);
+            if (kyhoc == null)
+            {
+                throw new Exception("Kỳ học không tồn tại");
+            }
+            //var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemThiDto.LopId);
+            //if (lop == null)
+            //{
+            //    throw new Exception("Không tồn tại lớp để thêm điểm");
+            //}
+            var monThi = await _context.MonThis.FirstOrDefaultAsync(item => item.Id == diemTongKetDto.MonTongKetId);
+            if (monThi == null)
+            {
+                throw new Exception("Môn tổng kết không tồn tại");
+            }
+            if (await _context.DiemTongKets.FirstOrDefaultAsync(item => item.KyHocId == diemTongKetDto.KyHocId && item.Username == diemTongKetDto.Username && item.LopId == diemTongKetDto.LopId && item.MonTongKetId == diemTongKetDto.MonTongKetId) != null)
+            {
+                throw new Exception("Điểm thi của bạn đã có trong danh sách");
+            }
+            var hs = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == diemTongKetDto.Username && item.LopId == diemTongKetDto.LopId);
+            if (hs == null)
+            {
+                throw new Exception("Không tồn tại học sinh trong lớp ở kỳ học hiện tại để thêm điểm ");
+            }
+
+
+            DiemTongKet diemTongKet = new DiemTongKet()
+            {
+                Id = Guid.NewGuid(),
+                Username = diemTongKetDto.Username,
+                LopId = diemTongKetDto.LopId,
+                KyHocId = diemTongKetDto.KyHocId,
+                MonTongKetId = diemTongKetDto.MonTongKetId,
+                Diem = diemTongKetDto.Diem,
+            };
+
+            _context.DiemTongKets.Add(diemTongKet);
+            _context.SaveChanges();
+            return new JsonResult(diemTongKet);
+        }
+
+        static KyHoc TimKyHocGanNhat(DateTime ngayHienTai, List<KyHoc> danhSachKyHoc)
+        {
+            KyHoc ngayGanNhat = danhSachKyHoc[0]; // Giả sử phần tử đầu tiên là ngày gần nhất ban đầu
+
+            foreach (var ngayItem in danhSachKyHoc)
+            {
+                // Tính khoảng cách tuyệt đối giữa ngày hiện tại và Ngay của NgayItem
+                TimeSpan khoangCach = ngayItem.NgayKetThuc - ngayHienTai;
+                TimeSpan khoangCachGanNhat = ngayGanNhat.NgayKetThuc - ngayHienTai;
+
+                // So sánh khoảng cách, nếu khoảng cách mới nhỏ hơn thì cập nhật NgayItem gần nhất
+                if (Math.Abs(khoangCach.Days) < Math.Abs(khoangCachGanNhat.Days))
+                {
+                    ngayGanNhat = ngayItem;
+                }
+            }
+
+            return ngayGanNhat;
+        }
+    }
+}
