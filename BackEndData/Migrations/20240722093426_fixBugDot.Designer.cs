@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEndData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240714111921_addTableDIemTKPC")]
-    partial class addTableDIemTKPC
+    [Migration("20240722093426_fixBugDot")]
+    partial class fixBugDot
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,13 +144,13 @@ namespace BackEndData.Migrations
                     b.Property<decimal>("Diem")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("Khoi")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("KyHoc")
+                    b.Property<Guid>("KyHocId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("MonTongKet")
+                    b.Property<Guid>("LopId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonTongKetId")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Username")
@@ -369,6 +369,43 @@ namespace BackEndData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("KyThis");
+                });
+
+            modelBuilder.Entity("BackEndData.Entities.LichThi", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CaHocId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("KhoiHoc")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("KhoiThi")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("KyThiId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("MonThiId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("NgayThi")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ThoiGianBatDau")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ThoiGianKetThuc")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LichThis");
                 });
 
             modelBuilder.Entity("BackEndData.Entities.Lop", b =>

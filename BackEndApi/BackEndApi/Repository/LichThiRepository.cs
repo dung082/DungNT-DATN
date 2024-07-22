@@ -38,7 +38,7 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Môn thi không tồn tại");
             }
-            if (lichThiDto.NgayThi < kythi.NgayBatDau || lichThiDto.NgayThi > kythi.NgayKetThuc)
+            if (DateOnly.FromDateTime(lichThiDto.NgayThi) < DateOnly.FromDateTime(kythi.NgayBatDau) || DateOnly.FromDateTime(lichThiDto.NgayThi) > DateOnly.FromDateTime(kythi.NgayKetThuc))
             {
                 throw new Exception("Thời gian thi đã nằm ngoài lịch thi");
             }
@@ -57,7 +57,7 @@ namespace BackEndApi.Repository
             };
             _context.LichThis.Add(lichthi);
             _context.SaveChanges();
-            return new JsonResult(true);
+            return new JsonResult(lichthi);
         }
     }
 }

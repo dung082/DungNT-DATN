@@ -41,5 +41,13 @@ namespace BackEndApi.Controllers
             var result = await _iDiemTongKetRepository.ThemDiemTongKet(diemTongKetDto);
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("ThemListDiemTongKet")]
+        public async Task<ActionResult> ThemListDiemTongKet([FromBody] DiemTongKetAddDto diemTongKetDto)
+        {
+            var result = await _iDiemTongKetRepository.ThemListDiemTongKet(diemTongKetDto);
+            return Ok(result);
+        }
     }
 }

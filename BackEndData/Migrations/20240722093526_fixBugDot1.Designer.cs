@@ -4,6 +4,7 @@ using BackEndData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEndData.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240722093526_fixBugDot1")]
+    partial class fixBugDot1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -378,44 +381,6 @@ namespace BackEndData.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("KhoiHoc")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("KhoiThi")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("KyThiId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("MonThiId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("NgayThi")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("ThoiGianBatDau")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("ThoiGianKetThuc")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LichThis");
-                });
-
-            modelBuilder.Entity("BackEndData.Entities.LichThi", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("CaHocId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("KhoiHoc")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("KhoiThi")

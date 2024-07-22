@@ -4,6 +4,8 @@ using BackEndData;
 using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Net.WebSockets;
 
 namespace BackEndApi.Repository
 {
@@ -16,7 +18,7 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
-        public async Task<ActionResult> LayDiemHocBa(string username ,int khoi)
+        public async Task<ActionResult> LayDiemHocBa(string username, int khoi)
         {
             var listLopTrongKhoi = await _context.Lops.Where(item => item.Khoi == khoi).Select(item => item.Id).ToListAsync();
             var lopHoc = await _context.ChiTietLops.FirstOrDefaultAsync(item => listLopTrongKhoi.Contains(item.LopId) && item.Username == username);
@@ -75,12 +77,22 @@ namespace BackEndApi.Repository
                 diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id);
                 if (diemtongket == null)
                 {
-                    throw new Exception($"Chưa có điểm tổng kết của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}");
+                    var ctlops = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == username);
+                    var lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctlops.LopId);
+                    var result = new
+                    {
+                        lop = lopHoc,
+                        kyHoc = kyhoc,
+                        MessageError = $"Chưa có điểm của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}"
+                    };
+
+                    return new JsonResult(result);
+                    //throw new Exception($"Chưa có điểm tổng kết của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}");
                 }
                 lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemtongket.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
                 var lopHienTai = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemtongket.LopId);
                 var listLopCungKhoiThi = await _context.Lops.Where(item => item.Khoi == lopHienTai.Khoi && item.KhoiHoc == lopHienTai.KhoiHoc).Select(i => i.Id).ToListAsync();
-                lstHsKhoi = await _context.ChiTietLops.Where(item =>  item.NamHoc == kyhoc.NamHoc).ToListAsync();
+                lstHsKhoi = await _context.ChiTietLops.Where(item => item.NamHoc == kyhoc.NamHoc).ToListAsync();
                 if (String.IsNullOrWhiteSpace(monTongKetId.ToString()))
                 {
                     var listDiemTongKet = await _context.DiemTongKets.Where(item => item.KyHocId == kyhoc.Id && item.Username == username).ToListAsync();
@@ -321,7 +333,16 @@ namespace BackEndApi.Repository
                 diemtongket = await _context.DiemTongKets.FirstOrDefaultAsync(item => item.Username == username && item.KyHocId == kyhoc.Id);
                 if (diemtongket == null)
                 {
-                    throw new Exception($"Chưa có điểm của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}");
+                    var ctlops = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == username);
+                    var lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctlops.LopId);
+                    var result = new
+                    {
+                        lop = lopHoc,
+                        kyHoc = kyhoc,
+                        MessageError = $"Chưa có điểm của bạn ở kỳ học {kyhoc.TenKyHoc.Split("-")[kyhoc.TenKyHoc.Split("-").Length - 1].ToLower()}"
+                    };
+
+                    return new JsonResult(result);
                 }
                 lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemtongket.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
                 var lopHienTai1 = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemtongket.LopId);
@@ -622,6 +643,103 @@ namespace BackEndApi.Repository
             }
 
             return ngayGanNhat;
+        }
+
+        public async Task<ActionResult> ThemListDiemTongKet(DiemTongKetAddDto diemTongKetAddDto)
+        {
+
+            DiemTongKetAddDtoResult diemTongKetAddDtoResult = new DiemTongKetAddDtoResult();
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == diemTongKetAddDto.KyHocId);
+            if (kyhoc == null)
+            {
+                throw new Exception("Kỳ học không tồm tại");
+            }
+
+            var ngdung = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == diemTongKetAddDto.Username);
+            if (ngdung == null)
+            {
+                throw new Exception("Người dùng không tồm tại");
+            }
+
+            var lophoc = await _context.Lops.FirstOrDefaultAsync(i => i.Id == diemTongKetAddDto.LopId);
+            if (lophoc == null)
+            {
+                throw new Exception("Lớp học không tồm tại");
+            }
+
+            var hsInlop = await _context.ChiTietLops.FirstOrDefaultAsync(i => i.NamHoc == kyhoc.NamHoc && i.LopId == diemTongKetAddDto.LopId && i.Username == diemTongKetAddDto.Username);
+            if (hsInlop == null)
+            {
+                throw new Exception("Học sinh không có trong lớp");
+            }
+
+            diemTongKetAddDtoResult.Username = diemTongKetAddDto.Username;
+            diemTongKetAddDtoResult.LopId = diemTongKetAddDto.LopId;
+            diemTongKetAddDtoResult.KyHocId = diemTongKetAddDto.KyHocId;
+            diemTongKetAddDtoResult.DiemAddsResult = new List<DiemAddResultDto>();
+            foreach (var item in diemTongKetAddDto.DiemAdds)
+            {
+
+                var montongket = await _context.MonTongKets.FirstOrDefaultAsync(i => i.Id == item.MonTongKetId);
+                if (montongket == null)
+                {
+                    DiemAddResultDto diemAddResult = new DiemAddResultDto()
+                    {
+                        MonTongKetId = item.MonTongKetId,
+                        Diem = item.Diem,
+                        Message = "Môn tổng kết không tồn tại"
+                    };
+                    diemTongKetAddDtoResult.DiemAddsResult.Add(diemAddResult);
+                }
+                else
+                {
+
+                    var tontai = await _context.DiemTongKets.FirstOrDefaultAsync(i => i.MonTongKetId == item.MonTongKetId && i.KyHocId == diemTongKetAddDto.KyHocId && i.Username == diemTongKetAddDto.Username);
+                    if (tontai != null)
+                    {
+                        DiemAddResultDto diemAddResult = new DiemAddResultDto()
+                        {
+                            MonTongKetId = item.MonTongKetId,
+                            Diem = item.Diem,
+                            Message = "Điểm tổng kết đã tồn tại"
+                        };
+                        diemTongKetAddDtoResult.DiemAddsResult.Add(diemAddResult);
+                    }
+                    else
+                    {
+                        DiemAddResultDto diemAddResult = new DiemAddResultDto()
+                        {
+                            MonTongKetId = item.MonTongKetId,
+                            //Diem = item.Diem,
+                            Diem = RandomDiem(),
+                            Message = "Thêm điểm thành công"
+                        };
+                        diemTongKetAddDtoResult.DiemAddsResult.Add(diemAddResult);
+                        DiemTongKet diemTongKet = new DiemTongKet()
+                        {
+                            Id = Guid.NewGuid(),
+                            //Diem = item.Diem,
+                            Diem = RandomDiem(),
+                            KyHocId = diemTongKetAddDto.KyHocId,
+                            MonTongKetId = item.MonTongKetId,
+                            LopId = diemTongKetAddDto.LopId,
+                            Username = diemTongKetAddDto.Username
+                        };
+                        _context.DiemTongKets.Add(diemTongKet);
+                        _context.SaveChanges();
+                    }
+                }
+
+            }
+            return new JsonResult(diemTongKetAddDtoResult);
+
+        }
+
+        public static decimal RandomDiem()
+        {
+            Random random = new Random();
+            var ran = random.NextDouble() * Math.Abs(4) + 6;
+            return (decimal)ran;
         }
     }
 }
