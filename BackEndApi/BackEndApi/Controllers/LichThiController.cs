@@ -19,9 +19,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayLichThi")]
-        public async Task<ActionResult> LayLichThi()
+        public async Task<ActionResult> LayLichThi(DateTime? ngayThi, string username)
         {
-            var result = await _iLichThiRepository.LayLichThi();
+            var result = await _iLichThiRepository.LayLichThi(ngayThi , username);
             return Ok(result);
         }
 

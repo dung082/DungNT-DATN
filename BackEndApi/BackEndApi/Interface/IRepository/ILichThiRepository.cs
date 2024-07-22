@@ -5,7 +5,7 @@ namespace BackEndApi.Interface.IRepository
 {
     public interface ILichThiRepository
     {
-        public Task<ActionResult> LayLichThi();
+        public Task<ActionResult> LayLichThi(DateTime? ngayThi, string username);
         public Task<ActionResult> ThemLichThi(LichThiDto lichThiDto);
     }
 }
