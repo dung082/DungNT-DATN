@@ -72,7 +72,18 @@ namespace BackEndApi.Repository
                 diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
                 if (diemthi == null)
                 {
-                    throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
+                    var ctlops = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == username);
+                    var lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctlops.LopId);
+                    var result = new
+                    {
+                        lop = lopHoc,
+                        kyHoc = kyhoc,
+                        kyThi = kythi,
+                        MessageError = $"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}"
+                    };
+
+                    return new JsonResult(result);
+                    //throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
                 }
                 lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
                 var lopHienTai = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemthi.LopId);
@@ -321,7 +332,18 @@ namespace BackEndApi.Repository
                 diemthi = await _context.DiemThis.FirstOrDefaultAsync(item => item.Username == username && item.KyThiId == kythi.Id);
                 if (diemthi == null)
                 {
-                    throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
+                    var ctlops = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == kyhoc.NamHoc && item.Username == username);
+                    var lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctlops.LopId);
+                    var result = new
+                    {
+                        lop = lopHoc,
+                        kyHoc = kyhoc,
+                        kyThi = kythi,
+                        MessageError = $"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}"
+                    };
+
+                    return new JsonResult(result);
+                    //throw new Exception($"Chưa có điểm của bạn ở kỳ thi {kythi.TenKyThi.Split("-")[kythi.TenKyThi.Split("-").Length - 1].ToLower()}");
                 }
                 lstHs = await _context.ChiTietLops.Where(item => item.LopId == diemthi.LopId && item.NamHoc == kyhoc.NamHoc).ToListAsync();
                 var lopHienTai1 = await _context.Lops.FirstOrDefaultAsync(item => item.Id == diemthi.LopId);
