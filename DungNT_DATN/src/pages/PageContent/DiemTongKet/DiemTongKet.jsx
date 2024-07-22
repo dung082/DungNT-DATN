@@ -3,33 +3,30 @@ import React, { useEffect, useState } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  diemThiState,
-  getDiemThiAction,
-  getListMonThiAction,
-  setKyThi,
   setMonThi,
   setNamHoc,
   setTypeSearch
 } from "../../../reducers/diemThiReducer/diemThiReducer";
+import { diemTongKetState, getDiemTongKetAction, getListKyHocAction, getListMonTongKetAction, setKyHoc, setNamHocTongKet } from "../../../reducers/diemTongKetReducer/diemTongKetReducer";
 import { globalState } from "../../../reducers/globalReducer/globalReducer";
 import {
-  getListKyThiAction,
-  kyThiState,
+  kyThiState
 } from "../../../reducers/kyThiReducer/kyThiReducer";
-export default function DiemThi(props) {
+export default function DiemTongKet(props) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(globalState);
   const {
-    diemThi,
+    diemTongKet,
     pageNumber,
     pageSize,
     typeSearch,
-    kyThi,
+    kyHoc,
     namHoc,
     errorMessage,
-    listMonThi,
-    monThi,
-  } = useSelector(diemThiState);
+    listMonTongKet,
+    monTongKet,
+    listKyHoc
+  } = useSelector(diemTongKetState);
   const { listKyThi } = useSelector(kyThiState);
   const [mt, setMt] = useState("");
   //   const listTypeSearch = [
@@ -78,9 +75,9 @@ export default function DiemThi(props) {
   ];
 
   useEffect(() => {
-    dispatch(getListKyThiAction(""));
-    dispatch(getDiemThiAction(userInfo?.username, "", ""));
-    dispatch(getListMonThiAction(userInfo?.lopIdHienTai));
+    dispatch(getListKyHocAction(""));
+    dispatch(getDiemTongKetAction(userInfo?.username, "", ""));
+    dispatch(getListMonTongKetAction());
     return () => {
       dispatch(setTypeSearch(0));
     };
@@ -107,37 +104,36 @@ export default function DiemThi(props) {
                 options={listNamHoc}
                 value={namHoc}
                 onChange={(e) => {
-                  dispatch(setNamHoc(e));
-                  dispatch(getListKyThiAction(e));
-                  dispatch(setKyThi(null));
+                  dispatch(setNamHocTongKet(e));
+                  dispatch(getListKyHocAction(e));
+                  dispatch(setKyHoc(null));
                 }}
               // value={namHocSelect}
               />
             </div>
 
             <div className="p-2">
-              <span>Kỳ thi</span>
+              <span>Kỳ học</span>
               <Select
-                placeholder="Chọn kỳ thi"
+                placeholder="Chọn kỳ học"
                 className="w-full"
-                options={listKyThi}
-                value={kyThi}
+                options={listKyHoc}
+                value={kyHoc}
                 onChange={(e) => {
-                  dispatch(setKyThi(e));
+                  dispatch(setKyHoc(e));
                 }}
               />
             </div>
 
             <div className="p-2">
-              <span>Môn thi</span>
+              <span>Môn tổng kết</span>
               <Select
                 className="w-full"
                 placeholder="Chọn môn thi"
-                options={listMonThi}
+                options={listMonTongKet}
                 value={mt}
                 onChange={(e) => {
                   setMt(e);
-
                 }}
               />
             </div>
@@ -147,8 +143,7 @@ export default function DiemThi(props) {
                 type="primary"
                 onClick={() => {
                   dispatch(setMonThi(mt));
-
-                  dispatch(getDiemThiAction(userInfo?.username, kyThi, mt));
+                  dispatch(getDiemTongKetAction(userInfo?.username, kyHoc, mt));
                 }}
               >
                 Tra cứu
@@ -164,31 +159,31 @@ export default function DiemThi(props) {
 
           <div className="grid grid-cols-4 mt-2">
             <div className=""><span><span className="font-bold">Họ và tên: </span> {userInfo?.hoTen}</span></div>
-            <div className=""><span><span className="font-bold">Lớp: </span> {diemThi?.lop?.tenLop}</span></div>
-            <div className=""><span><span className="font-bold">Kỳ thi: </span> {diemThi?.kyThi?.tenKyThi}</span></div>
-            <div className=""><span><span className="font-bold">Năm học: </span> {diemThi?.kyHoc?.namHoc}</span></div>
+            <div className=""><span><span className="font-bold">Lớp: </span> {diemTongKet?.lop?.tenLop}</span></div>
+            <div className=""><span><span className="font-bold">Kỳ học: </span> {diemTongKet?.kyHoc?.tenKyHoc}</span></div>
+            <div className=""><span><span className="font-bold">Năm học: </span> {diemTongKet?.kyHoc?.namHoc}</span></div>
           </div>
         </div>
 
         <div className="mt-4">
           <div className="">
-            <span className="font-bold text-xl">Biểu đồ phân tích kết quả thi</span>
+            <span className="font-bold text-xl">Biểu đồ phân tích điểm tổng kết</span>
           </div>
         </div>
         {
-          !diemThi?.messageError ? (
-            monThi === "" ? (
+          !diemTongKet?.messageError ? (
+            monTongKet === "" ? (
               <div className="grid grid-cols-2 mt-3">
                 <div>
-                  <div className="text-center">Điểm trung bình các môn thi của bạn là : <span className="font-bold">{diemThi?.diemTbMon}</span></div>
-                  <div className="text-center">{checkDiemThiTK(diemThi?.diemTbMon, "lớp", diemThi?.slDiemThiLop)}</div>
+                  <div className="text-center">Điểm trung bình các môn thi của bạn là : <span className="font-bold">{diemTongKet?.diemTbMon}</span></div>
+                  <div className="text-center">{checkDiemThiTK(diemTongKet?.diemTbMon, "lớp", diemTongKet?.slDiemThiLop)}</div>
                   <div>
                     <Doughnut
                       className="m-auto w-[400px] h-[400px] mt-3"
                       data={{
-                        labels: diemThi?.slDiemThiLop?.map((value, index) => {
+                        labels: diemTongKet?.slDiemThiLop?.map((value, index) => {
                           const labelName = ["Giỏi", "Khá", "Trung Bình", "Yếu", "Kém"][index];
-                          const percentage = ((value / diemThi?.slDiemThiLop?.reduce((a, b) => a + b, 0)) * 100).toFixed(2);
+                          const percentage = ((value / diemTongKet?.slDiemThiLop?.reduce((a, b) => a + b, 0)) * 100).toFixed(2);
                           return `${labelName} : ${value} học sinh (${percentage}%)`;
                         }),
 
@@ -202,7 +197,7 @@ export default function DiemThi(props) {
                               "#e8c3b9",
                               "#c45850",
                             ],
-                            data: diemThi?.slDiemThiLop,
+                            data: diemTongKet?.slDiemThiLop,
                           },
                         ],
                       }}
@@ -246,16 +241,16 @@ export default function DiemThi(props) {
                   </div>
                 </div>
                 <div>
-                  <div className="text-center">Điểm trung bình các môn thi của bạn là : <span className="font-bold">{diemThi?.diemTbMon}</span></div>
-                  <div className="text-center">{checkDiemThiTK(diemThi?.diemTbMon, "khối", diemThi?.slDiemThiKhoi)}</div>
+                  <div className="text-center">Điểm trung bình các môn thi của bạn là : <span className="font-bold">{diemTongKet?.diemTbMon}</span></div>
+                  <div className="text-center">{checkDiemThiTK(diemTongKet?.diemTbMon, "khối", diemTongKet?.slDiemThiKhoi)}</div>
 
                   <div>
                     <Doughnut
                       className="m-auto w-[400px] h-[400px] max-lg:w-[500px] max-lg:h-[500px]"
                       data={{
-                        labels: diemThi?.slDiemThiKhoi?.map((value, index) => {
+                        labels: diemTongKet?.slDiemThiKhoi?.map((value, index) => {
                           const labelName = ["Giỏi", "Khá", "Trung Bình", "Yếu", "Kém"][index];
-                          const percentage = ((value / diemThi?.slDiemThiKhoi?.reduce((a, b) => a + b, 0)) * 100).toFixed(2);
+                          const percentage = ((value / diemTongKet?.slDiemThiKhoi?.reduce((a, b) => a + b, 0)) * 100).toFixed(2);
                           return `${labelName} : ${value} học sinh (${percentage}%)`;
                         }),
                         datasets: [
@@ -268,7 +263,7 @@ export default function DiemThi(props) {
                               "#e8c3b9",
                               "#c45850",
                             ],
-                            data: diemThi?.slDiemThiKhoi,
+                            data: diemTongKet?.slDiemThiKhoi,
                           },
                         ],
                       }}
@@ -320,10 +315,10 @@ export default function DiemThi(props) {
                     <span className="font-bold text-lg">Biểu đồ phân tích số lượng học sinh đạt điểm thi trong các khoảng điểm theo lớp</span>
                   </div>
                   <div className="mt-2 text-center">
-                    <span>Điểm thi trung bình môn {listMonThi?.find((item) => item.value === monThi)?.label} của lớp : <span className="font-bold">{diemThi?.diemTblop}</span></span>
+                    <span>Điểm thi trung bình môn {listMonTongKet?.find((item) => item.value === monTongKet)?.label} của lớp : <span className="font-bold">{diemTongKet?.diemTblop}</span></span>
                   </div>
                   <div className="mt-2 text-center">
-                    <span>Điểm thi môn {listMonThi?.find((item) => item.value === monThi)?.label} của bạn là : <span className="font-bold">{diemThi?.diem}</span></span>
+                    <span>Điểm thi môn {listMonTongKet?.find((item) => item.value === monTongKet)?.label} của bạn là : <span className="font-bold">{diemTongKet?.diem}</span></span>
                   </div>
                   <div className="mt-2 m-auto">
                     <Bar
@@ -346,7 +341,7 @@ export default function DiemThi(props) {
                           {
                             label: "Số học sinh",
                             backgroundColor: ["#085BA4"],
-                            data: diemThi?.slDiemTBLop || [],
+                            data: diemTongKet?.slDiemTBLop || [],
                           },
                         ],
                       }}
@@ -355,7 +350,7 @@ export default function DiemThi(props) {
                           legend: { display: false },
                           title: {
                             display: true,
-                            text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonThi?.find((item) => item.value === monThi)?.label} trong các khoảng điểm của lớp`,
+                            text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonTongKet?.find((item) => item.value === monTongKet)?.label} trong các khoảng điểm của lớp`,
                           },
                           datalabels: {
                             color: "#fff",
@@ -391,10 +386,10 @@ export default function DiemThi(props) {
                     <span className="font-bold text-lg">Biểu đồ phân tích số lượng học sinh đạt điểm thi trong các khoảng điểm theo khối</span>
                   </div>
                   <div className="mt-2 text-center">
-                    <span>Điểm thi trung bình môn {listMonThi?.find((item) => item.value === monThi)?.label} của khối : <span className="font-bold">{diemThi?.diemTbKhoi}</span></span>
+                    <span>Điểm thi trung bình môn {listMonTongKet?.find((item) => item.value === monTongKet)?.label} của khối : <span className="font-bold">{diemTongKet?.diemTbKhoi}</span></span>
                   </div>
                   <div className="mt-2 text-center">
-                    <span>Điểm thi môn {listMonThi?.find((item) => item.value === monThi)?.label} của bạn là : <span className="font-bold">{diemThi?.diem}</span></span>
+                    <span>Điểm thi môn {listMonTongKet?.find((item) => item.value === monTongKet)?.label} của bạn là : <span className="font-bold">{diemTongKet?.diem}</span></span>
                   </div>
                   <div className="mt-2 m-auto ">
                     <Bar
@@ -417,7 +412,7 @@ export default function DiemThi(props) {
                           {
                             label: "Số học sinh",
                             backgroundColor: ["#085BA4"],
-                            data: diemThi?.slDiemTBKhoi || [],
+                            data: diemTongKet?.slDiemTBKhoi || [],
                           },
                         ],
                       }}
@@ -426,7 +421,7 @@ export default function DiemThi(props) {
                           legend: { display: false },
                           title: {
                             display: true,
-                            text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonThi?.find((item) => item.value === monThi)?.label} trong các khoảng điểm của khối`,
+                            text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonTongKet?.find((item) => item.value === monTongKet)?.label} trong các khoảng điểm của khối`,
                           },
                           datalabels: {
                             color: "#fff",
@@ -461,7 +456,7 @@ export default function DiemThi(props) {
 
             )
           ) : (<div>
-            <div className="mt-5 text-center"><span className="font-bold">{diemThi?.messageError}</span></div>
+            <div className="mt-5 text-center"><span className="font-bold">{diemTongKet?.messageError}</span></div>
           </div>)
         }
 
@@ -537,6 +532,6 @@ export default function DiemThi(props) {
 
             } */}
       </div>
-    </div >
+    </div>
   );
 }

@@ -163,17 +163,24 @@ export default function PageTemplate() {
                       },
                     },
                     {
-                      key: "/LichThi",
+                      key: "/DiemDanh",
                       label: "Điểm danh,xin nghỉ",
                       onClick: () => {
-                        navigate("/LichThi");
+                        navigate("/DiemDanh");
                       },
                     },
                     {
-                      key: "/XemDiemThi",
-                      label: "Xem điểm thi",
+                      key: "/DiemThi",
+                      label: "Điểm thi",
                       onClick: () => {
-                        navigate("/XemDiemThi");
+                        navigate("/DiemThi");
+                      },
+                    },
+                    {
+                      key: "/DiemTongKet",
+                      label: "Điểm tổng kết",
+                      onClick: () => {
+                        navigate("/DiemTongKet");
                       },
                     },
                   ],
