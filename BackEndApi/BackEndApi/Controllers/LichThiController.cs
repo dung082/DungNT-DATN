@@ -25,6 +25,14 @@ namespace BackEndApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("ChiTietLichThi")]
+        public async Task<ActionResult> ChiTietLichThi(Guid lichThiId, string username)
+        {
+            var result = await _iLichThiRepository.ChiTietLichThi(lichThiId, username);
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("ThemLichThi")]
         public async Task<ActionResult> ThemLichThi(LichThiDto lichThiDto)

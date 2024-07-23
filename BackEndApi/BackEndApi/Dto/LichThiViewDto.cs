@@ -8,6 +8,7 @@
         public string TenCaHoc { get; set; }
         public string TenMonThi { get; set; }
         public Guid CaHocId { get; set; }
+        public int PhongThi {  get; set; }
         public int KhoiThi { get; set; }
         public string? KhoiHoc { get; set; }
         public DateTime NgayThi { get; set; }
