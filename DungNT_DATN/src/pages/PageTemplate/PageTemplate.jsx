@@ -134,13 +134,13 @@ export default function PageTemplate() {
                         navigate("/ChuongTrinhHoc");
                       },
                     },
-                    {
-                      key: "/ThongTinHocBa",
-                      label: "Học bạ",
-                      onClick: () => {
-                        navigate("/ThongTinHocBa");
-                      },
-                    },
+                    // {
+                    //   key: "/ThongTinHocBa",
+                    //   label: "Học bạ",
+                    //   onClick: () => {
+                    //     navigate("/ThongTinHocBa");
+                    //   },
+                    // },
                     {
                       key: "/DanhSachHocSinh",
                       label: "Danh sách học sinh",

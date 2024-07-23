@@ -7,12 +7,14 @@ export const drawerSlice = createSlice({
         visiable: false,
         title: "",
         DrawerComponent: <></>,
+        width: 800
     },
     reducers: {
         openDrawerAction: (state, action) => {
             state.visiable = true
             state.title = action.payload.title
             state.DrawerComponent = action.payload.DrawerComponent
+            state.width = action.payload.width ? action.payload.width : 800
         }
         ,
         closeDrawerAction: (state) => {

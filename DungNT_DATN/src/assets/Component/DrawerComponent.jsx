@@ -7,7 +7,7 @@ import {
 import { Drawer } from "antd";
 
 export default function DrawerComponent(props) {
-  const { visiable, title, DrawerComponent } = useSelector(stateDrawer);
+  const { visiable, title, DrawerComponent , width} = useSelector(stateDrawer);
 
   const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ export default function DrawerComponent(props) {
     <Drawer
       open={visiable}
       title={title}
-      width={800}
+      width={width}
       onClose={() => {
         dispatch(closeDrawerAction());
       }}

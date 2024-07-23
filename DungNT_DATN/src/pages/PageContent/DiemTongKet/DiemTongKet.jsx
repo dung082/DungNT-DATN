@@ -90,7 +90,7 @@ export default function DiemTongKet(props) {
         <div className=" bottem-border-title pb-2">
           <div className="flex justify-between">
             <div>
-              <span className="font-bold text-xl">Xem điểm thi</span>
+              <span className="font-bold text-xl">Xem điểm tổng kết</span>
             </div>
           </div>
         </div>

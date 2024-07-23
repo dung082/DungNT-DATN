@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getThoiKhoaBieuAction,
+  setThoiKhoaBieu,
   thoiKhoaBieuState,
 } from "../../../reducers/thoiKhoaBieuReducer/thoiKhoaBieuReducer";
 import { globalState } from "../../../reducers/globalReducer/globalReducer";
@@ -17,6 +18,10 @@ export default function ThoiKhoaBieu(props) {
   const { thoiKhoaBieu } = useSelector(thoiKhoaBieuState);
   useEffect(() => {
     dispatch(getThoiKhoaBieuAction(ngayHoc, userInfo?.username));
+
+    return () => {
+      dispatch(setThoiKhoaBieu({}))
+    }
   }, []);
 
   const [ngayHoc, setNgayHoc] = useState(dayjs());
@@ -25,7 +30,7 @@ export default function ThoiKhoaBieu(props) {
     const divs = [];
     for (let i = 0; i < soluongthieu; i++) {
       divs.push(
-        <div key={Math.random() * 123312} title="Không có lịch học"></div>
+        <div key={Math.random() * 123312} title="Không có lịch học" className="parent"></div>
       );
     }
     return divs;
@@ -96,7 +101,7 @@ export default function ThoiKhoaBieu(props) {
                 format={"DD/MM/YYYY"}
                 onChange={(e) => {
                   setNgayHoc(dayjs(e));
-                  dispatch(getThoiKhoaBieuAction(e, userInfo?.username));
+                  dispatch(getThoiKhoaBieuAction(e.format('YYYY-MM-DD'), userInfo?.username));
                 }}
                 disabledDate={(current) => {
                   return current && current > dayjs();
@@ -133,11 +138,11 @@ export default function ThoiKhoaBieu(props) {
                   if (item?.length === 0) {
                     return (
                       <td key={Math.random() * 65165}>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
+                        <div title="Không có lịch học" className="parent" ></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
                       </td>
                     );
                   } else if (item?.length < 5 && item?.length > 0) {
@@ -150,15 +155,15 @@ export default function ThoiKhoaBieu(props) {
                               onClick={() => {
                                 openDetailThoiKhoaBieu(item1.id);
                               }}
-                              className="have-lichhoc"
+                              className="have-lichhoc parent"
                               key={Math.random() * 65165}
                               title="Xem chi tiết lịch học"
                             >
                               {item1?.tenMonHoc +
                                 " - " +
                                 item1?.tenGiaoVien.toString()?.split(" ")[
-                                  item1?.tenGiaoVien.toString().split(" ")
-                                    ?.length - 1
+                                item1?.tenGiaoVien.toString().split(" ")
+                                  ?.length - 1
                                 ]}
                             </div>
                           );
@@ -180,13 +185,13 @@ export default function ThoiKhoaBieu(props) {
                                 openDetailThoiKhoaBieu(item1.id);
                               }}
                               key={Math.random() * 65165}
-                              className="have-lichhoc"
+                              className="have-lichhoc parent"
                             >
                               {item1?.tenMonHoc +
                                 " - " +
                                 item1?.tenGiaoVien.toString()?.split(" ")[
-                                  item1?.tenGiaoVien.toString().split(" ")
-                                    ?.length - 1
+                                item1?.tenGiaoVien.toString().split(" ")
+                                  ?.length - 1
                                 ]}
                             </div>
                           );
@@ -252,11 +257,11 @@ export default function ThoiKhoaBieu(props) {
                   if (item?.length === 0) {
                     return (
                       <td key={Math.random() * 65165}>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
-                        <div title="Không có lịch học"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
+                        <div title="Không có lịch học" className="parent"></div>
                       </td>
                     );
                   } else if (item?.length < 5 && item?.length > 0) {
@@ -273,13 +278,13 @@ export default function ThoiKhoaBieu(props) {
                                 openDetailThoiKhoaBieu(item1.id);
                               }}
                               key={Math.random() * 65165}
-                              className="have-lichhoc"
+                              className="have-lichhoc parent"
                             >
                               {item1?.tenMonHoc +
                                 " - " +
                                 item1?.tenGiaoVien.toString()?.split(" ")[
-                                  item1?.tenGiaoVien.toString().split(" ")
-                                    ?.length - 1
+                                item1?.tenGiaoVien.toString().split(" ")
+                                  ?.length - 1
                                 ]}
                             </div>
                           );
@@ -301,13 +306,13 @@ export default function ThoiKhoaBieu(props) {
                                 openDetailThoiKhoaBieu(item1.id);
                               }}
                               key={Math.random() * 65165}
-                              className="have-lichhoc"
+                              className="have-lichhoc parent"
                             >
                               {item1?.tenMonHoc +
                                 " - " +
                                 item1?.tenGiaoVien.toString()?.split(" ")[
-                                  item1?.tenGiaoVien.toString().split(" ")
-                                    ?.length - 1
+                                item1?.tenGiaoVien.toString().split(" ")
+                                  ?.length - 1
                                 ]}
                             </div>
                           );

@@ -15,7 +15,6 @@ export default function ChiTietThoiKhoaBieu(props) {
 
   useEffect(() => {
     dispatch(getChiTietThoiKhoaBieuAction(props.idTietHoc));
-    console.log(chiTietTKB);
   }, []);
   return (
     <div>

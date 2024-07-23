@@ -284,12 +284,12 @@ table.table-diem thead tr th {
 .table-tkb tr:nth-child(even) {
   background-color: #fff;
 }
-.table-tkb tr td div {
+.table-tkb tr td div.parent {
   border-bottom: 1px solid black;
   border-right: 1px solid black;
   padding: 5px;
   min-width: 150px;
-  height: 40px;
+  min-height: 40px;
   cursor: pointer;
   font-weight: 600;
   user-select: none; /* standard syntax */
