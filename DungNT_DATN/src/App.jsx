@@ -18,6 +18,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ThoiKhoaBieu from "./pages/PageContent/ThoiKhoaBieu/ThoiKhoaBieu";
 import DiemTongKet from "./pages/PageContent/DiemTongKet/DiemTongKet";
+import DiemDanh from "./pages/PageContent/DiemDanh/DiemDanh";
 
 ChartJS.register(ArcElement, Tooltip, Legend , ChartDataLabels);
 
@@ -42,7 +43,7 @@ function App() {
             <Route path="/ThongTinHocBa" element={<ThongTinHocBa />} />
             <Route path="/DanhSachHocSinh" element={<DanhSachLopHoc />} />
             <Route path="/DiemTongKet" element={<DiemTongKet />} />
-            <Route path="/DiemDanh" element={<DiemTongKet />} />
+            <Route path="/DiemDanh" element={<DiemDanh />} />
           </Route>
           {/* </Route> */}
         </Routes>
