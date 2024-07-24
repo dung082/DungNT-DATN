@@ -32,6 +32,7 @@ builder.Services.AddScoped<IThoiKhoaBieuRepository, ThoiKhoaBieuRepository>();
 builder.Services.AddScoped<IMonTongKetRepository, MonTongKetRepository>();
 builder.Services.AddScoped<IDiemTongKetRepository, DiemTongKetRepository>();
 builder.Services.AddScoped<ILichThiRepository, LichThiRepository>();
+builder.Services.AddScoped<IDiemDanhRepository, DiemDanhRepository>();
 
 builder.Services.AddCors(options =>
 {
