@@ -97,7 +97,7 @@ export default function DiemDanh(props) {
                                                 key={Math.random() * 65165}
                                                 title="Xem chi tiết lịch học"
                                             >
-                                                <div className="parent flex justify-center items-center" style={{ height: 100 }}>{item?.status === 1 ? "Có mặt" : item?.status === 2 ? "Vắng có phép" : "Vắng không phép"}</div>
+                                                <div className="parent flex justify-center items-center" style={{ height: 100 }}>{item?.trangThai === 1 ? "Có mặt" : item?.status === 2 ? "Vắng có phép" : "Vắng không phép"}</div>
                                             </td>
                                         );
                                     }

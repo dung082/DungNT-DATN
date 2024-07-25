@@ -60,9 +60,9 @@ export default function InfoPage(props) {
                 <span className="font-bold text-xl">THÔNG TIN CÁ NHÂN</span>
               </div>
               <div>
-                <Button type="primary" onClick={openDrawerEditUser}>
-                  Sửa thông tin
-                </Button>
+                {/* <Button type="primary" onClick={openDrawerEditUser}>
+                    Sửa thông tin
+                  </Button> */}
               </div>
             </div>
           </div>
@@ -92,8 +92,8 @@ export default function InfoPage(props) {
                       {userInfomation?.userType === 0
                         ? "Admin trường"
                         : userInfo?.userType === 1
-                        ? "Giáo viên"
-                        : "Học sinh"}
+                          ? "Giáo viên"
+                          : "Học sinh"}
                     </div>
                   </div>
 
@@ -126,6 +126,14 @@ export default function InfoPage(props) {
                       {userInfomation?.tenTonGiao}
                     </div>
                   </div>
+
+                  <div className="mt-3">
+                    <div className="">Lớp học hiện tại: </div>
+                    <div className=" font-bold">
+                      {userInfomation?.tenLopHienTai}
+                    </div>
+                  </div>
+
                   {userInfomation?.userType === 2 && (
                     <div className="mt-3">
                       <div className="">Khóa học: </div>

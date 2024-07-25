@@ -22,7 +22,7 @@ export default function DonXinNghiHoc(props) {
             caHocId: caHoc,
             ngayHoc: ngayHoc.format('YYYY-MM-DD'),
             lyDo: lyDo,
-            trangThai: lyDo !== "" ? 1 : 2
+            trangThai: lyDo !== "" ? 2 : 3
         }
 
         dispatch(xinNghiAction(data))
