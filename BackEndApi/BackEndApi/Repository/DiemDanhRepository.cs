@@ -88,7 +88,7 @@ namespace BackEndApi.Repository
             foreach (var item in weekDays)
             {
                 var ddSang = await _context.DiemDanhs.FirstOrDefaultAsync(i => DateOnly.FromDateTime(i.NgayHoc) == item && i.CaHocId == IdCaSang && i.Username == username);
-                var ddchieu = await _context.DiemDanhs.FirstOrDefaultAsync(i => DateOnly.FromDateTime(i.NgayHoc) == item && i.CaHocId == IdCaSang && i.Username == username);
+                var ddchieu = await _context.DiemDanhs.FirstOrDefaultAsync(i => DateOnly.FromDateTime(i.NgayHoc) == item && i.CaHocId == IdCaChieu && i.Username == username);
                 diemDanhSang.Add(ddSang);
                 diemDanhChieu.Add(ddchieu);
             }
