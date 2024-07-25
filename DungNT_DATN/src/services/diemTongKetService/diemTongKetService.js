@@ -1,8 +1,8 @@
 import { baseService } from "../baseService";
 
 export class DiemTongKetService extends baseService {
-    getDiemTongKet = (username, kyHocId, monTongKetId) => {
-        return this.get(`DiemTongKet/LayDiemTongKet?username=${username}&kyHocId=${kyHocId}&monTongKet=${monTongKetId}`);
+    getDiemTongKet = (type , username, kyHocId, monTongKetId) => {
+        return this.get(`DiemTongKet/LayDiemTongKet?type=${type}&username=${username}&kyHocId=${kyHocId}&monTongKet=${monTongKetId}`);
     };
 
     getListMonTongKet = () => {

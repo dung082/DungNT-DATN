@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import { DatePicker } from "antd";
 import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
 import ChiTietLichThi from "./ChiTietLichThi";
+import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
 export default function LichThi(props) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(globalState);
@@ -22,9 +23,9 @@ export default function LichThi(props) {
 
   const openDetailLichThi = (lichThiId) => {
     dispatch(
-      openDrawerAction({
+      openModalAction({
         title: "Chi tiết lịch thi",
-        DrawerComponent: <ChiTietLichThi idLichThi={lichThiId} />,
+        ModalComponent: <ChiTietLichThi idLichThi={lichThiId} />,
         width: 1000
       })
     );

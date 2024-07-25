@@ -7,8 +7,9 @@ export default {
         colorthemes: "#085BA4",
         white: "#fff",
         line: "#d3cfcf",
-        success : "#5cb85c",
-        error : "#f44336"
+        success: "#3e8522",
+        error: "#f44336",
+        pendding: "#d9512c",
       },
     },
   },

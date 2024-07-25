@@ -95,6 +95,54 @@ export const HOC_SINH_CHI_TIET_THOI_KHOA_BIEU = [
   },
 ];
 
+export const DIEM_THI_COLUMN_CONFIG = [
+  {
+    title: "STT",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
+    title: "Mã môn thi",
+    dataIndex: "maMonThi",
+    key: "maMonThi",
+  },
+  {
+    title: "Tên môn thi",
+    dataIndex: "tenMonThi",
+    key: "tenMonThi",
+  },
+
+  {
+    title: "Điểm",
+    dataIndex: "diem",
+    key: "diem  ",
+  },
+];
+
+
+export const DIEM_TONG_KET_COLUMN_CONFIG = [
+  {
+    title: "STT",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
+    title: "Mã môn học",
+    dataIndex: "maMon",
+    key: "maMon",
+  },
+  {
+    title: "Tên môn học",
+    dataIndex: "tenMon",
+    key: "tenMon",
+  },
+  {
+    title: "Điểm",
+    dataIndex: "diem",
+    key: "diem  ",
+  },
+];
+
 export const DIEM_THI_LOP = [
   {
     title: "STT",
@@ -142,4 +190,4 @@ export const DIEM_THI_LOP = [
     dataIndex: "diemSinhHoc",
     key: "diemSinhHoc",
   },
-]
+];

@@ -46,18 +46,25 @@ export const diemThiSlice = createSlice({
 });
 
 export const getDiemThiAction =
-  (username, kyThiId, monThiId) => async (dispatch) => {
+  (type, username, kyThiId, monThiId) => async (dispatch) => {
     try {
-      const res = await diemthiservice.getDiemThi(username, kyThiId, monThiId);
+      const res = await diemthiservice.getDiemThi(
+        type,
+        username,
+        kyThiId,
+        monThiId
+      );
       if (res.status === 200) {
         dispatch(setDiemThi(res.data.value));
         dispatch(setKyThi(res.data.value?.kyThi?.id));
         dispatch(setNamHoc(res.data.value?.kyHoc?.namHoc));
         dispatch(setErrorMessage(""));
+        dispatch(setTypeSearch(type));
         dispatch(setMonThi(monThiId));
       }
     } catch (err) {
       dispatch(setDiemThi(null));
+      dispatch(setTypeSearch(type));
       dispatch(setErrorMessage(err.response.data.Message));
     }
   };

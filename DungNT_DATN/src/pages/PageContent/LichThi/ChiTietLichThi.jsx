@@ -74,7 +74,7 @@ export default function ChiTietLichThi(props) {
                 </div>
             </div>
 
-            <div>
+            {/* <div>
                 <div className="py-2 title-detail mt-5">
                     <span className="font-bold text-lg">Thông tin phòng thi</span>
                 </div>
@@ -97,7 +97,7 @@ export default function ChiTietLichThi(props) {
                     })
                     }
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

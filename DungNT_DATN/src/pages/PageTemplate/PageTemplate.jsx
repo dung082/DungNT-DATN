@@ -164,7 +164,7 @@ export default function PageTemplate() {
                     },
                     {
                       key: "/DiemDanh",
-                      label: "Điểm danh,xin nghỉ",
+                      label: "Điểm danh, xin nghỉ",
                       onClick: () => {
                         navigate("/DiemDanh");
                       },

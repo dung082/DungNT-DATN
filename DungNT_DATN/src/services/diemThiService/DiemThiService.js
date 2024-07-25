@@ -1,8 +1,8 @@
 import { baseService } from "../baseService";
 
 export class DiemThiService extends baseService {
-    getDiemThi = ( username, kythiid , monThiId) => {
-        return this.get(`DiemThi/LayDiemThi?username=${username}&kyThiId=${kythiid}&monThiId=${monThiId}`);
+    getDiemThi = (type, username, kythiid , monThiId) => {
+        return this.get(`DiemThi/LayDiemThi?type=${type}&username=${username}&kyThiId=${kythiid}&monThiId=${monThiId}`);
     };
 
     addDiemThi = (diemthi) => {

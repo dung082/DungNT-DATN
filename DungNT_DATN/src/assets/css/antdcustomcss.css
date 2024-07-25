@@ -310,3 +310,13 @@ table.table-diem thead tr th {
 .title-detail {
   border-bottom: 1px solid #dbdbdb;
 }
+
+.description-tableDiemDanh {
+  border: 1px solid black;
+  height: 24px;
+  width: 70px;
+}
+
+.text-success {
+  color: theme(colors.success);
+}
