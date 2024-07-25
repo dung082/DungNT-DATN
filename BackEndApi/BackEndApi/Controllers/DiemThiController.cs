@@ -19,17 +19,17 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayDiemThi")]
-        public async Task<ActionResult> LayDiemThi(string? username, Guid? kyThiId, Guid? monThiId)
+        public async Task<ActionResult> LayDiemThi(int type, string? username, Guid? kyThiId, Guid? monThiId)
         {
-            var result = await _iDiemThiRepository.LayDiemThi( username, kyThiId , monThiId);
+            var result = await _iDiemThiRepository.LayDiemThi(type, username, kyThiId, monThiId);
             return Ok(result);
         }
 
         [HttpPost]
         [Route("ThemDiemThi")]
-        public  async Task<ActionResult> ThemDiemThi([FromBody] DiemThiDto diemThiDto)
+        public async Task<ActionResult> ThemDiemThi([FromBody] DiemThiDto diemThiDto)
         {
-            var result =await _iDiemThiRepository.ThemDiemThi(diemThiDto);
+            var result = await _iDiemThiRepository.ThemDiemThi(diemThiDto);
             return Ok(result);
         }
     }
