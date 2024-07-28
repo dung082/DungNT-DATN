@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
 {
-        [ApiController]
-        [Route("[controller]")]
+    [ApiController]
+    [Route("[controller]")]
     public class CaHocController : ControllerBase
     {
         private readonly ILogger<CaHocController> _logger;
