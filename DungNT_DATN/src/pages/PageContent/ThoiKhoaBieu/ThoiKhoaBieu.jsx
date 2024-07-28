@@ -8,20 +8,32 @@ import {
 import { globalState } from "../../../reducers/globalReducer/globalReducer";
 import dayjs from "dayjs";
 import { forEach } from "lodash";
-import { DatePicker } from "antd";
+import { DatePicker, Select } from "antd";
 import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
 import ChiTietThoiKhoaBieu from "./ChiTietThoiKhoaBieu";
+import TableComponent from "../../../assets/Component/TableComponent";
+import { THOI_KHOA_BIEU_COLUMN_CONFIG } from "../../../templates/tableConfig";
 
 export default function ThoiKhoaBieu(props) {
+  const listTypeSelect = [
+    {
+      value: 0,
+      label: "Xem theo ngày",
+    },
+    {
+      value: 1,
+      label: "Xem theo tuần",
+    },
+  ];
   const dispatch = useDispatch();
   const { userInfo } = useSelector(globalState);
-  const { thoiKhoaBieu } = useSelector(thoiKhoaBieuState);
+  const { thoiKhoaBieu, type } = useSelector(thoiKhoaBieuState);
   useEffect(() => {
-    dispatch(getThoiKhoaBieuAction(ngayHoc, userInfo?.username));
+    dispatch(getThoiKhoaBieuAction(type, ngayHoc, userInfo?.username));
 
     return () => {
-      dispatch(setThoiKhoaBieu({}))
-    }
+      dispatch(setThoiKhoaBieu({}));
+    };
   }, []);
 
   const [ngayHoc, setNgayHoc] = useState(dayjs());
@@ -30,7 +42,11 @@ export default function ThoiKhoaBieu(props) {
     const divs = [];
     for (let i = 0; i < soluongthieu; i++) {
       divs.push(
-        <div key={Math.random() * 123312} title="Không có lịch học" className="parent"></div>
+        <div
+          key={Math.random() * 123312}
+          title="Không có lịch học"
+          className="parent"
+        ></div>
       );
     }
     return divs;
@@ -93,6 +109,26 @@ export default function ThoiKhoaBieu(props) {
 
             <div className="ml-5">
               <div>
+                <span>Xem theo</span>
+              </div>
+              <Select
+                className="w-[200px] "
+                value={type}
+                options={listTypeSelect}
+                onChange={(e) => {
+                  dispatch(
+                    getThoiKhoaBieuAction(
+                      e,
+                      ngayHoc.format("YYYY-MM-DD"),
+                      userInfo?.username
+                    )
+                  );
+                }}
+              />
+            </div>
+
+            <div className="ml-5">
+              <div>
                 <span>Chọn ngày học</span>
               </div>
               <DatePicker
@@ -101,7 +137,13 @@ export default function ThoiKhoaBieu(props) {
                 format={"DD/MM/YYYY"}
                 onChange={(e) => {
                   setNgayHoc(dayjs(e));
-                  dispatch(getThoiKhoaBieuAction(e.format('YYYY-MM-DD'), userInfo?.username));
+                  dispatch(
+                    getThoiKhoaBieuAction(
+                      type,
+                      e.format("YYYY-MM-DD"),
+                      userInfo?.username
+                    )
+                  );
                 }}
                 disabledDate={(current) => {
                   return current && current > dayjs();
@@ -109,270 +151,221 @@ export default function ThoiKhoaBieu(props) {
               />
             </div>
           </div>
-          <div className="mt-4">
-            <table className="w-full table-tkb">
-              <tr>
-                <th>Ca học</th>
-                {thoiKhoaBieu?.ngay?.map((item) => {
-                  return (
-                    <th key={Math.random() * 65165}>
-                      <div>
-                        <div>
-                          {dayjs(item).day() === 0
-                            ? "Chủ nhật"
-                            : `Thứ ${dayjs(item).day() + 1}`}
-                        </div>
-                        <div>
-                          <span>{dayjs(item).format("DD/MM/YYYY")}</span>
-                        </div>
-                      </div>
-                    </th>
-                  );
-                })}
-              </tr>
-
-              <tr>
-                <td>Ca sáng</td>
-
-                {thoiKhoaBieu?.data?.S?.map((item) => {
-                  if (item?.length === 0) {
-                    return (
-                      <td key={Math.random() * 65165}>
-                        <div title="Không có lịch học" className="parent" ></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                      </td>
-                    );
-                  } else if (item?.length < 5 && item?.length > 0) {
-                    let conlai = 5 - item?.length;
-                    return (
-                      <td key={Math.random() * 65165}>
-                        {item?.map((item1) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                openDetailThoiKhoaBieu(item1.id);
-                              }}
-                              className="have-lichhoc parent"
-                              key={Math.random() * 65165}
-                              title="Xem chi tiết lịch học"
-                            >
-                              {item1?.tenMonHoc +
-                                " - " +
-                                item1?.tenGiaoVien.toString()?.split(" ")[
-                                item1?.tenGiaoVien.toString().split(" ")
-                                  ?.length - 1
-                                ]}
+          {type === 0 ? (
+            <>
+              <div className="mt-4">
+                <TableComponent
+                  className="mt-3"
+                  ColumnConfig={THOI_KHOA_BIEU_COLUMN_CONFIG}
+                  DataSource={thoiKhoaBieu?.data}
+                  CurrentPage={1}
+                  CurrentPageSize={10}
+                  ShowSizeChanger={false}
+                  hidePagination={true}
+                  emptyDescription="Không có lịch học"
+                />
+              </div>
+            </>
+          ) : (
+            <div>
+              <div className="mt-4">
+                <table className="w-full table-tkb">
+                  <tr>
+                    <th>Ca học</th>
+                    {thoiKhoaBieu?.ngay?.map((item) => {
+                      return (
+                        <th key={Math.random() * 65165}>
+                          <div>
+                            <div>
+                              {dayjs(item).day() === 0
+                                ? "Chủ nhật"
+                                : `Thứ ${dayjs(item).day() + 1}`}
                             </div>
-                          );
-                        })}
-
-                        {renderTkbThieu(conlai)}
-                      </td>
-                    );
-                  } else {
-                    return (
-                      <td
-                        key={Math.random() * 65165}
-                        title="Xem chi tiết lịch học"
-                      >
-                        {item?.map((item1) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                openDetailThoiKhoaBieu(item1.id);
-                              }}
-                              key={Math.random() * 65165}
-                              className="have-lichhoc parent"
-                            >
-                              {item1?.tenMonHoc +
-                                " - " +
-                                item1?.tenGiaoVien.toString()?.split(" ")[
-                                item1?.tenGiaoVien.toString().split(" ")
-                                  ?.length - 1
-                                ]}
+                            <div>
+                              <span>{dayjs(item).format("DD/MM/YYYY")}</span>
                             </div>
-                          );
-                        })}
-                      </td>
-                    );
-                  }
-                })}
-                {/* <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td> */}
-              </tr>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
 
-              <tr>
-                <td>Ca chiều</td>
-                {thoiKhoaBieu?.data?.C?.map((item, index) => {
-                  if (item?.length === 0) {
-                    return (
-                      <td key={Math.random() * 65165}>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                        <div title="Không có lịch học" className="parent"></div>
-                      </td>
-                    );
-                  } else if (item?.length < 5 && item?.length > 0) {
-                    let conlai = 5 - item?.length;
-                    return (
-                      <td
-                        key={Math.random() * 65165}
-                        title="Xem chi tiết lịch học"
-                      >
-                        {item?.map((item1) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                openDetailThoiKhoaBieu(item1.id);
-                              }}
-                              key={Math.random() * 65165}
-                              className="have-lichhoc parent"
-                            >
-                              {item1?.tenMonHoc +
-                                " - " +
-                                item1?.tenGiaoVien.toString()?.split(" ")[
-                                item1?.tenGiaoVien.toString().split(" ")
-                                  ?.length - 1
-                                ]}
-                            </div>
-                          );
-                        })}
+                  <tr>
+                    <td>Ca sáng</td>
 
-                        {renderTkbThieu(conlai)}
-                      </td>
-                    );
-                  } else {
-                    return (
-                      <td
-                        key={Math.random() * 65165}
-                        title="Xem chi tiết lịch học"
-                      >
-                        {item?.map((item1) => {
-                          return (
+                    {thoiKhoaBieu?.data?.S?.map((item) => {
+                      if (item?.length === 0) {
+                        return (
+                          <td key={Math.random() * 65165}>
                             <div
-                              onClick={() => {
-                                openDetailThoiKhoaBieu(item1.id);
-                              }}
-                              key={Math.random() * 65165}
-                              className="have-lichhoc parent"
-                            >
-                              {item1?.tenMonHoc +
-                                " - " +
-                                item1?.tenGiaoVien.toString()?.split(" ")[
-                                item1?.tenGiaoVien.toString().split(" ")
-                                  ?.length - 1
-                                ]}
-                            </div>
-                          );
-                        })}
-                      </td>
-                    );
-                  }
-                })}
-                {/* <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td>
-                            <td>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                                <div>1</div>
-                            </td> */}
-              </tr>
-            </table>
-          </div>
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                          </td>
+                        );
+                      } else if (item?.length < 5 && item?.length > 0) {
+                        let conlai = 5 - item?.length;
+                        return (
+                          <td key={Math.random() * 65165}>
+                            {item?.map((item1) => {
+                              return (
+                                <div
+                                  onClick={() => {
+                                    openDetailThoiKhoaBieu(item1.id);
+                                  }}
+                                  className="have-lichhoc parent"
+                                  key={Math.random() * 65165}
+                                  title="Xem chi tiết lịch học"
+                                >
+                                  {item1?.tenMonHoc +
+                                    " - " +
+                                    item1?.tenGiaoVien.toString()?.split(" ")[
+                                      item1?.tenGiaoVien.toString().split(" ")
+                                        ?.length - 1
+                                    ]}
+                                </div>
+                              );
+                            })}
+
+                            {renderTkbThieu(conlai)}
+                          </td>
+                        );
+                      } else {
+                        return (
+                          <td
+                            key={Math.random() * 65165}
+                            title="Xem chi tiết lịch học"
+                          >
+                            {item?.map((item1) => {
+                              return (
+                                <div
+                                  onClick={() => {
+                                    openDetailThoiKhoaBieu(item1.id);
+                                  }}
+                                  key={Math.random() * 65165}
+                                  className="have-lichhoc parent"
+                                >
+                                  {item1?.tenMonHoc +
+                                    " - " +
+                                    item1?.tenGiaoVien.toString()?.split(" ")[
+                                      item1?.tenGiaoVien.toString().split(" ")
+                                        ?.length - 1
+                                    ]}
+                                </div>
+                              );
+                            })}
+                          </td>
+                        );
+                      }
+                    })}
+                  </tr>
+
+                  <tr>
+                    <td>Ca chiều</td>
+                    {thoiKhoaBieu?.data?.C?.map((item, index) => {
+                      if (item?.length === 0) {
+                        return (
+                          <td key={Math.random() * 65165}>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                            <div
+                              title="Không có lịch học"
+                              className="parent"
+                            ></div>
+                          </td>
+                        );
+                      } else if (item?.length < 5 && item?.length > 0) {
+                        let conlai = 5 - item?.length;
+                        return (
+                          <td
+                            key={Math.random() * 65165}
+                            title="Xem chi tiết lịch học"
+                          >
+                            {item?.map((item1) => {
+                              return (
+                                <div
+                                  onClick={() => {
+                                    openDetailThoiKhoaBieu(item1.id);
+                                  }}
+                                  key={Math.random() * 65165}
+                                  className="have-lichhoc parent"
+                                >
+                                  {item1?.tenMonHoc +
+                                    " - " +
+                                    item1?.tenGiaoVien.toString()?.split(" ")[
+                                      item1?.tenGiaoVien.toString().split(" ")
+                                        ?.length - 1
+                                    ]}
+                                </div>
+                              );
+                            })}
+
+                            {renderTkbThieu(conlai)}
+                          </td>
+                        );
+                      } else {
+                        return (
+                          <td
+                            key={Math.random() * 65165}
+                            title="Xem chi tiết lịch học"
+                          >
+                            {item?.map((item1) => {
+                              return (
+                                <div
+                                  onClick={() => {
+                                    openDetailThoiKhoaBieu(item1.id);
+                                  }}
+                                  key={Math.random() * 65165}
+                                  className="have-lichhoc parent"
+                                >
+                                  {item1?.tenMonHoc +
+                                    " - " +
+                                    item1?.tenGiaoVien.toString()?.split(" ")[
+                                      item1?.tenGiaoVien.toString().split(" ")
+                                        ?.length - 1
+                                    ]}
+                                </div>
+                              );
+                            })}
+                          </td>
+                        );
+                      }
+                    })}
+                  </tr>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </>

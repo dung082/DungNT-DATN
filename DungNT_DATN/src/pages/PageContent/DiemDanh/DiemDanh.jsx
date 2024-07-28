@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import { Button, DatePicker, Input, Modal, Select } from "antd";
 import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
 import DonXinNghiHoc from "./DonXinNghiHoc";
+import ChiTietDiemDanh from "./ChiTietDiemDanh";
 
 export default function DiemDanh(props) {
   const dispatch = useDispatch();
@@ -115,13 +116,25 @@ export default function DiemDanh(props) {
                         <div
                           className="parent flex justify-center items-center"
                           style={{ height: 100 }}
+                          onClick={() => {
+                            dispatch(
+                              openModalAction({
+                                title: "Chi tiết điểm danh",
+                                ModalComponent: (
+                                  <ChiTietDiemDanh DiemDanh={item} />
+                                ),
+                              })
+                            );
+                          }}
                         >
                           {item?.trangThai === 1 ? (
                             <span className="material-icons text-xl font-bold text-success">
                               done
                             </span>
                           ) : item?.trangThai === 0 ? (
-                            <span className="text-xl font-bold text-pendding">...</span>
+                            <span className="text-xl font-bold text-pendding">
+                              ...
+                            </span>
                           ) : item?.trangThai === 2 ? (
                             <span className="text-xl font-bold">-</span>
                           ) : (
@@ -166,7 +179,9 @@ export default function DiemDanh(props) {
                               done
                             </span>
                           ) : item?.trangThai === 0 ? (
-                            <span className="text-xl font-bold text-pendding">...</span>
+                            <span className="text-xl font-bold text-pendding">
+                              ...
+                            </span>
                           ) : item?.trangThai === 2 ? (
                             <span className="text-xl font-bold">-</span>
                           ) : (

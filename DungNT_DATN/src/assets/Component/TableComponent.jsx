@@ -22,6 +22,7 @@ export default function TableComponent(props) {
     CurrentPageSize,
     ShowSizeChanger,
     hidePagination,
+    emptyDescription,
     ...rest
   } = props;
 
@@ -64,7 +65,6 @@ export default function TableComponent(props) {
     let newSource = setIndex(DataSource, CurrentPage, CurrentPageSize);
     setCurrentSource(newSource);
   }, [DataSource]);
-
 
   return (
     <>
@@ -109,7 +109,11 @@ export default function TableComponent(props) {
                   <Empty
                     className="py-5"
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Không tìm thấy kết quả"
+                    description={
+                      emptyDescription
+                        ? emptyDescription
+                        : "Không tìm thấy kết quả"
+                    }
                   />
                 </div>
               ),
@@ -135,7 +139,11 @@ export default function TableComponent(props) {
                   <Empty
                     className="py-5"
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
-                    description="Không tìm thấy kết quả"
+                    description={
+                      emptyDescription
+                        ? emptyDescription
+                        : "Không tìm thấy kết quả"
+                    }
                   />
                 </div>
               ),

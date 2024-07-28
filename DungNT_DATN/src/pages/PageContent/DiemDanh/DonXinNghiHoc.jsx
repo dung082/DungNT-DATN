@@ -8,6 +8,7 @@ import {
   getListCaHocAction,
   xinNghiAction,
 } from "../../../reducers/diemDanhReducer/diemDanhReducer";
+import { closeModalAction } from "../../../reducers/modalReducer/modalReducer";
 const { TextArea } = Input;
 
 export default function DonXinNghiHoc(props) {
@@ -76,7 +77,17 @@ export default function DonXinNghiHoc(props) {
       </div>
 
       <div className="mt-5 text-center">
+        <Button
+          type="default"
+          onClick={() => {
+            dispatch(closeModalAction());
+          }}
+        >
+          Đóng
+        </Button>
+
         <Popconfirm
+          className="ml-3"
           title="Nộp đơn xin nghỉ"
           description="Bạn có chắc chắn muốn xin nghỉ?"
           onConfirm={submitForm}

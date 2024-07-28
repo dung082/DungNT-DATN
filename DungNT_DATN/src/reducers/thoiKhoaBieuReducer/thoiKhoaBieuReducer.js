@@ -9,6 +9,7 @@ export const thoiKhoaBieuSlice = createSlice({
     chiTietTKB: {},
     pageNumber: 1,
     pageSize: 10,
+    type: 0,
   },
   reducers: {
     setThoiKhoaBieu: (state, action) => {
@@ -21,15 +22,24 @@ export const thoiKhoaBieuSlice = createSlice({
       state.pageNumber = action.payload.pageNumber;
       state.pageSize = action.payload.pageSize;
     },
+    setTypeSearch: (state, action) => {
+      state.type = action.payload;
+    },
   },
 });
 
 export const getThoiKhoaBieuAction =
-  (ngayHoc, username) => async (dispatch) => {
+  (type, ngayHoc, username) => async (dispatch) => {
     try {
-      const res = await thoikhoabieuservice.getThoiKhoaBieu(ngayHoc, username);
+      const res = await thoikhoabieuservice.getThoiKhoaBieu(
+        type,
+        ngayHoc,
+        username
+      );
       if (res.status === 200) {
         dispatch(setThoiKhoaBieu(res.data.value));
+
+        dispatch(setTypeSearch(type));
       }
     } catch (err) {
       openWarning("Thất bại", "Có lỗi xảy ra khi lấy thời khóa biểu");
@@ -40,7 +50,6 @@ export const getChiTietThoiKhoaBieuAction = (tkbId) => async (dispatch) => {
   try {
     const res = await thoikhoabieuservice.getChiTietThoiKhoaBieu(tkbId);
     if (res.status === 200) {
-      console.log(res);
       dispatch(setChiTietTkb(res.data));
     }
   } catch (err) {
@@ -48,7 +57,11 @@ export const getChiTietThoiKhoaBieuAction = (tkbId) => async (dispatch) => {
   }
 };
 
-export const { setThoiKhoaBieu, setChiTietTkb, setPageInformationTKB } =
-  thoiKhoaBieuSlice.actions;
+export const {
+  setThoiKhoaBieu,
+  setChiTietTkb,
+  setPageInformationTKB,
+  setTypeSearch,
+} = thoiKhoaBieuSlice.actions;
 export const thoiKhoaBieuState = (state) => state.thoikhoabieu;
 export default thoiKhoaBieuSlice.reducer;

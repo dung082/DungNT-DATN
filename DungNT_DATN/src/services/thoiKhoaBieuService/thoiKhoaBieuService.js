@@ -1,8 +1,8 @@
 import { baseService } from "../baseService";
 
 export class ThoiKhoaBieuService extends baseService {
-    getThoiKhoaBieu = (ngayhoc, username) => {
-        return this.get(`ThoiKhoaBieu/LayThoiKhoaBieu?ngayHoc=${ngayhoc}&username=${username}`);
+    getThoiKhoaBieu = (type ,ngayhoc, username) => {
+        return this.get(`ThoiKhoaBieu/LayThoiKhoaBieu?type=${type}&ngayHoc=${ngayhoc}&username=${username}`);
     };
 
     getChiTietThoiKhoaBieu = (tkbId) => {

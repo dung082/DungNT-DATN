@@ -66,6 +66,38 @@ export const xinNghiAction = (data) => async (dispatch) => {
 }
 
 
+export const suaDiemDanhAction = (data) => async (dispatch) => {
+  try {
+    const res = await diemdanhservice.suaDiemDanh(data);
+    if (res.status === 200) {
+      openNotification("Thành công", "Sửa đơn xin nghỉ thành công");
+      dispatch(getDiemDanhAction("", data?.username))
+      dispatch(closeModalAction())
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+}
+
+
+export const xoaDiemDanhAction = (diemDanhId , username) => async (dispatch) => {
+  try {
+    const res = await diemdanhservice.xoaDiemDanh(diemDanhId);
+    if (res.status === 200) {
+      openNotification("Thành công", "Xóa đơn xin nghỉ thành công");
+      dispatch(getDiemDanhAction("", username))
+      dispatch(closeModalAction())
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+}
+
+
 export const {
   setDiemDanh,
   setListCaHoc

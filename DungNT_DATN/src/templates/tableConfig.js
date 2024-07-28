@@ -119,6 +119,35 @@ export const DIEM_THI_COLUMN_CONFIG = [
   },
 ];
 
+export const THOI_KHOA_BIEU_COLUMN_CONFIG = [
+  {
+    title: "STT",
+    dataIndex: "stt",
+    key: "stt",
+  },
+  {
+    title: "Ca học",
+    dataIndex: "tenCaHoc",
+    key: "tenCaHoc",
+  },
+  {
+    title: "Tiết học",
+    dataIndex: "tenTietHoc",
+    key: "tenTietHoc",
+  },
+  {
+    title: "Môn học",
+    dataIndex: "tenMonHoc",
+    key: "tenMonHoc",
+  },
+
+  {
+    title: "Giáo viên giảng dạy",
+    dataIndex: "tenGiaoVien",
+    key: "tenGiaoVien  ",
+  },
+];
+
 
 export const DIEM_TONG_KET_COLUMN_CONFIG = [
   {
