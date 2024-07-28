@@ -16,6 +16,16 @@ namespace BackEndApi.Repository
             _context = context;
         }
 
+        public async Task<ActionResult> ChiTietDiemDanh(Guid diemDanhId)
+        {
+            return new JsonResult(true);
+        }
+
+        public Task<ActionResult> DuyetDiemDanh(Guid diemDanhId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ActionResult> LayDanhSachDiemDanhTheoTuan(DateTime? ngay, string username)
         {
             Dictionary<string, List<DiemDanh>> listdd = new Dictionary<string, List<DiemDanh>>();
@@ -103,6 +113,19 @@ namespace BackEndApi.Repository
             return new JsonResult(result);
         }
 
+        public async Task<ActionResult> SuaDiemDanh(DiemDanh diemDanh)
+        {
+            var diemdanh = await _context.DiemDanhs.FirstOrDefaultAsync(item => item.Id == diemDanh.Id);
+            if (diemdanh == null)
+            {
+                throw new Exception("Điểm danh không tồn tại");
+            }
+            diemdanh.LyDo = diemDanh.LyDo;
+            _context.DiemDanhs.Update(diemdanh);
+            _context.SaveChanges();
+            return new JsonResult(diemdanh);
+        }
+
         public async Task<ActionResult> ThemDiemDanh(DiemDanhDto diemDanhDto)
         {
             var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == diemDanhDto.Username);
@@ -136,6 +159,18 @@ namespace BackEndApi.Repository
             _context.DiemDanhs.Add(diemdanh);
             _context.SaveChanges();
 
+            return new JsonResult(diemdanh);
+        }
+
+        public async Task<ActionResult> XoaDiemDanh(Guid diemDanhId)
+        {
+            var diemdanh = await _context.DiemDanhs.FirstOrDefaultAsync(item => item.Id == diemDanhId);
+            if(diemdanh == null)
+            {
+                throw new Exception("Điểm danh không tồn tại");
+            }
+            _context.DiemDanhs.Remove(diemdanh);
+            _context.SaveChanges();
             return new JsonResult(diemdanh);
         }
     }

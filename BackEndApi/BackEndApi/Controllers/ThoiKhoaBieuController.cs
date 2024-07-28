@@ -19,9 +19,9 @@ namespace BackEndApi.Controllers
         }
         [HttpGet]
         [Route("LayThoiKhoaBieu")]
-        public async Task<ActionResult> LayThoiKhoaBieu(DateTime? ngayHoc, string username)
+        public async Task<ActionResult> LayThoiKhoaBieu(int type, DateTime? ngayHoc, string username)
         {
-            var lstTkb = await _iThoiKhoaBieuRepository.LayThoiKhoaBieu(ngayHoc , username);
+            var lstTkb = await _iThoiKhoaBieuRepository.LayThoiKhoaBieu( type , ngayHoc , username);
             return Ok(lstTkb);
         }
 

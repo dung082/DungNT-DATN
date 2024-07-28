@@ -1,5 +1,6 @@
 ﻿using BackEndApi.Dto;
 using BackEndApi.Interface.IRepository;
+using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndApi.Controllers
@@ -29,6 +30,22 @@ namespace BackEndApi.Controllers
         public async Task<ActionResult> ThemDiemDanh(DiemDanhDto diemDanhDto)
         {
             var result = await _iDiemDanhRepository.ThemDiemDanh(diemDanhDto);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("SuaDiemDanh")]
+        public async Task<ActionResult> SuaDiemDanh(DiemDanh diemDanh)
+        {
+            var result = await _iDiemDanhRepository.SuaDiemDanh(diemDanh);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("XoaDiemDanh")]
+        public async Task<ActionResult> XoaDiemDanh(Guid diemDanhId)
+        {
+            var result = await _iDiemDanhRepository.XoaDiemDanh(diemDanhId);
             return Ok(result);
         }
     }
