@@ -16,6 +16,7 @@ import { thoiKhoaBieuSlice } from "./thoiKhoaBieuReducer/thoiKhoaBieuReducer";
 import { diemTongKetSlice } from "./diemTongKetReducer/diemTongKetReducer";
 import { lichThiSlice } from "./lichThiReducer/lichThiReducer";
 import { diemDanhSlice } from "./diemDanhReducer/diemDanhReducer";
+import { thongBaoSlice } from "./thongBaoReducer/thongBaoReducer";
 
 const store = configureStore({
   reducer: {
@@ -36,6 +37,7 @@ const store = configureStore({
     diemtongket: diemTongKetSlice.reducer,
     lichthi: lichThiSlice.reducer,
     diemdanh: diemDanhSlice.reducer,
+    thongbao: thongBaoSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

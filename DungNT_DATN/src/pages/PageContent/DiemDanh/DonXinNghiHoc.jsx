@@ -93,7 +93,7 @@ export default function DonXinNghiHoc(props) {
           onConfirm={submitForm}
           //   onCancel={cancel}
           okText="Nộp đơn"
-          cancelText="hủy"
+          cancelText="Hủy"
         >
           <Button type="primary">Gửi đơn</Button>
         </Popconfirm>
