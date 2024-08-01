@@ -42,6 +42,14 @@ namespace BackEndApi.Controllers
             return Ok(tb);
         }
 
+        [HttpPost]
+        [Route("CapNhatTrangThaiListThongBao")]
+        public async Task<ActionResult> CapNhatTrangThaiListThongBao(List<Guid> listTbId)
+        {
+            var tb = await _iThongBaoRepository.CapNhatTrangThaiListThongBao(listTbId);
+            return Ok(tb);
+        }
+
         [HttpGet]
         [Route("LayThongBao")]
         public async Task<ActionResult> LayThongBao(string username)

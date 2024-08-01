@@ -105,5 +105,20 @@ namespace BackEndApi.Repository
 
             return new JsonResult(listTb);
         }
+
+        public async Task<ActionResult> CapNhatTrangThaiListThongBao(List<Guid> listTbId)
+        {
+            foreach (var item in listTbId)
+            {
+                var tb = await _context.ThongBaos.FirstOrDefaultAsync(i => i.Id == item && i.Status == 0);
+                if(tb != null)
+                {
+                    tb.Status = 1;
+                    _context.ThongBaos.Update(tb);
+                }
+            }
+            _context.SaveChanges();
+            return new JsonResult(true);
+        }
     }
 }
