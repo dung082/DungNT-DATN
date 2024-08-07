@@ -126,13 +126,15 @@ export default function InfoPage(props) {
                       {userInfomation?.tenTonGiao}
                     </div>
                   </div>
+                  {userInfomation?.userType === 2 && (
 
-                  <div className="mt-3">
-                    <div className="">Lớp học hiện tại: </div>
-                    <div className=" font-bold">
-                      {userInfomation?.tenLopHienTai}
+                    <div className="mt-3">
+                      <div className="">Lớp học hiện tại: </div>
+                      <div className=" font-bold">
+                        {userInfomation?.tenLopHienTai}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {userInfomation?.userType === 2 && (
                     <div className="mt-3">

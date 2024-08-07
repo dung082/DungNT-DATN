@@ -111,7 +111,7 @@ export default function PageTemplate() {
                   : window.location.pathname
               }
               // defaultSelectedKeys={["1"]}
-              items={[
+              items={userInfo?.userType === 2 ? [
                 {
                   key: "/TrangChu",
                   label: "Trang chủ",
@@ -191,10 +191,27 @@ export default function PageTemplate() {
                     },
                   ],
                 },
+                // {
+                //   key: "sub4",
+                //   label: "Thông báo",
+                //   icon: <SoundOutlined />,
+                // },
+              ] : [
                 {
-                  key: "sub4",
-                  label: "Thông báo",
-                  icon: <SoundOutlined />,
+                  key: "/TrangChu",
+                  label: "Trang chủ",
+                  icon: <HomeOutlined />,
+                  onClick: () => {
+                    navigate("/TrangChu");
+                  },
+                },
+                {
+                  key: "/ThongTinCaNhan",
+                  label: "Thông tin cá nhân",
+                  onClick: () => {
+                    navigate("/ThongTinCaNhan");
+                  },
+                  icon: <UserOutlined />,
                 },
               ]}
             />

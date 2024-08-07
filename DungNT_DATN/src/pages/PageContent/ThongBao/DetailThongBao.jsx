@@ -7,7 +7,7 @@ export default function DetailThongBao(props) {
     return (
         <div>
             <p className="whitespace-pre-wrap">{props?.noti?.content}</p>
-            <div className="text-center">
+            <div className="text-center mt-5">
                 <Button type="default" onClick={() => {
                     dispatch(closeModalAction())
                 }}>Đóng</Button>
