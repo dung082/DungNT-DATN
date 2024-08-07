@@ -23,7 +23,7 @@ namespace BackEndApi.Repository
                 string namhoc = "";
                 var month = DateTime.Now.Month;
                 var year = DateTime.Now.Year;
-                if (month >= 8)
+                if (month >= 10)
                 {
                     namhoc = year + "-" + (year + 1);
                 }

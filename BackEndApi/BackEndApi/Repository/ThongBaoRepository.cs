@@ -83,20 +83,31 @@ namespace BackEndApi.Repository
         public async Task<ActionResult> LayThongBao(string username)
         {
             List<ThongBao> listTb = new List<ThongBao>();
-
-            var listTbByUserName = await _context.ThongBaos.Where(i => i.Username == username).ToListAsync();
-            if (listTbByUserName.Count > 0)
+            if (username.Contains("admin_"))
             {
-                listTb.AddRange(listTbByUserName);
-            }
-
-            var listLop = await _context.ChiTietLops.Where(i => i.Username == username).Select(i => new { i.LopId, i.NamHoc }).ToListAsync();
-            foreach (var item in listLop)
-            {
-                var listTbByLop = await _context.ThongBaos.Where(i => i.LopId == item.LopId && i.NamHoc == item.NamHoc).ToListAsync();
-                if (listTbByLop.Count > 0)
+                var listThongBao = await _context.ThongBaos.Where(i => i.Username.Contains("admin")).ToListAsync();
+                if (listThongBao.Count > 0)
                 {
-                    listTb.AddRange(listTbByLop);
+                    listTb.AddRange(listThongBao);
+                }
+            }
+            else
+            {
+
+                var listTbByUserName = await _context.ThongBaos.Where(i => i.Username == username).ToListAsync();
+                if (listTbByUserName.Count > 0)
+                {
+                    listTb.AddRange(listTbByUserName);
+                }
+
+                var listLop = await _context.ChiTietLops.Where(i => i.Username == username).Select(i => new { i.LopId, i.NamHoc }).ToListAsync();
+                foreach (var item in listLop)
+                {
+                    var listTbByLop = await _context.ThongBaos.Where(i => i.LopId == item.LopId && i.NamHoc == item.NamHoc).ToListAsync();
+                    if (listTbByLop.Count > 0)
+                    {
+                        listTb.AddRange(listTbByLop);
+                    }
                 }
             }
 
@@ -111,7 +122,7 @@ namespace BackEndApi.Repository
             foreach (var item in listTbId)
             {
                 var tb = await _context.ThongBaos.FirstOrDefaultAsync(i => i.Id == item && i.Status == 0);
-                if(tb != null)
+                if (tb != null)
                 {
                     tb.Status = 1;
                     _context.ThongBaos.Update(tb);

@@ -4,16 +4,19 @@ using BackEndData;
 using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.WebSockets;
 
 namespace BackEndApi.Repository
 {
     public class DiemDanhRepository : IDiemDanhRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IThongBaoRepository _iThongBaoRepository;
 
-        public DiemDanhRepository(ApplicationDbContext context)
+        public DiemDanhRepository(ApplicationDbContext context, IThongBaoRepository iThongBaoRepository)
         {
             _context = context;
+            _iThongBaoRepository = iThongBaoRepository;
         }
 
         public async Task<ActionResult> ChiTietDiemDanh(Guid diemDanhId)
@@ -21,9 +24,30 @@ namespace BackEndApi.Repository
             return new JsonResult(true);
         }
 
-        public Task<ActionResult> DuyetDiemDanh(Guid diemDanhId)
+        public async Task<ActionResult> DuyetDiemDanh(Guid diemDanhId)
         {
-            throw new NotImplementedException();
+            var diemDanh = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.Id == diemDanhId);
+            if (diemDanh == null)
+            {
+                throw new Exception("Không tồn tại đơn xin nghỉ");
+            }
+            diemDanh.TrangThai = 1;
+            ThongBaoDto tbdto = new ThongBaoDto()
+            {
+                Content = "Đơn xin nghỉ của bạn đã được duyệt thành công. Vui lòng vào trang /DiemDanhXinNghi để kiểm tra lại",
+                Link = "/DiemDanhXinNghi",
+                LopId = null,
+                NamHoc = null,
+                Status = 0 ,
+                Title = "Xác nhận đơn xin nghỉ học",
+                Username = diemDanh.Username,
+            };
+            var tb = await _iThongBaoRepository.ThemThongBao(tbdto);
+
+            _context.DiemDanhs.Update(diemDanh);
+            _context.SaveChanges();
+
+            return new JsonResult(true);
         }
 
         public async Task<ActionResult> LayDanhSachDiemDanhTheoTuan(DateTime? ngay, string username)
@@ -54,7 +78,7 @@ namespace BackEndApi.Repository
 
                 }
 
-                if (weekDays[0].Month >= 8)
+                if (weekDays[0].Month >= 10)
                 {
                     namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                 }
@@ -140,11 +164,25 @@ namespace BackEndApi.Repository
                 throw new Exception("Ca học không tồn tại");
             }
 
+            if(DateOnly.FromDateTime(diemDanhDto.NgayHoc) < DateOnly.FromDateTime(DateTime.Now))
+            {
+                throw new Exception("Bạn không thể xin nghỉ những ngày đã qua");
+            }
+
+            var caHocSang = await _context.CaHocs.Where(i => i.TenCaHoc.Contains("sáng")).Select(i => i.Id).FirstOrDefaultAsync();
+            if(caHocSang == diemDanhDto.CaHocId )
+            {
+                throw new Exception("Bạn không thể xin nghỉ buổi học đã qua");
+            }
+            
+
             var ddtrung = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.CaHocId == diemDanhDto.CaHocId && i.Username == diemDanhDto.Username && DateOnly.FromDateTime(i.NgayHoc) == DateOnly.FromDateTime(diemDanhDto.NgayHoc));
             if (ddtrung != null)
             {
                 throw new Exception("Học sinh đã có lịch điểm danh vào buổi học này");
             }
+
+
 
             DiemDanh diemdanh = new DiemDanh()
             {
@@ -156,6 +194,20 @@ namespace BackEndApi.Repository
                 TrangThai = diemDanhDto.TrangThai
             };
 
+            ThongBaoDto tbDto = new ThongBaoDto()
+            {
+                Username = "admin_truong_dungnt",
+                Title = "Đơn xin nghỉ học",
+                Content = "Hiện đang có thông tin học sinh đang xin nghỉ học.Vui lòng vào trang /DiemDanhHS để chấp nhận đơn xin nghỉ học của học sinh",
+                Link = "/DiemDanhHS",
+                LopId = null,
+                NamHoc = null,
+                Status = 0
+            };
+
+
+            var addTb = await _iThongBaoRepository.ThemThongBao(tbDto);
+
             _context.DiemDanhs.Add(diemdanh);
             _context.SaveChanges();
 
@@ -165,7 +217,7 @@ namespace BackEndApi.Repository
         public async Task<ActionResult> XoaDiemDanh(Guid diemDanhId)
         {
             var diemdanh = await _context.DiemDanhs.FirstOrDefaultAsync(item => item.Id == diemDanhId);
-            if(diemdanh == null)
+            if (diemdanh == null)
             {
                 throw new Exception("Điểm danh không tồn tại");
             }

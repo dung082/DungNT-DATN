@@ -138,7 +138,7 @@ namespace BackEndApi.Repository
 
                 }
 
-                if (weekDays[0].Month >= 8)
+                if (weekDays[0].Month >= 10)
                 {
                     namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                 }
@@ -168,7 +168,7 @@ namespace BackEndApi.Repository
                     weekDays[i] = weekStart.AddDays(i);
                 }
 
-                if (weekDays[0].Month >= 8)
+                if (weekDays[0].Month >= 10)
                 {
                     namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                 }

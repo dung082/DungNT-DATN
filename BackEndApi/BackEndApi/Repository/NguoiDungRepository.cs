@@ -120,7 +120,7 @@ namespace BackEndApi.Repository
 
             if (nguoiDungDto.UserType == 2)
             {
-                if(String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHocId.ToString()))
+                if (String.IsNullOrWhiteSpace(nguoiDungDto.KhoaHocId.ToString()))
                 {
                     throw new Exception("Khóa học không được để trống");
                 }
@@ -437,7 +437,7 @@ namespace BackEndApi.Repository
                 }
             }
 
-            
+
             user.DanTocId = nguoiDung.DanTocId;
             user.DiaChi = nguoiDung.DiaChi;
             user.Status = nguoiDung.Status;
@@ -474,7 +474,7 @@ namespace BackEndApi.Repository
             nameRevert = RemoveSign4VietnameseString(NameSplit[NameSplit.Length - 1]).ToLower();
             for (int i = 0; i < NameSplit.Length - 1; i++)
             {
-                nameRevert += RemoveSign4VietnameseString(NameSplit[i].Substring(0, 1).ToLower()).ToLower(); 
+                nameRevert += RemoveSign4VietnameseString(NameSplit[i].Substring(0, 1).ToLower()).ToLower();
             }
             if (userType == 0)
             {
@@ -566,7 +566,7 @@ namespace BackEndApi.Repository
             string namhoc = "";
             var month = DateTime.Now.Month;
             var year = DateTime.Now.Year;
-            if (month >= 8)
+            if (month >= 10)
             {
                 namhoc = year + "-" + (year + 1);
             }
@@ -591,7 +591,11 @@ namespace BackEndApi.Repository
             var dantocMe = await _context.DanTocs.FirstOrDefaultAsync(item => item.Id == nguoiDung.DanTocIdMe);
             var tongiaoMe = await _context.TonGiaos.FirstOrDefaultAsync(item => item.Id == nguoiDung.TonGiaoIdMe);
             var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(item => item.NamHoc == namhoc && item.Username == nguoiDung.Username);
-            var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
+            var lop = new Lop();
+            if (ctl != null)
+            {
+                lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
+            }
 
             ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
             {
