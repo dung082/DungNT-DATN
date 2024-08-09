@@ -7,7 +7,8 @@ export const diemDanhSlice = createSlice({
   name: "diemdanh",
   initialState: {
     diemDanh: {},
-    listCaHoc: []
+    listCaHoc: [],
+    listDiemDanh: []
   },
   reducers: {
     setDiemDanh: (state, action) => {
@@ -15,6 +16,9 @@ export const diemDanhSlice = createSlice({
     },
     setListCaHoc: (state, action) => {
       state.listCaHoc = action.payload;
+    },
+    setListDiemDanh: (state, action) => {
+      state.listDiemDanh = action.payload
     }
   },
 });
@@ -82,7 +86,7 @@ export const suaDiemDanhAction = (data) => async (dispatch) => {
 }
 
 
-export const xoaDiemDanhAction = (diemDanhId , username) => async (dispatch) => {
+export const xoaDiemDanhAction = (diemDanhId, username) => async (dispatch) => {
   try {
     const res = await diemdanhservice.xoaDiemDanh(diemDanhId);
     if (res.status === 200) {
@@ -97,10 +101,24 @@ export const xoaDiemDanhAction = (diemDanhId , username) => async (dispatch) => 
 
 }
 
+export const layDiemDanhAction = () => async (dispatch) => {
+  try {
+    const res = await diemdanhservice.LayLichDiemDanh();
+    if (res.status === 200) {
+      dispatch(setListDiemDanh(res.data.value))
+    }
+  }
+  catch (err) {
+    console.log(err);
+  }
+
+}
+
 
 export const {
   setDiemDanh,
-  setListCaHoc
+  setListCaHoc,
+  setListDiemDanh
 } = diemDanhSlice.actions;
 export const diemDanhState = (state) => state.diemdanh;
 export default diemDanhSlice.reducer;

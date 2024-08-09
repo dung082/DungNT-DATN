@@ -213,6 +213,28 @@ export default function PageTemplate() {
                   },
                   icon: <UserOutlined />,
                 },
+
+                {
+                  key: "/QuanLyHocSinh",
+                  label: "Quản lý học sinh",
+                  onClick: () => {
+                    navigate("/QuanLyHocSinh");
+                  },
+                  icon: <span className="material-icons">
+                    people
+                  </span>
+                },
+
+                {
+                  key: "/DiemDanhHS",
+                  label: "Điểm danh học sinh",
+                  onClick: () => {
+                    navigate("/DiemDanhHS");
+                  },
+                  icon: <span className="material-icons">
+                    fact_check
+                  </span>
+                },
               ]}
             />
           </Sider>

@@ -19,8 +19,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ThoiKhoaBieu from "./pages/PageContent/ThoiKhoaBieu/ThoiKhoaBieu";
 import DiemTongKet from "./pages/PageContent/DiemTongKet/DiemTongKet";
 import DiemDanh from "./pages/PageContent/DiemDanh/DiemDanh";
+import QuanLyHocSinh from "./pages/PageContent/QuanLyHocSinh/QuanLyHocSinh";
+import DiemDanhHocSinh from "./pages/PageContent/DiemDanh/DiemDanhHocSinh";
 
-ChartJS.register(ArcElement, Tooltip, Legend , ChartDataLabels);
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
             <Route path="/DanhSachHocSinh" element={<DanhSachLopHoc />} />
             <Route path="/DiemTongKet" element={<DiemTongKet />} />
             <Route path="/DiemDanh" element={<DiemDanh />} />
+            <Route path="/QuanLyHocSinh" element={<QuanLyHocSinh />} />
+            <Route path="/DiemDanhHS" element={<DiemDanhHocSinh />} />
           </Route>
           {/* </Route> */}
         </Routes>

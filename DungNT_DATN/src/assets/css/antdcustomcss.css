@@ -33,12 +33,22 @@
   font-weight: bold;
 }
 
+.ant-menu-item.ant-menu-item-selected .material-icons {
+  color: theme(colors.colorthemes) !important;
+  font-weight: bold;
+}
+
 .ant-menu-item .ant-menu-title-content {
   color: white !important;
   font-weight: bold;
 }
 
 .ant-menu-item .anticon {
+  color: white !important;
+  font-weight: bold;
+}
+
+.ant-menu-item .material-icons {
   color: white !important;
   font-weight: bold;
 }
@@ -51,6 +61,11 @@
 }
 
 .ant-menu-submenu.ant-menu-submenu-inline .ant-menu-submenu-title .anticon {
+  color: white !important;
+  font-weight: bold;
+}
+
+.ant-menu-submenu.ant-menu-submenu-inline .ant-menu-submenu-title .material-icons {
   color: white !important;
   font-weight: bold;
 }
@@ -86,6 +101,17 @@
   font-weight: bold;
 }
 
+
+.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-selected:not(
+    .ant-menu-submenu-open
+  )
+  .ant-menu-submenu-title
+  .material-icons {
+  color: theme(colors.colorthemes) !important;
+  font-weight: bold;
+}
+
+
 .ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-selected:not(
     .ant-menu-submenu-open
   )
@@ -117,9 +143,21 @@
   font-weight: bold;
 }
 
+.ant-menu-submenu.ant-menu-submenu-vertical .ant-menu-submenu-title .material-icons {
+  color: white !important;
+  font-weight: bold;
+}
+
 .ant-menu-submenu.ant-menu-submenu-vertical.ant-menu-submenu-selected
   .ant-menu-submenu-title
   .anticon {
+  color: theme(colors.colorthemes) !important;
+  font-weight: bold;
+}
+
+.ant-menu-submenu.ant-menu-submenu-vertical.ant-menu-submenu-selected
+  .ant-menu-submenu-title
+  .material-icons {
   color: theme(colors.colorthemes) !important;
   font-weight: bold;
 }
@@ -319,4 +357,16 @@ table.table-diem thead tr th {
 
 .text-success {
   color: theme(colors.success);
+}
+
+.popup-action {
+  cursor : pointer;
+  /* text-decoration: underline; */
+  color : theme(colors.colorthemes)
+}
+
+.popup-action:hover {
+  cursor : pointer;
+  text-decoration: underline;
+  color : theme(colors.colorthemes)
 }

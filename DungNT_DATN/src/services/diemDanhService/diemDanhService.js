@@ -20,6 +20,10 @@ export class DiemDanhService extends baseService {
   xoaDiemDanh = (diemDanhId) => {
     return this.post(`DiemDanh/XoaDiemDanh?diemDanhId=${diemDanhId}`);
   };
+
+  LayLichDiemDanh = () => {
+    return this.get(`DiemDanh/LayLichDiemDanh`);
+  };
 }
 
 export const diemdanhservice = new DiemDanhService();

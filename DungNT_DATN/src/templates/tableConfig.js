@@ -1,4 +1,7 @@
 import dayjs from "dayjs";
+import PopUpComponent from "../pages/PageTemplate/PopUpComponent";
+import { openModalAction } from "../reducers/modalReducer/modalReducer";
+import EditInfo from "../pages/PageContent/InfoPage/EditInfo";
 
 export const CHUONG_TRINH_KHUNG_TABLE_CONFIG = [
   {
@@ -69,6 +72,8 @@ export const CHI_TIET_LOP_HOC_COLUMN_CONFIG = [
     key: "diaChi",
   },
 ];
+
+
 
 export const HOC_SINH_CHI_TIET_THOI_KHOA_BIEU = [
   {

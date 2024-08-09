@@ -9,9 +9,6 @@ export default function ThongBao(props) {
     const { listThongBao, thongBaoChuaXem, isOpen } = useSelector(thongbaoState)
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        console.log(isOpen);
-    }, [isOpen])
     return (
         <div className="mr-3 cursor-pointer select-none">
             <Popover

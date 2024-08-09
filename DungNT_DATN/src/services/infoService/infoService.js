@@ -8,6 +8,14 @@ export class InfoService extends baseService {
   updateUserInfomation = (user) => {
     return this.post(`NguoiDung/SuaNguoiDung`, user);
   };
+
+  themNguoiDung = (user) => {
+    return this.post(`NguoiDung/ThemNguoiDung`, user);
+  };
+
+  layTatCaHocSinh = () => {
+    return this.get(`NguoiDung/LayTatCaHocSinh`);
+  }
 }
 
 export const infoservice = new InfoService();
