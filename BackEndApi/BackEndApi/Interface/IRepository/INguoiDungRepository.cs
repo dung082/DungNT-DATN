@@ -7,6 +7,7 @@ namespace BackEndApi.Interface.IRepository
     public interface INguoiDungRepository
     {
         public Task<ActionResult<List<NguoiDung>>> LayTatCaNguoiDung();
+        public Task<ActionResult> LayTatCaHocSinh();
         public Task<ActionResult<List<NguoiDung>>> LayNguoiDungTheoIdLop(Guid idLop);
         public IActionResult ThemNguoiDung(NguoiDungDto nguoiDungDto);
         public IActionResult SuaNguoiDung(NguoiDung nguoiDung);

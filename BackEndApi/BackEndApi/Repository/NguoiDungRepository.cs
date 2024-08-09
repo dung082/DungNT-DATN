@@ -376,7 +376,7 @@ namespace BackEndApi.Repository
                         }
                         if (String.IsNullOrWhiteSpace(nguoiDung.SoDienThoaiCha))
                         {
-                            throw new Exception("Mã dân tộc của cha không được để trống");
+                            throw new Exception("Số điện thoại của cha không được để trống");
                         }
                         if (!String.IsNullOrWhiteSpace(nguoiDung.DanTocIdCha.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDung.DanTocIdCha))
                         {
@@ -408,7 +408,7 @@ namespace BackEndApi.Repository
                         }
                         if (String.IsNullOrWhiteSpace(nguoiDung.SoDienThoaiMe))
                         {
-                            throw new Exception("Mã dân tộc của mẹ không được để trống");
+                            throw new Exception("Số điện thoại mẹ không được để trống");
                         }
                         if (!String.IsNullOrWhiteSpace(nguoiDung.DanTocIdMe.ToString()) && !_context.DanTocs.Any(item => item.Id == nguoiDung.DanTocIdMe))
                         {
@@ -641,6 +641,86 @@ namespace BackEndApi.Repository
                 TenTonGiaoMe = tongiaoMe != null ? tongiaoMe.TenTonGiao : "",
             };
             return new JsonResult(thongTinNguoiDung);
+        }
+
+        public async Task<ActionResult> LayTatCaHocSinh()
+        {
+            string namhoc = "";
+            var month = DateTime.Now.Month;
+            var year = DateTime.Now.Year;
+            if (month >= 10)
+            {
+                namhoc = year + "-" + (year + 1);
+            }
+            else
+            {
+                namhoc = (year - 1) + "-" + year;
+            }
+            List<ThongTinNguoiDungDto> listNguoiDung = new List<ThongTinNguoiDungDto>();
+            var lstHS = await _context.NguoiDungs.Where(i => i.UserType == 2).ToListAsync();
+            foreach (var item in lstHS)
+            {
+                var dantoc = await _context.DanTocs.FirstOrDefaultAsync(i => i.Id == item.DanTocId);
+                var tongiao = await _context.TonGiaos.FirstOrDefaultAsync(i => i.Id == item.TonGiaoId);
+                var khoahoc = await _context.KhoaHocs.FirstOrDefaultAsync(i => i.Id == item.KhoaHocId);
+                var dantocCha = await _context.DanTocs.FirstOrDefaultAsync(i => i.Id == item.DanTocIdCha);
+                var tongiaoCha = await _context.TonGiaos.FirstOrDefaultAsync(i => i.Id == item.TonGiaoIdCha);
+                var dantocMe = await _context.DanTocs.FirstOrDefaultAsync(i => i.Id == item.DanTocIdMe);
+                var tongiaoMe = await _context.TonGiaos.FirstOrDefaultAsync(i => i.Id == item.TonGiaoIdMe);
+                var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(i => i.NamHoc == namhoc && item.Username == item.Username);
+                var lop = new Lop();
+                if (ctl != null)
+                {
+                    lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
+                }
+
+                ThongTinNguoiDungDto thongTinNguoiDung = new ThongTinNguoiDungDto
+                {
+                    Id = item.Id,
+                    Username = item.Username,
+                    Status = item.Status,
+                    HoTen = item.HoTen,
+                    NgaySinh = item.NgaySinh,
+                    DiaChi = item.DiaChi,
+                    GioiTinh = item.GioiTinh,
+                    SoDienThoai = item.SoDienThoai,
+                    UserType = item.UserType,
+                    Email = item.Email,
+                    Propeties = item.Propeties,
+                    DanTocId = item.DanTocId,
+                    TenDanToc = dantoc != null ? dantoc.TenDanToc : "",
+                    TonGiaoId = item.TonGiaoId,
+                    TenTonGiao = tongiao != null ? tongiao.TenTonGiao : "",
+                    NamHocIdHienTai = namhoc,
+                    LopIdHienTai = lop != null ? lop.Id : null,
+                    MaLopHienTai = lop != null ? lop.MaLop : "",
+                    TenLopHienTai = lop != null ? lop.TenLop : "",
+                    KhoiHoc = lop.KhoiHoc,
+                    KhoaHocId = item.KhoaHocId,
+                    TenKhoaHoc = khoahoc != null ? khoahoc.TenKhoaHoc : "",
+                    Avatar = item.Avatar,
+                    CCCD = item.CCCD,
+                    HoTenCha = item.HoTenCha,
+                    NamSinhCha = item.NamSinhCha,
+                    DiaChiCha = item.DiaChiCha,
+                    DanTocIdCha = item.DanTocIdCha,
+                    TenDanTocCha = dantocCha != null ? dantocCha.TenDanToc : "",
+                    TonGiaoIdCha = item.TonGiaoIdCha,
+                    TenTonGiaoCha = tongiaoCha != null ? tongiaoCha.TenTonGiao : "",
+                    HoTenMe = item.HoTenMe,
+                    NamSinhMe = item.NamSinhMe,
+                    DiaChiMe = item.DiaChiMe,
+                    DanTocIdMe = item.DanTocIdMe,
+                    TenDanTocMe = dantocMe != null ? dantocMe.TenDanToc : "",
+                    TonGiaoIdMe = item.TonGiaoIdMe,
+                    SoDienThoaiCha = item.SoDienThoaiCha,
+                    SoDienThoaiMe = item.SoDienThoaiMe,
+                    TenTonGiaoMe = tongiaoMe != null ? tongiaoMe.TenTonGiao : "",
+                };
+                listNguoiDung.Add(thongTinNguoiDung);
+            }
+            listNguoiDung = listNguoiDung.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
+            return new JsonResult(listNguoiDung);
         }
     }
 }

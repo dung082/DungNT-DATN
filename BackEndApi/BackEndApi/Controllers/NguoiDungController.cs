@@ -75,5 +75,13 @@ namespace BackEndApi.Controllers
             return Ok(nguoiDung);
         }
 
+        [HttpGet]
+        [Route("LayTatCaHocSinh")]
+        public async Task<ActionResult> LayTatCaHocSinh()
+        {
+            var nguoiDung = await _iNguoiDungRepository.LayTatCaHocSinh();
+            return Ok(nguoiDung);
+        }
+
     }
 }

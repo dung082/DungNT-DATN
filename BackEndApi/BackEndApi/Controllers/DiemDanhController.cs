@@ -19,7 +19,7 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayDiemDanh")]
-        public async Task<ActionResult> LayDiemDanh(DateTime? ngay , string username)
+        public async Task<ActionResult> LayDiemDanh(DateTime? ngay, string username)
         {
             var result = await _iDiemDanhRepository.LayDanhSachDiemDanhTheoTuan(ngay, username);
             return Ok(result);
@@ -54,6 +54,14 @@ namespace BackEndApi.Controllers
         public async Task<ActionResult> DuyetDiemDanh(Guid diemDanhId)
         {
             var result = await _iDiemDanhRepository.DuyetDiemDanh(diemDanhId);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("LayLichDiemDanh")]
+        public async Task<ActionResult> LayLichDiemDanh()
+        {
+            var result = await _iDiemDanhRepository.LayLichDiemDanh();
             return Ok(result);
         }
     }

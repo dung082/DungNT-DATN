@@ -38,7 +38,7 @@ namespace BackEndApi.Repository
                 Link = "/DiemDanhXinNghi",
                 LopId = null,
                 NamHoc = null,
-                Status = 0 ,
+                Status = 0,
                 Title = "Xác nhận đơn xin nghỉ học",
                 Username = diemDanh.Username,
             };
@@ -137,6 +137,30 @@ namespace BackEndApi.Repository
             return new JsonResult(result);
         }
 
+        public async Task<ActionResult> LayLichDiemDanh()
+        {
+            List<DiemDanhView> lstDiemDanhView = new List<DiemDanhView>();
+            var listDD = await _context.DiemDanhs.ToListAsync();
+            listDD = listDD.OrderByDescending(i => i.NgayHoc).ToList();
+            foreach (var i in listDD)
+            {
+                var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == i.Username);
+                DiemDanhView ddView = new DiemDanhView()
+                {
+                    Username = i.Username,
+                    CaHocId = i.CaHocId,
+                    HoTen = ngd.HoTen,
+                    Id = i.Id,
+                    LyDo = i.LyDo,
+                    NgayHoc = i.NgayHoc,
+                    TrangThai = i.TrangThai
+                };
+                lstDiemDanhView.Add(ddView);
+            }
+
+            return new JsonResult(lstDiemDanhView);
+        }
+
         public async Task<ActionResult> SuaDiemDanh(DiemDanh diemDanh)
         {
             var diemdanh = await _context.DiemDanhs.FirstOrDefaultAsync(item => item.Id == diemDanh.Id);
@@ -164,17 +188,17 @@ namespace BackEndApi.Repository
                 throw new Exception("Ca học không tồn tại");
             }
 
-            if(DateOnly.FromDateTime(diemDanhDto.NgayHoc) < DateOnly.FromDateTime(DateTime.Now))
+            if (DateOnly.FromDateTime(diemDanhDto.NgayHoc) < DateOnly.FromDateTime(DateTime.Now))
             {
                 throw new Exception("Bạn không thể xin nghỉ những ngày đã qua");
             }
 
             var caHocSang = await _context.CaHocs.Where(i => i.TenCaHoc.Contains("sáng")).Select(i => i.Id).FirstOrDefaultAsync();
-            if(caHocSang == diemDanhDto.CaHocId )
+            if (caHocSang == diemDanhDto.CaHocId)
             {
                 throw new Exception("Bạn không thể xin nghỉ buổi học đã qua");
             }
-            
+
 
             var ddtrung = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.CaHocId == diemDanhDto.CaHocId && i.Username == diemDanhDto.Username && DateOnly.FromDateTime(i.NgayHoc) == DateOnly.FromDateTime(diemDanhDto.NgayHoc));
             if (ddtrung != null)
