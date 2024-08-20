@@ -64,13 +64,14 @@ export default function ChiTietDiemDanh(props) {
         </div>
 
         <DatePicker
+          allowClear={false}
           disabled
           format={"DD/MM/YYYY"}
           className="w-full"
           value={ngayHoc}
-          //   onChange={(e) => {
-          //     setNgayHoc(dayjs(e));
-          //   }}
+        //   onChange={(e) => {
+        //     setNgayHoc(dayjs(e));
+        //   }}
         />
       </div>
 
@@ -84,7 +85,7 @@ export default function ChiTietDiemDanh(props) {
           className="w-full"
           value={caHoc}
           options={listCaHoc}
-          //   onChange={(e) => setCaHoc(e)}
+        //   onChange={(e) => setCaHoc(e)}
         />
       </div>
 
@@ -98,7 +99,7 @@ export default function ChiTietDiemDanh(props) {
           className="w-full"
           value={trangThai}
           options={listSelectTrangThai}
-          //   onChange={(e) => setCaHoc(e)}
+        //   onChange={(e) => setCaHoc(e)}
         />
       </div>
 

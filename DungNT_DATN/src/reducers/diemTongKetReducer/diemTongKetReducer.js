@@ -63,6 +63,8 @@ export const getDiemTongKetAction =
         dispatch(setErrorMessage(""));
         dispatch(setMonTongKet(monTongKetId));
         dispatch(setTypeSearch(type));
+        dispatch(getListKyHocAction(res.data.value?.kyHoc?.namHoc));
+
       }
     } catch (err) {
       dispatch(setMonTongKet(null));

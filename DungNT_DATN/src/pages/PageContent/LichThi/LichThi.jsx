@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { globalState } from "../../../reducers/globalReducer/globalReducer";
 import { getLichThiAction, lichThiState, setChiTietLichThi } from "../../../reducers/lichThiReducer/lichThiReducer";
 import dayjs from "dayjs";
-import { DatePicker } from "antd";
+import { Button, DatePicker } from "antd";
 import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
 import ChiTietLichThi from "./ChiTietLichThi";
 import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
@@ -42,12 +42,25 @@ export default function LichThi(props) {
         </div>
       </div>
 
-      <div className="mt-2 flex items-start justify-end">
-        <div className="ml-5">
+      <div className="mt-2 flex items-end justify-end">
+        <div className="ml-2">
+          <Button type="primary" onClick={() => {
+            let ngay = dayjs(ngayHoc).add(-7, 'day')
+            setNgayHoc(ngay);
+            dispatch(
+              getLichThiAction(
+                ngay.format("YYYY-MM-DD"),
+                userInfo?.username
+              )
+            );
+          }}>Tuần trước</Button>
+        </div>
+        <div className="ml-2">
           <div>
             <span>Chọn ngày học</span>
           </div>
           <DatePicker
+            allowClear={false}
             className="w-[200px] "
             value={ngayHoc}
             format={"DD/MM/YYYY"}
@@ -60,6 +73,18 @@ export default function LichThi(props) {
               return current && current > dayjs();
             }}
           />
+        </div>
+        <div className="ml-2">
+          <Button type="primary" onClick={() => {
+            let ngay = dayjs(ngayHoc).add(7, 'day')
+            setNgayHoc(ngay);
+            dispatch(
+              getLichThiAction(
+                ngay.format("YYYY-MM-DD"),
+                userInfo?.username
+              )
+            );
+          }}>Tuần sau</Button>
         </div>
       </div>
 

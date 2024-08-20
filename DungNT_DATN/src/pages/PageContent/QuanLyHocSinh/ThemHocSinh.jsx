@@ -132,6 +132,7 @@ export default function ThemHocSinh(props) {
                 <div className="p-2">
                     <span>Ngày sinh</span>
                     <DatePicker
+                        allowClear={false}
                         className="w-full"
                         value={formik.values.ngaySinh}
                         name="ngaySinh"
@@ -233,6 +234,7 @@ export default function ThemHocSinh(props) {
                 <div className="p-2">
                     <span>Năm sinh</span>
                     <DatePicker
+                        allowClear={false}
                         className="w-full"
                         picker="year"
                         value={namSinhCha}
@@ -302,6 +304,7 @@ export default function ThemHocSinh(props) {
                 <div className="p-2">
                     <span>Năm sinh</span>
                     <DatePicker
+                        allowClear={false}
                         className="w-full"
                         picker="year"
                         id="namSinhMe"

@@ -21,8 +21,8 @@ export const CHUONG_TRINH_KHUNG_TABLE_CONFIG = [
   },
   {
     title: "Tên khối học",
-    dataIndex: "tenKhoi",
-    key: "tenKhoi",
+    dataIndex: "khoi",
+    key: "khoi",
   },
   {
     title: "Số tiết học",

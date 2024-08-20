@@ -10,6 +10,13 @@ export const infoSlice = createSlice({
     listHocSinh: [],
     pageNumber: 1,
     pageSize: 10,
+    listHocKy: [],
+    listKyThi: [],
+    listLop: [],
+    namHoc: "",
+    kythi: "",
+    lop: "",
+    monthi: ""
   },
   reducers: {
     setUserInfomation: (state, action) => {
@@ -21,6 +28,18 @@ export const infoSlice = createSlice({
     setAdvanceSearchQLHS: (state, action) => {
       state.pageNumber = action.payload.pageNumber
       state.pageSize = action.payload.pageSize
+    },
+    setNamHoc: (state, action) => {
+      state.namHoc = action.payload
+    },
+    setKyThi: (state, action) => {
+      state.kythi = action.payload
+    },
+    setLop: (state, action) => {
+      state.lop = action.payload
+    },
+    setMonThi: (state, action) => {
+      state.monthi = action.payload
     }
   },
 });
@@ -89,6 +108,6 @@ export const themNguoiDungAction =
     }
   };
 
-export const { setUserInfomation, setListHocSinh, setAdvanceSearchQLHS } = infoSlice.actions;
+export const { setUserInfomation, setListHocSinh, setAdvanceSearchQLHS, setNamHoc, setLop, setKyThi, setMonThi } = infoSlice.actions;
 export const infoState = (state) => state.info;
 export default infoSlice.reducer;

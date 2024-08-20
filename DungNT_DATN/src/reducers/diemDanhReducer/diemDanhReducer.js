@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { diemdanhservice } from "../../services/diemDanhService/diemDanhService";
-import { openNotification } from "../../templates/notification";
+import { openNotification, openWarning } from "../../templates/notification";
 import { closeModalAction } from "../modalReducer/modalReducer";
 
 export const diemDanhSlice = createSlice({
@@ -8,7 +8,9 @@ export const diemDanhSlice = createSlice({
   initialState: {
     diemDanh: {},
     listCaHoc: [],
-    listDiemDanh: []
+    listDiemDanh: [],
+    pageNumber: 1,
+    pageSize: 10,
   },
   reducers: {
     setDiemDanh: (state, action) => {
@@ -19,6 +21,10 @@ export const diemDanhSlice = createSlice({
     },
     setListDiemDanh: (state, action) => {
       state.listDiemDanh = action.payload
+    },
+    setAdvanceSearchDiemDanh: (state, action) => {
+      state.pageNumber = action.payload.pageNumber
+      state.pageSize = action.payload.pageSize
     }
   },
 });
@@ -65,6 +71,8 @@ export const xinNghiAction = (data) => async (dispatch) => {
   }
   catch (err) {
     console.log(err);
+    openWarning("Thất bại", err?.response?.data?.Message)
+
   }
 
 }
@@ -93,17 +101,19 @@ export const xoaDiemDanhAction = (diemDanhId, username) => async (dispatch) => {
       openNotification("Thành công", "Xóa đơn xin nghỉ thành công");
       dispatch(getDiemDanhAction("", username))
       dispatch(closeModalAction())
+
     }
   }
   catch (err) {
     console.log(err);
+    openWarning("Thất bại", err?.response?.data?.Message)
   }
 
 }
 
-export const layDiemDanhAction = () => async (dispatch) => {
+export const layDiemDanhAction = (type) => async (dispatch) => {
   try {
-    const res = await diemdanhservice.LayLichDiemDanh();
+    const res = await diemdanhservice.LayLichDiemDanh(type);
     if (res.status === 200) {
       dispatch(setListDiemDanh(res.data.value))
     }
@@ -114,11 +124,27 @@ export const layDiemDanhAction = () => async (dispatch) => {
 
 }
 
+export const duyetDonXinNghiAction = (diemDanhId) => async (dispatch) => {
+  try {
+    const res = await diemdanhservice.DuyetDonXinNghi(diemDanhId);
+    if (res.status === 200) {
+      openNotification("Thành công", "Duyệt đơn xin nghỉ thành công");
+
+      dispatch(layDiemDanhAction(0))
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message)
+  }
+
+}
+
 
 export const {
   setDiemDanh,
   setListCaHoc,
-  setListDiemDanh
+  setListDiemDanh,
+  setAdvanceSearchDiemDanh
 } = diemDanhSlice.actions;
 export const diemDanhState = (state) => state.diemdanh;
 export default diemDanhSlice.reducer;

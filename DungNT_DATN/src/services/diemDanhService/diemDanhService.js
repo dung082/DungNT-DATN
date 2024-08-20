@@ -21,8 +21,12 @@ export class DiemDanhService extends baseService {
     return this.post(`DiemDanh/XoaDiemDanh?diemDanhId=${diemDanhId}`);
   };
 
-  LayLichDiemDanh = () => {
-    return this.get(`DiemDanh/LayLichDiemDanh`);
+  LayLichDiemDanh = (type) => {
+    return this.get(`DiemDanh/LayLichDiemDanh?type=${type}`);
+  };
+
+  DuyetDonXinNghi = (diemDanhId) => {
+    return this.get(`DiemDanh/DuyetDiemDanh?diemDanhId=${diemDanhId}`);
   };
 }
 

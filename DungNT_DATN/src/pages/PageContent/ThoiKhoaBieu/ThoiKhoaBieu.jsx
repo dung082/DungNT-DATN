@@ -8,7 +8,7 @@ import {
 import { globalState } from "../../../reducers/globalReducer/globalReducer";
 import dayjs from "dayjs";
 import { forEach } from "lodash";
-import { DatePicker, Select } from "antd";
+import { Button, DatePicker, Select } from "antd";
 import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
 import ChiTietThoiKhoaBieu from "./ChiTietThoiKhoaBieu";
 import TableComponent from "../../../assets/Component/TableComponent";
@@ -126,29 +126,57 @@ export default function ThoiKhoaBieu(props) {
                 }}
               />
             </div>
-
-            <div className="ml-5">
-              <div>
-                <span>Chọn ngày học</span>
-              </div>
-              <DatePicker
-                className="w-[200px] "
-                value={ngayHoc}
-                format={"DD/MM/YYYY"}
-                onChange={(e) => {
-                  setNgayHoc(dayjs(e));
+            <div className="flex items-end ml-5">
+              <div className="ml-2">
+                <Button type="primary" onClick={() => {
+                  let ngay = dayjs(ngayHoc).add(-7, 'day')
+                  setNgayHoc(ngay);
                   dispatch(
                     getThoiKhoaBieuAction(
                       type,
-                      e.format("YYYY-MM-DD"),
+                      ngay.format("YYYY-MM-DD"),
                       userInfo?.username
                     )
                   );
-                }}
-                disabledDate={(current) => {
-                  return current && current > dayjs();
-                }}
-              />
+                }}>Tuần trước</Button>
+              </div>
+              <div className="ml-2">
+                <div>
+                  <span>Chọn ngày học</span>
+                </div>
+                <DatePicker
+                  allowClear={false}
+                  className="w-[200px] "
+                  value={ngayHoc}
+                  format={"DD/MM/YYYY"}
+                  onChange={(e) => {
+                    setNgayHoc(dayjs(e));
+                    dispatch(
+                      getThoiKhoaBieuAction(
+                        type,
+                        e.format("YYYY-MM-DD"),
+                        userInfo?.username
+                      )
+                    );
+                  }}
+                  disabledDate={(current) => {
+                    return current && current > dayjs();
+                  }}
+                />
+              </div>
+              <div className="ml-2">
+                <Button type="primary" onClick={() => {
+                  let ngay = dayjs(ngayHoc).add(7, 'day')
+                  setNgayHoc(ngay);
+                  dispatch(
+                    getThoiKhoaBieuAction(
+                      type,
+                      ngay.format("YYYY-MM-DD"),
+                      userInfo?.username
+                    )
+                  );
+                }}>Tuần sau</Button>
+              </div>
             </div>
           </div>
           {type === 0 ? (
@@ -236,8 +264,8 @@ export default function ThoiKhoaBieu(props) {
                                   {item1?.tenMonHoc +
                                     " - " +
                                     item1?.tenGiaoVien.toString()?.split(" ")[
-                                      item1?.tenGiaoVien.toString().split(" ")
-                                        ?.length - 1
+                                    item1?.tenGiaoVien.toString().split(" ")
+                                      ?.length - 1
                                     ]}
                                 </div>
                               );
@@ -264,8 +292,8 @@ export default function ThoiKhoaBieu(props) {
                                   {item1?.tenMonHoc +
                                     " - " +
                                     item1?.tenGiaoVien.toString()?.split(" ")[
-                                      item1?.tenGiaoVien.toString().split(" ")
-                                        ?.length - 1
+                                    item1?.tenGiaoVien.toString().split(" ")
+                                      ?.length - 1
                                     ]}
                                 </div>
                               );
@@ -323,8 +351,8 @@ export default function ThoiKhoaBieu(props) {
                                   {item1?.tenMonHoc +
                                     " - " +
                                     item1?.tenGiaoVien.toString()?.split(" ")[
-                                      item1?.tenGiaoVien.toString().split(" ")
-                                        ?.length - 1
+                                    item1?.tenGiaoVien.toString().split(" ")
+                                      ?.length - 1
                                     ]}
                                 </div>
                               );
@@ -351,8 +379,8 @@ export default function ThoiKhoaBieu(props) {
                                   {item1?.tenMonHoc +
                                     " - " +
                                     item1?.tenGiaoVien.toString()?.split(" ")[
-                                      item1?.tenGiaoVien.toString().split(" ")
-                                        ?.length - 1
+                                    item1?.tenGiaoVien.toString().split(" ")
+                                      ?.length - 1
                                     ]}
                                 </div>
                               );

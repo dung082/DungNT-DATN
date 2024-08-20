@@ -110,7 +110,7 @@ export default function DiemThi(props) {
   ];
 
   useEffect(() => {
-    dispatch(getListKyThiAction(""));
+  
     dispatch(getDiemThiAction(0, userInfo?.username, "", ""));
     dispatch(getListMonThiAction(userInfo?.lopIdHienTai));
     return () => {

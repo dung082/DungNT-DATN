@@ -41,6 +41,7 @@ export default function DonXinNghiHoc(props) {
         </div>
 
         <DatePicker
+          allowClear={false}
           format={"DD/MM/YYYY"}
           className="w-full"
           value={ngayHoc}

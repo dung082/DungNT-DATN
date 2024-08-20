@@ -9,6 +9,8 @@ import dayjs from "dayjs";
 import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
 import ThemHocSinh from "./ThemHocSinh";
 import { Button } from "antd";
+import ThemDiemThi from "./ThemDiem/ThemDiemThi";
+import ThemDiemTongKet from "./ThemDiem/ThemDiemTongKet";
 export default function QuanLyHocSinh(props) {
     const dispatch = useDispatch();
     const { listHocSinh, pageSize, pageNumber } = useSelector(infoState)
@@ -24,6 +26,20 @@ export default function QuanLyHocSinh(props) {
         dispatch(openDrawerAction({
             title: "Thêm học sinh",
             DrawerComponent: <ThemHocSinh />
+        }))
+    }
+
+    const themDiemThi = () => {
+        dispatch(openDrawerAction({
+            title: "Thêm điểm thi",
+            DrawerComponent: <ThemDiemThi />
+        }))
+    }
+
+    const themDiemTongKet = () => {
+        dispatch(openDrawerAction({
+            title: "Thêm điểm tổng kết",
+            DrawerComponent: <ThemDiemTongKet />
         }))
     }
 
@@ -122,9 +138,12 @@ export default function QuanLyHocSinh(props) {
                     </div>
                 </div>
                 <div className="mt-3 flex justify-end px-5">
+                    <Button type="primary" className="mr-3" onClick={themDiemTongKet}>Thêm điểm tổng kết</Button>
+                    <Button type="primary" className="mr-3" onClick={themDiemThi} >Thêm điểm thi</Button>
+
                     <Button type="primary" onClick={themHS}>Thêm mới</Button>
                 </div>
-                <div className="p-5">
+                <div className="px-5">
                     <TableComponent
                         className="mt-3"
                         ColumnConfig={QUAN_LY_HOC_SINH_COLUMN_CONFIG}

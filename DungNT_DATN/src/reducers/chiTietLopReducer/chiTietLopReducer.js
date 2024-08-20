@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { chuongtrinhhocservice } from "../../services/chuongTrinhHocService/chuongTrinhHocService";
 import { chitietlopservice } from "../../services/chiTietLopHocService/chiTietLopHocService";
+import { openWarning } from "../../templates/notification";
 
 export const chiTietLopSlice = createSlice({
   name: "chitietlop",
@@ -8,6 +9,7 @@ export const chiTietLopSlice = createSlice({
     pageNumber: 1,
     pageSize: 10,
     listHs: {},
+    listHocSinh: []
   },
   reducers: {
     setListHocSinhAction: (state, action) => {
@@ -17,6 +19,9 @@ export const chiTietLopSlice = createSlice({
       state.pageNumber = action.payload.pageNumber;
       state.pageSize = action.payload.pageSize;
     },
+    setListHsAction: (state, action) => {
+      state.listHocSinh = action.payload
+    }
   },
 });
 export const getListHocSinhTrongLopAction = (username) => async (dispatch) => {
@@ -30,7 +35,30 @@ export const getListHocSinhTrongLopAction = (username) => async (dispatch) => {
   }
 };
 
-export const { setListHocSinhAction, setAdvanceSearchCTLopAction } =
+export const getListHocSinhAction = (namhoc, lopId) => async (dispatch) => {
+  try {
+    const res = await chitietlopservice.getHSLopNamHoc(namhoc, lopId)
+    if (res.status === 200) {
+      const listHocSinh = res?.data?.value?.map(i => {
+        return {
+          username: i.username,
+          hoTen: i?.hoTen,
+          ngaySinh: i?.ngaySinh,
+          gioiTinh: i?.gioiTinh,
+          diem: 0
+        }
+      })
+      dispatch(setListHsAction(listHocSinh))
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message)
+  }
+}
+
+
+
+export const { setListHocSinhAction, setAdvanceSearchCTLopAction, setListHsAction } =
   chiTietLopSlice.actions;
 export const chiTietLopState = (state) => state.chitietlop;
 export default chiTietLopSlice.reducer;

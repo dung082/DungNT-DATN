@@ -143,6 +143,7 @@ export default function EditInfo({ UserEdit }) {
         <div className="p-2">
           <span>Ngày sinh</span>
           <DatePicker
+            allowClear={false}
             className="w-full"
             value={formik.values.ngaySinh}
             name="ngaySinh"
@@ -257,6 +258,7 @@ export default function EditInfo({ UserEdit }) {
             <div className="p-2">
               <span>Năm sinh</span>
               <DatePicker
+                allowClear={false}
                 className="w-full"
                 picker="year"
                 value={namSinhCha}
@@ -279,7 +281,7 @@ export default function EditInfo({ UserEdit }) {
                 onChange={(e) => {
                   formik.setFieldValue("danTocIdCha", e);
                 }}
-                // onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               />
             </div>
             <div className="p-2">
@@ -326,6 +328,7 @@ export default function EditInfo({ UserEdit }) {
             <div className="p-2">
               <span>Năm sinh</span>
               <DatePicker
+                allowClear={false}
                 className="w-full"
                 picker="year"
                 id="namSinhMe"
@@ -335,7 +338,7 @@ export default function EditInfo({ UserEdit }) {
                   setNamSinhMe(dayjs(e));
                   formik.setFieldValue("namSinhMe", dayjs(e).year());
                 }}
-                // onBlur={formik.handleBlur}
+              // onBlur={formik.handleBlur}
               />
             </div>
             <div className="p-2">

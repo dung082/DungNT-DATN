@@ -110,7 +110,6 @@ export default function DiemTongKet(props) {
   ];
 
   useEffect(() => {
-    dispatch(getListKyHocAction(""));
     dispatch(getDiemTongKetAction(0, userInfo?.username, "", ""));
     dispatch(getListMonTongKetAction());
     return () => {

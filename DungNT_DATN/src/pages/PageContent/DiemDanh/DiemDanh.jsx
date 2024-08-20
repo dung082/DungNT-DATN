@@ -34,27 +34,54 @@ export default function DiemDanh(props) {
           </div>
           <div className="mt-4">
             <div className="flex justify-end items-end">
-              <div>
-                <div>
-                  <span>Chọn ngày học</span>
-                </div>
-                <DatePicker
-                  className="w-[200px] "
-                  value={ngay}
-                  format={"DD/MM/YYYY"}
-                  onChange={(e) => {
-                    setNgay(dayjs(e));
+              <div className="flex items-end">
+                <div className="ml-2">
+                  <Button type="primary" onClick={() => {
+                    let ngaytk = dayjs(ngay).add(-7, 'day')
+                    setNgay(ngaytk);
                     dispatch(
                       getDiemDanhAction(
-                        e.format("YYYY-MM-DD"),
+                        ngaytk.format("YYYY-MM-DD"),
                         userInfo?.username
                       )
                     );
-                  }}
-                  disabledDate={(current) => {
-                    return current && current > dayjs();
-                  }}
-                />
+                  }}>Tuần trước</Button>
+                </div>
+                <div className="ml-2">
+                  <div>
+                    <span>Chọn ngày học</span>
+                  </div>
+                  <DatePicker
+                    allowClear={false}
+                    className="w-[200px] "
+                    value={ngay}
+                    format={"DD/MM/YYYY"}
+                    onChange={(e) => {
+                      setNgay(dayjs(e));
+                      dispatch(
+                        getDiemDanhAction(
+                          e.format("YYYY-MM-DD"),
+                          userInfo?.username
+                        )
+                      );
+                    }}
+                    disabledDate={(current) => {
+                      return current && current > dayjs();
+                    }}
+                  />
+                </div>
+                <div className="ml-2">
+                  <Button type="primary" onClick={() => {
+                    let ngaytk = dayjs(ngay).add(7, 'day')
+                    setNgay(ngaytk);
+                    dispatch(
+                      getDiemDanhAction(
+                        ngaytk.format("YYYY-MM-DD"),
+                        userInfo?.username
+                      )
+                    );
+                  }}>Tuần trước</Button>
+                </div>
               </div>
 
               <Button

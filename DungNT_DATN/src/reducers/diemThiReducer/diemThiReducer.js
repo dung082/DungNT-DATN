@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { dantocservice } from "../../services/danTocService/danTocService";
 import { diemthiservice } from "../../services/diemThiService/DiemThiService";
 import { act } from "react";
+import { getListKyThiAction } from "../kyThiReducer/kyThiReducer";
+import { openWarning } from "../../templates/notification";
 
 export const diemThiSlice = createSlice({
   name: "diemthi",
@@ -15,6 +17,7 @@ export const diemThiSlice = createSlice({
     errorMessage: "",
     listMonThi: [],
     monThi: "",
+    listResponse: [],
   },
   reducers: {
     setDiemThi: (state, action) => {
@@ -42,6 +45,9 @@ export const diemThiSlice = createSlice({
     setMonThi: (state, action) => {
       state.monThi = action.payload;
     },
+    setListResponse: (state, action) => {
+      state.listResponse = action.payload;
+    }
   },
 });
 
@@ -61,6 +67,7 @@ export const getDiemThiAction =
         dispatch(setErrorMessage(""));
         dispatch(setTypeSearch(type));
         dispatch(setMonThi(monThiId));
+        dispatch(getListKyThiAction(res.data.value?.kyHoc?.namHoc));
       }
     } catch (err) {
       dispatch(setDiemThi(null));
@@ -89,6 +96,48 @@ export const getListMonThiAction = (khoiHoc) => async (dispatch) => {
   }
 };
 
+export const getListMonThiSelectAction = (khoiHoc) => async (dispatch) => {
+  try {
+    const res = await diemthiservice.getListMonThi(khoiHoc);
+    if (res.status === 200) {
+      let listSelect = res.data?.value?.map((item) => {
+        return {
+          value: item.id,
+          label: item.tenMonThi,
+        };
+      });
+
+      dispatch(
+        setListMonThi(listSelect)
+      );
+    }
+  } catch (err) {
+    console.log();
+  }
+};
+
+export const addListDiemAction = (data) => async (dispatch) => {
+  try {
+    const res = await diemthiservice.themListDiemThi(data);
+    if (res.status === 200) {
+      let result = res?.body?.value?.listDiemThiResponse?.map(item => {
+        return {
+          username: item?.username,
+          hoTen: item?.hoTen,
+          ngaySinh: item?.ngaySinh,
+          diem: item?.diem,
+          result: item?.Message
+        }
+      })
+
+      dispatch(setListResponse(result))
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message)
+  }
+}
+
 export const {
   setDiemThi,
   setAdvanceSearchDiemThi,
@@ -98,6 +147,7 @@ export const {
   setErrorMessage,
   setListMonThi,
   setMonThi,
+  setListResponse
 } = diemThiSlice.actions;
 export const diemThiState = (state) => state.diemthi;
 export default diemThiSlice.reducer;
