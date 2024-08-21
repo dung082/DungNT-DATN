@@ -864,6 +864,23 @@ namespace BackEndApi.Repository
                 listDiemThiResponse = listDiemThiDtoResponses
             };
 
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == kythi.KyHocId);
+
+            ThongBao tb = new ThongBao
+            {
+                Id = Guid.NewGuid(),
+                Content = $"Bạn đã có điểm môn thi môn {monthi.TenMonThi} của {kythi.TenKyThi} của năm học {kyhoc.NamHoc}",
+                Link = "",
+                LopId = lop.Id,
+                NamHoc = kyhoc.NamHoc,
+                NgayTao = DateTime.Now,
+                Status = 0,
+                Title = "Thông báo điểm thi",
+                Username = ""
+            };
+            _context.ThongBaos.Add(tb);
+            _context.SaveChanges();
+
             return new JsonResult(listDiemThiDtoResponses);
         }
     }
