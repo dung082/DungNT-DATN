@@ -4,6 +4,7 @@ using BackEndData;
 using BackEndData.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.Eventing.Reader;
 using System.Net.WebSockets;
 
 namespace BackEndApi.Repository
@@ -31,7 +32,7 @@ namespace BackEndApi.Repository
             {
                 throw new Exception("Không tồn tại đơn xin nghỉ");
             }
-            diemDanh.TrangThai = 1;
+            diemDanh.TrangThai = 2;
             ThongBaoDto tbdto = new ThongBaoDto()
             {
                 Content = "Đơn xin nghỉ của bạn đã được duyệt thành công. Vui lòng vào trang /DiemDanhXinNghi để kiểm tra lại",
@@ -78,7 +79,7 @@ namespace BackEndApi.Repository
 
                 }
 
-                if (weekDays[0].Month >= 10)
+                if (weekDays[0].Month >= 8)
                 {
                     namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                 }
@@ -137,26 +138,56 @@ namespace BackEndApi.Repository
             return new JsonResult(result);
         }
 
-        public async Task<ActionResult> LayLichDiemDanh()
+        public async Task<ActionResult> LayLichDiemDanh(int? type)
         {
             List<DiemDanhView> lstDiemDanhView = new List<DiemDanhView>();
-            var listDD = await _context.DiemDanhs.ToListAsync();
-            listDD = listDD.OrderByDescending(i => i.NgayHoc).ToList();
-            foreach (var i in listDD)
+            if (String.IsNullOrWhiteSpace(type.ToString()))
             {
-                var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == i.Username);
-                DiemDanhView ddView = new DiemDanhView()
+                var listDD = await _context.DiemDanhs.ToListAsync();
+                listDD = listDD.OrderByDescending(i => i.NgayHoc).ToList();
+                foreach (var i in listDD)
                 {
-                    Username = i.Username,
-                    CaHocId = i.CaHocId,
-                    HoTen = ngd.HoTen,
-                    Id = i.Id,
-                    LyDo = i.LyDo,
-                    NgayHoc = i.NgayHoc,
-                    TrangThai = i.TrangThai
-                };
-                lstDiemDanhView.Add(ddView);
+                    var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == i.Username);
+                    if (ngd != null)
+                    {
+                        DiemDanhView ddView = new DiemDanhView()
+                        {
+                            Username = i.Username,
+                            CaHocId = i.CaHocId,
+                            HoTen = ngd.HoTen,
+                            Id = i.Id,
+                            LyDo = i.LyDo,
+                            NgayHoc = i.NgayHoc,
+                            TrangThai = i.TrangThai
+                        };
+                        lstDiemDanhView.Add(ddView);
+                    }
+                }
             }
+            else
+            {
+                var listDD = await _context.DiemDanhs.Where(i => i.TrangThai == type).ToListAsync();
+                listDD = listDD.OrderByDescending(i => i.NgayHoc).ToList();
+                foreach (var i in listDD)
+                {
+                    var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == i.Username);
+                    if (ngd != null)
+                    {
+                        DiemDanhView ddView = new DiemDanhView()
+                        {
+                            Username = i.Username,
+                            CaHocId = i.CaHocId,
+                            HoTen = ngd.HoTen,
+                            Id = i.Id,
+                            LyDo = i.LyDo,
+                            NgayHoc = i.NgayHoc,
+                            TrangThai = i.TrangThai
+                        };
+                        lstDiemDanhView.Add(ddView);
+                    }
+                }
+            }
+
 
             return new JsonResult(lstDiemDanhView);
         }
@@ -193,11 +224,11 @@ namespace BackEndApi.Repository
                 throw new Exception("Bạn không thể xin nghỉ những ngày đã qua");
             }
 
-            var caHocSang = await _context.CaHocs.Where(i => i.TenCaHoc.Contains("sáng")).Select(i => i.Id).FirstOrDefaultAsync();
-            if (caHocSang == diemDanhDto.CaHocId)
-            {
-                throw new Exception("Bạn không thể xin nghỉ buổi học đã qua");
-            }
+            //var caHocSang = await _context.CaHocs.Where(i => i.TenCaHoc.Contains("sáng")).Select(i => i.Id).FirstOrDefaultAsync();
+            //if (caHocSang == diemDanhDto.CaHocId)
+            //{
+            //    throw new Exception("Bạn không thể xin nghỉ buổi học đã qua");
+            //}
 
 
             var ddtrung = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.CaHocId == diemDanhDto.CaHocId && i.Username == diemDanhDto.Username && DateOnly.FromDateTime(i.NgayHoc) == DateOnly.FromDateTime(diemDanhDto.NgayHoc));

@@ -10,5 +10,6 @@ namespace BackEndApi.Interface.IRepository
         public IActionResult ChuyenLop(ChiTietLopHocDto chiTietLopHocDto);
         public IActionResult XoaHocSinhTrongLop(Guid chiTietLopHocId);
         public Task<ActionResult> LayHocSinhTrongLop(string username);
+        public Task<ActionResult> LayHocSinhTrongLopById(string namhoc , Guid lopId);
     }
 }

@@ -13,6 +13,6 @@ namespace BackEndApi.Interface.IRepository
         public Task<ActionResult> XoaDiemDanh(Guid diemDanhId);
         public Task<ActionResult> SuaDiemDanh(DiemDanh diemDanh);
         public Task<ActionResult> DuyetDiemDanh(Guid diemDanhId);
-        public Task<ActionResult> LayLichDiemDanh();
+        public Task<ActionResult> LayLichDiemDanh(int? type);
     }
 }

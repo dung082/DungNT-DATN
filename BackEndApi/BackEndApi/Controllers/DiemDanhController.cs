@@ -59,9 +59,9 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayLichDiemDanh")]
-        public async Task<ActionResult> LayLichDiemDanh()
+        public async Task<ActionResult> LayLichDiemDanh(int? type)
         {
-            var result = await _iDiemDanhRepository.LayLichDiemDanh();
+            var result = await _iDiemDanhRepository.LayLichDiemDanh(type);
             return Ok(result);
         }
     }

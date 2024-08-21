@@ -60,7 +60,7 @@ namespace BackEndApi.Repository
             string namhoc = "";
             var month = DateTime.Now.Month;
             var year = DateTime.Now.Year;
-            if (month >= 10)
+            if (month >= 8)
             {
                 namhoc = year + "-" + (year + 1);
             }
@@ -91,7 +91,7 @@ namespace BackEndApi.Repository
             }
 
             lopHoc = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
-            var listCtl = await _context.ChiTietLops.Where(item => item.NamHoc ==  namhoc && item.LopId == ctl.LopId).ToListAsync();
+            var listCtl = await _context.ChiTietLops.Where(item => item.NamHoc == namhoc && item.LopId == ctl.LopId).ToListAsync();
 
 
             List<NguoiDung> listNguoiDung = new List<NguoiDung>();
@@ -100,7 +100,7 @@ namespace BackEndApi.Repository
                 var nguoiDungHS = await _context.NguoiDungs.FirstOrDefaultAsync(item => item.Username == hs.Username && item.UserType == 2);
                 listNguoiDung.Add(nguoiDungHS);
             }
-            var lstNguoiDungSort = listNguoiDung.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1 ]).ToList();
+            var lstNguoiDungSort = listNguoiDung.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
             var result = new
             {
                 lopHocHienTai = lopHoc,
@@ -108,6 +108,31 @@ namespace BackEndApi.Repository
                 listHocSinh = lstNguoiDungSort
             };
             return new JsonResult(result);
+        }
+
+        public async Task<ActionResult> LayHocSinhTrongLopById(string namhoc, Guid lopId)
+        {
+            var lisths = await _context.ChiTietLops.Where(i => i.NamHoc == namhoc && i.LopId == lopId).ToListAsync();
+            List<NguoiDung> lstNgD = new List<NguoiDung>();
+            if (lisths.Count == 0)
+            {
+                throw new Exception("Không có học sinh trong lớp vào năm học này");
+            }
+            else
+            {
+                foreach (var item in lisths)
+                {
+                    var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == item.Username);
+                    if (ngd != null)
+                    {
+                        lstNgD.Add(ngd);
+                    }
+                }
+            }
+
+            lstNgD = lstNgD.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
+
+            return new JsonResult(lstNgD);
         }
 
         public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto)

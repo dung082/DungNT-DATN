@@ -85,7 +85,7 @@ namespace BackEndApi.Repository
                 if (String.IsNullOrWhiteSpace(ngayHoc.ToString()))
                 {
                     ngayhoc = new DateTime();
-                    if (ngayhoc.Month >= 10)
+                    if (ngayhoc.Month >= 8)
                     {
                         namhoc = ngayhoc.Year.ToString() + "-" + (ngayhoc.Year + 1).ToString();
                     }
@@ -98,7 +98,7 @@ namespace BackEndApi.Repository
                 {
                     //ngayhoc = new DateTime
                     ngayhoc = ngayHoc.Value;
-                    if (ngayhoc.Month >= 10)
+                    if (ngayhoc.Month >= 8)
                     {
                         namhoc = ngayhoc.Year.ToString() + "-" + (ngayhoc.Year + 1).ToString();
                     }
@@ -182,7 +182,7 @@ namespace BackEndApi.Repository
 
                     }
 
-                    if (weekDays[0].Month >= 10)
+                    if (weekDays[0].Month >= 8)
                     {
                         namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                     }
@@ -212,7 +212,7 @@ namespace BackEndApi.Repository
                         weekDays[i] = weekStart.AddDays(i);
                     }
 
-                    if (weekDays[0].Month >= 10)
+                    if (weekDays[0].Month >= 8)
                     {
                         namhoc = weekDays[0].Year.ToString() + "-" + (weekDays[0].Year + 1).ToString();
                     }

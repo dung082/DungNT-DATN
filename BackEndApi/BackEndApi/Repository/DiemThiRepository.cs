@@ -789,6 +789,83 @@ namespace BackEndApi.Repository
 
             return ngayGanNhat;
         }
+
+        public async Task<ActionResult> ThemListDiemThi(ListDiemThiDto listDiemThiDto)
+        {
+            var kythi = await _context.KyThis.FirstOrDefaultAsync(i => i.Id == listDiemThiDto.KyThiId);
+            var lop = await _context.Lops.FirstOrDefaultAsync(i => i.Id == listDiemThiDto.LopId);
+            var monthi = await _context.MonThis.FirstOrDefaultAsync(i => i.Id == listDiemThiDto.MonThiId);
+            List<DiemThiInListDiemThiResponse> listDiemThiDtoResponses = new List<DiemThiInListDiemThiResponse>();
+            if (kythi == null)
+            {
+                throw new Exception("Kỳ thi không tồn tại");
+            }
+            if (lop == null)
+            {
+                throw new Exception("Lớp không tồn tại");
+            }
+            if (monthi == null)
+            {
+                throw new Exception("Môn thi không tồn tại");
+            }
+
+            foreach (var item in listDiemThiDto.listDiemThi)
+            {
+                var nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == item.username);
+                DiemThiInListDiemThiResponse diemThiInListDiemThiResponse = new DiemThiInListDiemThiResponse();
+                if (nguoiDung == null)
+                {
+                    diemThiInListDiemThiResponse.username = item.username;
+                    diemThiInListDiemThiResponse.diem = item.diem;
+                    diemThiInListDiemThiResponse.Message = "Học sinh không tồn tại";
+                }
+                else
+                {
+                    var diemthi = await _context.DiemThis.FirstOrDefaultAsync(i => i.Username == item.username && i.MonThiId == listDiemThiDto.MonThiId && i.KyThiId == listDiemThiDto.KyThiId && i.LopId == listDiemThiDto.LopId);
+                    if (diemthi != null)
+                    {
+                        diemThiInListDiemThiResponse.username = item.username;
+                        diemThiInListDiemThiResponse.diem = item.diem;
+                        diemThiInListDiemThiResponse.hoTen = nguoiDung.HoTen;
+                        diemThiInListDiemThiResponse.ngaySinh = nguoiDung.NgaySinh;
+                        diemThiInListDiemThiResponse.gioiTinh = nguoiDung.GioiTinh;
+                        diemThiInListDiemThiResponse.Message = "Điểm thi của học sinh đã tồn tại";
+                    }
+                    else
+                    {
+                        diemThiInListDiemThiResponse.username = item.username;
+                        diemThiInListDiemThiResponse.diem = item.diem;
+                        diemThiInListDiemThiResponse.Message = "Thêm điểm thành công";
+                        diemThiInListDiemThiResponse.hoTen = nguoiDung.HoTen;
+                        diemThiInListDiemThiResponse.ngaySinh = nguoiDung.NgaySinh;
+                        diemThiInListDiemThiResponse.gioiTinh = nguoiDung.GioiTinh;
+                        DiemThi dt = new DiemThi
+                        {
+                            Id = Guid.NewGuid(),
+                            LopId = listDiemThiDto.LopId,
+                            KyThiId = listDiemThiDto.KyThiId,
+                            MonThiId = listDiemThiDto.MonThiId,
+                            Diem = item.diem,
+                            Username = item.username,
+                        };
+                        _context.DiemThis.Add(dt);
+                        _context.SaveChanges();
+                    }
+
+                }
+                listDiemThiDtoResponses.Add(diemThiInListDiemThiResponse);
+            }
+
+            ListDiemThiDtoResponse listDiemThiDtoResponse = new ListDiemThiDtoResponse
+            {
+                LopId = listDiemThiDto.LopId,
+                KyThiId = listDiemThiDto.KyThiId,
+                MonThiId = listDiemThiDto.MonThiId,
+                listDiemThiResponse = listDiemThiDtoResponses
+            };
+
+            return new JsonResult(listDiemThiDtoResponses);
+        }
     }
 }
 

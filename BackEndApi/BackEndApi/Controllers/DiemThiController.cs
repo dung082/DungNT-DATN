@@ -32,5 +32,14 @@ namespace BackEndApi.Controllers
             var result = await _iDiemThiRepository.ThemDiemThi(diemThiDto);
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("ThemListDiemThi")]
+        public async Task<ActionResult> ThemListDiemThi(ListDiemThiDto diemThiDto)
+        {
+            var result = await _iDiemThiRepository.ThemListDiemThi(diemThiDto);
+            return Ok(result);
+        }
     }
 }
+        

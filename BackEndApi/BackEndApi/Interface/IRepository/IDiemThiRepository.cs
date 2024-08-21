@@ -7,5 +7,6 @@ namespace BackEndApi.Interface.IRepository
     {
         public Task<ActionResult> LayDiemThi(int type, string? username, Guid? kyThiId, Guid? monThiId);
         public Task<ActionResult> ThemDiemThi(DiemThiDto diemThiDto);
+        public Task<ActionResult> ThemListDiemThi(ListDiemThiDto listDiemThiDto);
     }
 }
