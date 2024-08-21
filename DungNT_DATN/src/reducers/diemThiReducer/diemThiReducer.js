@@ -120,20 +120,23 @@ export const addListDiemAction = (data) => async (dispatch) => {
   try {
     const res = await diemthiservice.themListDiemThi(data);
     if (res.status === 200) {
-      let result = res?.body?.value?.listDiemThiResponse?.map(item => {
+      let result = res?.data?.value?.map(item => {
         return {
           username: item?.username,
           hoTen: item?.hoTen,
           ngaySinh: item?.ngaySinh,
           diem: item?.diem,
-          result: item?.Message
+          result: item?.message
         }
       })
+
+      console.log(result);
 
       dispatch(setListResponse(result))
     }
   }
   catch (err) {
+    console.log(err)
     openWarning("Thất bại", err?.response?.data?.Message)
   }
 }

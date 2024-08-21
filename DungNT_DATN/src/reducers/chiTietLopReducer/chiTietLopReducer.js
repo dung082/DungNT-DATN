@@ -45,7 +45,7 @@ export const getListHocSinhAction = (namhoc, lopId) => async (dispatch) => {
           hoTen: i?.hoTen,
           ngaySinh: i?.ngaySinh,
           gioiTinh: i?.gioiTinh,
-          diem: 0
+          diem: (Math.random() * 4 + 6).toFixed(2)
         }
       })
       dispatch(setListHsAction(listHocSinh))

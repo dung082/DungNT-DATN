@@ -276,7 +276,7 @@ export default function PageTemplate() {
             </Header>
             <Content className="min-h-[300px] p-8 overflow-auto">
               <div
-                className="bg-white rounded-md w-full h-full overflow-scroll"
+                className="bg-white rounded-md w-full h-full overflow-auto"
                 style={{ background: "#fff" }}
               >
                 <Outlet />

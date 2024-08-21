@@ -247,7 +247,7 @@ export default function DiemThi(props) {
               <TableComponent
                 className="mt-3"
                 ColumnConfig={DIEM_THI_COLUMN_CONFIG}
-                DataSource={diemThi.listDT}
+                DataSource={diemThi?.listDT}
                 CurrentPage={1}
                 CurrentPageSize={10}
                 ShowSizeChanger={false}

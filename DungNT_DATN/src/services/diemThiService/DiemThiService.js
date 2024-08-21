@@ -14,7 +14,7 @@ export class DiemThiService extends baseService {
     };
 
     themListDiemThi = (listDiemThi) => {
-        this.post(`DiemThi/ThemListDiemThi`, listDiemThi)
+        return this.post(`DiemThi/ThemListDiemThi`, listDiemThi)
     }
 }
 
