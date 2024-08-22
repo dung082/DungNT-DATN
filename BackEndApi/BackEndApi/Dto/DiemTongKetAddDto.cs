@@ -17,7 +17,7 @@
         public Guid KyHocId { get; set; }
         public Guid MonTongKetId { get; set; }
         public Guid LopId { get; set; }
-        public decimal diem {  get; set; }
+        public decimal diem { get; set; }
     }
 
 
@@ -42,4 +42,35 @@
         public string Message { get; set; }
 
     }
+
+    public class DiemTongKetAddList
+    {
+        public Guid HocKyId { get; set; }
+        public Guid LopId { get; set; }
+        public Guid MonTongKetId { get; set; }
+        public List<DT> listDT { get; set; }
+    }
+
+    public class DT
+    {
+        public string Username { get; set; }
+        public decimal Diem { get; set; }
+    }
+    public class DiemTongKetAddListResponse
+    {
+        public Guid HocKyId { get; set; }
+        public Guid LopId { get; set; }
+        public Guid MonTongKetId { get; set; }
+        public List<DTRes> listRes { get; set; }
+    }
+    public class DTRes
+    {
+        public string Username { get; set; }
+        public string HoTen { get; set; }
+        public DateTime NgaySinh { get; set; }
+        public int GioiTinh { get; set; }
+        public decimal Diem { get; set; }
+        public string Message { get; set; }
+    }
+
 }

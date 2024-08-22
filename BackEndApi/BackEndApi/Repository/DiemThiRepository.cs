@@ -869,7 +869,7 @@ namespace BackEndApi.Repository
             ThongBao tb = new ThongBao
             {
                 Id = Guid.NewGuid(),
-                Content = $"Bạn đã có điểm môn thi môn {monthi.TenMonThi} của {kythi.TenKyThi} của năm học {kyhoc.NamHoc}",
+                Content = $"Bạn đã có điểm thi môn {monthi.TenMonThi} của {kythi.TenKyThi} của năm học {kyhoc.NamHoc}",
                 Link = "",
                 LopId = lop.Id,
                 NamHoc = kyhoc.NamHoc,

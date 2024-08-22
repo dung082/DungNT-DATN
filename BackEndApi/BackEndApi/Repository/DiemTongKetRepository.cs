@@ -868,7 +868,20 @@ namespace BackEndApi.Repository
                         _context.SaveChanges();
                     }
                 }
-
+                ThongBao tb = new ThongBao
+                {
+                    Id = Guid.NewGuid(),
+                    Content = $"Bạn đã có điểm môn tổng kết môn {montongket.TenMon} của {kyhoc.TenKyHoc} của năm học {kyhoc.NamHoc}",
+                    Link = "",
+                    LopId = lophoc.Id,
+                    NamHoc = kyhoc.NamHoc,
+                    NgayTao = DateTime.Now,
+                    Status = 0,
+                    Title = "Thông báo điểm thi",
+                    Username = ""
+                };
+                _context.ThongBaos.Add(tb);
+                _context.SaveChanges();
             }
             return new JsonResult(diemTongKetAddDtoResult);
 
@@ -879,6 +892,96 @@ namespace BackEndApi.Repository
             Random random = new Random();
             var ran = random.NextDouble() * Math.Abs(4) + 6;
             return (decimal)ran;
+        }
+
+        public async Task<ActionResult> ThemListDiemTongKet(DiemTongKetAddList diemTongKetAddList)
+        {
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == diemTongKetAddList.HocKyId);
+            if (kyhoc == null)
+            {
+                throw new Exception("Kỳ học không tồn tại");
+            }
+            var lop = await _context.Lops.FirstOrDefaultAsync(i => i.Id == diemTongKetAddList.LopId);
+            if (lop == null)
+            {
+                throw new Exception("Lớp không tồn tại");
+            }
+            var montongket = await _context.MonTongKets.FirstOrDefaultAsync(i => i.Id == diemTongKetAddList.MonTongKetId);
+            if (montongket == null)
+            {
+                throw new Exception("Môn tổng kết không tồn tại");
+            }
+
+            List<DTRes> lstDiemTongKetResponse = new List<DTRes>();
+            foreach (var item in diemTongKetAddList.listDT)
+            {
+                var nd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == item.Username);
+                DTRes dtkRes = new DTRes();
+                if (nd == null)
+                {
+                    dtkRes.Username = item.Username;
+                    dtkRes.Diem = item.Diem;
+                    dtkRes.Message = "Học sinh không tồn tại";
+                }
+                else
+                {
+                    var dtk = await _context.DiemTongKets.FirstOrDefaultAsync(i => i.Username == item.Username && i.MonTongKetId == diemTongKetAddList.MonTongKetId && i.KyHocId == diemTongKetAddList.HocKyId);
+                    if (dtk != null)
+                    {
+                        dtkRes.Username = item.Username;
+                        dtkRes.Diem = item.Diem;
+                        dtkRes.HoTen = nd.HoTen;
+                        dtkRes.NgaySinh = nd.NgaySinh;
+                        dtkRes.GioiTinh = nd.GioiTinh;
+                        dtkRes.Message = "Điểm tổng kết của học sinh đã tồn tại";
+                    }
+                    else
+                    {
+                        dtkRes.Username = item.Username;
+                        dtkRes.Diem = item.Diem;
+                        dtkRes.Message = "Thêm điểm thành công";
+                        dtkRes.HoTen = nd.HoTen;
+                        dtkRes.NgaySinh = nd.NgaySinh;
+                        dtkRes.GioiTinh = nd.GioiTinh;
+
+                        DiemTongKet dt = new DiemTongKet
+                        {
+                            Id = Guid.NewGuid(),
+                            LopId = diemTongKetAddList.LopId,
+                            KyHocId = diemTongKetAddList.HocKyId,
+                            MonTongKetId = diemTongKetAddList.MonTongKetId,
+                            Diem = item.Diem,
+                            Username = item.Username,
+                        };
+                        _context.DiemTongKets.Add(dt);
+                        _context.SaveChanges();
+                    }
+                }
+                lstDiemTongKetResponse.Add(dtkRes);
+            }
+
+            DiemTongKetAddListResponse dtkResponse = new DiemTongKetAddListResponse
+            {
+                LopId = diemTongKetAddList.LopId,
+                HocKyId = diemTongKetAddList.HocKyId,
+                MonTongKetId = diemTongKetAddList.MonTongKetId,
+                listRes = lstDiemTongKetResponse
+            };
+
+            ThongBao tb = new ThongBao
+            {
+                Id = Guid.NewGuid(),
+                Content = $"Bạn đã có điểm tổng kết môn {montongket.TenMon} của {kyhoc.TenKyHoc} của năm học {kyhoc.NamHoc}",
+                Link = "",
+                LopId = lop.Id,
+                NamHoc = kyhoc.NamHoc,
+                NgayTao = DateTime.Now,
+                Status = 0,
+                Title = "Thông báo điểm tổng kết",
+                Username = ""
+            };
+
+            return new JsonResult(dtkResponse);
         }
     }
 }
