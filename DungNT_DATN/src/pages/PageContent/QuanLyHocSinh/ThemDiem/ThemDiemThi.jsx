@@ -31,9 +31,6 @@ export default function ThemDiemThi(props) {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(listResponse)
-    }, [listResponse])
     const listNamHoc = [
         {
             label: "2022-2023",

@@ -33,16 +33,22 @@ export default function HomePage(props) {
               </div>
               <div className="ml-10">
                 <div className="grid grid-cols-2">
-                  <div className="">Họ và tên: </div> <div className="font-bold ml-3">{userInfo?.hoTen}</div>
+                  <div className="">Họ và tên: </div> <div className="font-bold">{userInfo?.hoTen}</div>
                 </div>
                 <div className="mt-5 grid grid-cols-2">
-                  <div className="">Ngày sinh: </div> <div className="font-bold ml-3">{dayjs(userInfo?.ngaySinh).format("DD/MM/YYYY")}</div>
+                  <div className="">Ngày sinh: </div> <div className="font-bold">{dayjs(userInfo?.ngaySinh).format("DD/MM/YYYY")}</div>
                 </div>
                 <div className="mt-5 grid grid-cols-2">
-                  <div className="">Giới tính: </div> <div className="font-bold ml-3">{userInfo?.gioiTinh ? "Nữ" : "Nam"}</div>
+                  <div className="">Giới tính: </div> <div className="font-bold">{userInfo?.gioiTinh ? "Nữ" : "Nam"}</div>
                 </div>
                 <div className="mt-5 grid grid-cols-2">
-                  <div className="">Địa chỉ: </div> <div className="font-bold ml-3">{userInfo?.diaChi}</div>
+                  <div className="">Địa chỉ: </div> <div className="font-bold">{userInfo?.diaChi}</div>
+                </div>
+                <div className="mt-5 grid grid-cols-2">
+                  <div className="">Tôn giáo: </div> <div className="font-bold">{userInfo?.tenTonGiao}</div>
+                </div>
+                <div className="mt-5 grid grid-cols-2">
+                  <div className="">Dân tộc: </div> <div className="font-bold">{userInfo?.tenDanToc}</div>
                 </div>
               </div>
             </div>

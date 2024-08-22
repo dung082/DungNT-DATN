@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { diemtongketservice } from "../../services/diemTongKetService/diemTongKetService";
+import { openWarning } from "../../templates/notification";
 
 export const diemTongKetSlice = createSlice({
   name: "diemtongket",
@@ -14,6 +15,7 @@ export const diemTongKetSlice = createSlice({
     listMonTongKet: [],
     monTongKet: "",
     listKyHoc: [],
+    listResponse: []
   },
   reducers: {
     setDiemTongKet: (state, action) => {
@@ -44,6 +46,9 @@ export const diemTongKetSlice = createSlice({
     setListKyHoc: (state, action) => {
       state.listKyHoc = action.payload;
     },
+    setListResponse: (state, action) => {
+      state.listResponse = action.payload;
+    }
   },
 });
 
@@ -93,6 +98,26 @@ export const getListMonTongKetAction = () => async (dispatch) => {
   }
 };
 
+export const getListMonTongKetAddAction = () => async (dispatch) => {
+  try {
+    const res = await diemtongketservice.getListMonTongKet();
+    if (res.status === 200) {
+      let listSelect = res.data?.value?.map((item) => {
+        return {
+          value: item.id,
+          label: item.tenMon,
+        };
+      });
+
+      dispatch(
+        setListMonTongKet([...listSelect])
+      );
+    }
+  } catch (err) {
+    console.log();
+  }
+};
+
 export const getListKyHocAction = (namHoc) => async (dispatch) => {
   try {
     const res = await diemtongketservice.getListKyHoc(namHoc);
@@ -111,6 +136,28 @@ export const getListKyHocAction = (namHoc) => async (dispatch) => {
   }
 };
 
+export const themListDiemAction = (data) => async (dispatch) => {
+  try {
+    const res = await diemtongketservice.addListDiemTongKet(data);
+    if (res.status === 200) {
+      let result = res?.data?.value?.listRes?.map(item => {
+        return {
+          username: item?.username,
+          hoTen: item?.hoTen,
+          ngaySinh: item?.ngaySinh,
+          diem: item?.diem,
+          result: item?.message
+        }
+      })
+
+      dispatch(setListResponse(result))
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message)
+  }
+}
+
 export const {
   setDiemTongKet,
   setAdvanceSearchDiemTongKet,
@@ -121,6 +168,7 @@ export const {
   setListMonTongKet,
   setMonTongKet,
   setListKyHoc,
+  setListResponse
 } = diemTongKetSlice.actions;
 export const diemTongKetState = (state) => state.diemtongket;
 export default diemTongKetSlice.reducer;

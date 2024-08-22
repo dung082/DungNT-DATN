@@ -130,13 +130,10 @@ export const addListDiemAction = (data) => async (dispatch) => {
         }
       })
 
-      console.log(result);
-
       dispatch(setListResponse(result))
     }
   }
   catch (err) {
-    console.log(err)
     openWarning("Thất bại", err?.response?.data?.Message)
   }
 }

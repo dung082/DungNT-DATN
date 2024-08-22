@@ -39,7 +39,8 @@ export default function QuanLyHocSinh(props) {
     const themDiemTongKet = () => {
         dispatch(openDrawerAction({
             title: "Thêm điểm tổng kết",
-            DrawerComponent: <ThemDiemTongKet />
+            DrawerComponent: <ThemDiemTongKet />,
+            width: 1000
         }))
     }
 

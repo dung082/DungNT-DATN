@@ -370,3 +370,11 @@ table.table-diem thead tr th {
   text-decoration: underline;
   color : theme(colors.colorthemes)
 }
+
+.ant-btn {
+  min-width: 100px
+}
+
+.ant-btn.ant-btn-primary {
+  background-color :  theme(colors.colorthemes)
+}

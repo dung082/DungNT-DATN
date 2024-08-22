@@ -16,7 +16,9 @@ export const infoSlice = createSlice({
     namHoc: "",
     kythi: "",
     lop: "",
-    monthi: ""
+    monthi: "",
+    kyhoc: "",
+    montongket: ""
   },
   reducers: {
     setUserInfomation: (state, action) => {
@@ -40,6 +42,12 @@ export const infoSlice = createSlice({
     },
     setMonThi: (state, action) => {
       state.monthi = action.payload
+    },
+    setKyHoc: (state, action) => {
+      state.kyhoc = action.payload
+    },
+    setMonTongKet: (state, action) => {
+      state.montongket = action.payload
     }
   },
 });
@@ -108,6 +116,6 @@ export const themNguoiDungAction =
     }
   };
 
-export const { setUserInfomation, setListHocSinh, setAdvanceSearchQLHS, setNamHoc, setLop, setKyThi, setMonThi } = infoSlice.actions;
+export const { setUserInfomation, setListHocSinh, setMonTongKet, setAdvanceSearchQLHS, setKyHoc, setNamHoc, setLop, setKyThi, setMonThi } = infoSlice.actions;
 export const infoState = (state) => state.info;
 export default infoSlice.reducer;
