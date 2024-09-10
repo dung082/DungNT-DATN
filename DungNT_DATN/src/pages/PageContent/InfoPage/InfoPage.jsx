@@ -9,6 +9,8 @@ import {
   infoState,
 } from "../../../reducers/infoReducer/infoReducer";
 import EditInfo from "./EditInfo";
+import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
+import DoiMatKhau from "./DoiMatKhau";
 
 export default function InfoPage(props) {
   const dispatch = useDispatch();
@@ -41,11 +43,11 @@ export default function InfoPage(props) {
     }
   };
 
-  const openDrawerEditUser = () => {
+  const doiMatKhauAction = () => {
     dispatch(
-      openDrawerAction({
-        title: "Sửa thông tin người dùng",
-        DrawerComponent: <EditInfo UserEdit={userInfomation} />,
+      openModalAction({
+        title: "Đổi mật khẩu",
+        ModalComponent: <DoiMatKhau />,
       })
     );
   };
@@ -60,9 +62,9 @@ export default function InfoPage(props) {
                 <span className="font-bold text-xl">THÔNG TIN CÁ NHÂN</span>
               </div>
               <div>
-                {/* <Button type="primary" onClick={openDrawerEditUser}>
-                    Sửa thông tin
-                  </Button> */}
+                <Button type="primary" onClick={doiMatKhauAction}>
+                  Đổi mật khẩu
+                </Button>
               </div>
             </div>
           </div>
@@ -71,7 +73,7 @@ export default function InfoPage(props) {
               <div className="col-span-1">
                 <div className="flex justify-center">
                   <Image
-                    className="mt-3"
+                    className=""
                     width={120}
                     height={180}
                     src={userInfomation?.avatar}

@@ -235,6 +235,28 @@ export default function PageTemplate() {
                     fact_check
                   </span>
                 },
+
+                {
+                  key: "/QuanLyDiemThi",
+                  label: "Quản lý điểm thi",
+                  onClick: () => {
+                    navigate("/QuanLyDiemThi");
+                  },
+                  icon: <span className="material-icons">
+                    fact_check
+                  </span>
+                },
+
+                {
+                  key: "/QuanLyDiemTongKet",
+                  label: "Quản lý điểm tổng kết",
+                  onClick: () => {
+                    navigate("/QuanLyDiemTongKet");
+                  },
+                  icon: <span className="material-icons">
+                    fact_check
+                  </span>
+                },
               ]}
             />
           </Sider>

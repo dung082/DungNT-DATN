@@ -27,7 +27,8 @@ export default function QuanLyHocSinh(props) {
     const themHS = () => {
         dispatch(openDrawerAction({
             title: "Thêm học sinh",
-            DrawerComponent: <ThemHocSinh />
+            DrawerComponent: <ThemHocSinh />,
+            width: 1000
         }))
     }
 

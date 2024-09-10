@@ -21,6 +21,8 @@ import DiemTongKet from "./pages/PageContent/DiemTongKet/DiemTongKet";
 import DiemDanh from "./pages/PageContent/DiemDanh/DiemDanh";
 import QuanLyHocSinh from "./pages/PageContent/QuanLyHocSinh/QuanLyHocSinh";
 import DiemDanhHocSinh from "./pages/PageContent/DiemDanh/DiemDanhHocSinh";
+import QuanLyDiemThi from "./pages/PageContent/QuanLyDiemThi/QuanLyDiemThi";
+import QuanLyDiemTongKet from "./pages/PageContent/QuanLyDiemTongKet/QuanLyDiemTongKet";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -48,6 +50,8 @@ function App() {
             <Route path="/DiemDanh" element={<DiemDanh />} />
             <Route path="/QuanLyHocSinh" element={<QuanLyHocSinh />} />
             <Route path="/DiemDanhHS" element={<DiemDanhHocSinh />} />
+            <Route path="/QuanLyDiemThi" element={<QuanLyDiemThi />} />
+            <Route path="/QuanLyDiemTongKet" element={<QuanLyDiemTongKet />} />
           </Route>
           {/* </Route> */}
         </Routes>
