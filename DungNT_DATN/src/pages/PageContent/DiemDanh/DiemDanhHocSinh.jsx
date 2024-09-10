@@ -1,128 +1,25 @@
-import { useDispatch, useSelector } from "react-redux"
-import { diemDanhState, layDiemDanhAction, setAdvanceSearchDiemDanh } from "../../../reducers/diemDanhReducer/diemDanhReducer"
-import { useEffect, useState } from "react"
-import TableComponent from "../../../assets/Component/TableComponent"
+import { Button, Checkbox, DatePicker, Input, Select } from "antd"
 import dayjs from "dayjs"
-import PopUpComponent from "../../PageTemplate/PopUpComponent"
-import { openModalAction } from "../../../reducers/modalReducer/modalReducer"
-import ChiTietDonXinNghi from "./ChiTietDonXinNghi"
-import { Select } from "antd"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { diemDanhListAction, diemDanhState, getListCaHocAction, getListHocSinhAction, getListLopHocAction, layDiemDanhAction, setCaHoc, setListHocSinh, setLopHoc, setNgayHoc } from "../../../reducers/diemDanhReducer/diemDanhReducer"
+import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer"
+import DuyetXinNghiHS from "./DuyetXinNghiHS"
+import { cloneDeep } from "lodash"
 
 export default function DiemDanhHocSinh(props) {
-    const [type, setType] = useState(0)
-    const configTable = [
-        {
-            title: "STT",
-            dataIndex: "stt",
-            key: "stt",
-        },
-        {
-            title: "Tên tài khoản",
-            dataIndex: "username",
-            key: "username",
-            render: (text, record, index) => {
-                return (
-                    <PopUpComponent
-                        Key={index}
-                        Action={openModalAction({
-                            title: "Chi tiết đơn nghỉ",
-                            ModalComponent: <ChiTietDonXinNghi DiemDanh={record} />
-                        })}
-                        Title={record.username}
-                    />
-                )
-            }
-        },
-        {
-            title: "Họ tên học sinh",
-            dataIndex: "hoTen",
-            key: "hoTen",
-        },
-        {
-            title: "Ngày nghỉ",
-            dataIndex: "ngayHoc",
-            key: "ngayHoc",
-            render: (_, record) => {
-                try {
-                    return dayjs(record.ngayHoc).format("DD/MM/YYYY");
-                } catch (err) {
-                    return record.ngayHoc;
-                }
-            },
-        },
-        {
-            title: "Lý do",
-            dataIndex: "lyDo",
-            key: "lyDo",
-        },
-        {
-            title: "Trạng thái",
-            dataIndex: "trangThai",
-            key: "trangThai",
-            render: (_, record) => {
 
-                if (record?.trangThai === 0) {
-                    return "Chưa duyệt";
-                }
-                else if (record.trangThai === 1) {
-                    return "Có mặt"
-
-                }
-                else if (record.trangThai === 2) {
-                    return "Nghỉ có phép"
-                }
-                else {
-                    return "Nghỉ không phép"
-                }
-
-            }
-        },
-        // {
-        //     title: "Công cụ",
-        //     dataIndex: "tool",
-        //     key: "tool",
-        //     render: (_, record) => {
-
-        //         record?.trangThai === 1 ? (
-        //             <div>
-
-        //             </div>
-        //         ) : (
-        //             <div>
-
-        //             </div>
-        //         )
-        //     },
-        // },
-    ]
-
-    const option = [
-        {
-            label: "Tất cả",
-            value: ""
-        },
-        {
-            label: "Chưa duyệt",
-            value: 0
-        },
-        {
-            label: "Có mặt",
-            value: 1
-        },
-        {
-            label: "Nghỉ có phép",
-            value: 2
-        },
-        {
-            label: "Nghỉ không phép",
-            value: 3
-        },
-    ]
     const dispatch = useDispatch()
-    const { listDiemDanh, pageNumber, pageSize } = useSelector(diemDanhState)
+    const { listCaHoc, cahoc, ngayHoc, namhoc, lopHoc, listLopHoc, listHocSinh } = useSelector(diemDanhState)
     useEffect(() => {
+        dispatch(getListCaHocAction())
         dispatch(layDiemDanhAction(0))
+        dispatch(getListLopHocAction())
     }, [])
+
+    useEffect(() => {
+        console.log(listHocSinh)
+    }, [listHocSinh])
 
     return (
         <div className="p-3">
@@ -138,35 +35,127 @@ export default function DiemDanhHocSinh(props) {
                     </div>
                 </div>
             </div>
-            <div className="mt-3 flex justify-end px-5">
-            </div>
-            <div className="p-5">
-                <div className="flex justify-end">
-                    <Select
-                        className="w-[200px]"
-                        options={option}
-                        value={type}
-                        onChange={(e) => {
-                            setType(e)
-                            dispatch(layDiemDanhAction(e));
-                            setAdvanceSearchDiemDanh({ pageNumber: 1, pageSize: 10 })
+            <div className="mt-3 flex justify-between px-5">
+                <div className="flex items-end">
+                    <div className="ml-2 w-[200px]">
+                        <span>Ngày học</span>
+                        <DatePicker className="w-full"
+                            format={"DD/MM/YYYY"}
+                            value={ngayHoc}
+                            onChange={(e) => {
+                                dispatch(setNgayHoc(dayjs(e)))
+                            }}
+                        />
+                    </div>
 
-                        }}
-                    >
-                        Loại điểm danh
-                    </Select></div>
-                <TableComponent
-                    className="mt-3"
-                    ColumnConfig={configTable}
-                    DataSource={listDiemDanh}
-                    CurrentPage={pageNumber}
-                    CurrentPageSize={pageSize}
-                    OnPageChange={(pageNumber, pageSize) => {
-                        dispatch(
-                            setAdvanceSearchDiemDanh({ pageNumber: pageNumber, pageSize: pageSize })
-                        );
-                    }}
-                />
+                    <div className="ml-2 w-[200px]">
+                        <span>Lớp học</span>
+                        <Select className="w-full" value={lopHoc} options={listLopHoc} onChange={(e) => {
+                            dispatch(setLopHoc(e))
+                        }} />
+                    </div>
+
+                    <div className="ml-2 w-[200px]">
+                        <span>Ca học</span>
+                        <Select className="w-full" options={listCaHoc} value={cahoc} onChange={(e) => {
+                            dispatch(setCaHoc(e))
+                        }} />
+                    </div>
+
+                    <Button type="primary" className="ml-2" onClick={() => {
+                        console.log(dayjs(ngayHoc).get('month'))
+                        let namhc = ""
+                        if (dayjs(ngayHoc).get('month') < 8) {
+                            namhc = `${dayjs(ngayHoc).get('year') - 1}-${dayjs(ngayHoc).get('year')}`
+                        }
+                        else {
+                            namhc = `${dayjs(ngayHoc).get('year')}-${dayjs(ngayHoc).get('year') + 1}`
+                        }
+                        dispatch(getListHocSinhAction(namhc, lopHoc))
+                    }}>Lấy danh sách lớp</Button>
+                </div>
+                <div className="p-5">
+                    <Button type="primary" onClick={() => {
+                        dispatch(openDrawerAction({
+                            title: "Duyệt điểm danh",
+                            DrawerComponent: <DuyetXinNghiHS />
+                        }))
+                    }}>Duyệt điểm danh</Button>
+                </div>
+            </div>
+            <div className="mt-5 px-5">
+                {
+                    listHocSinh?.length > 0 && (
+                        <div>
+                            <table className="w-full dungnt-custom-table">
+                                <thead>
+                                    <tr>
+                                        <th className="w-[50px]">STT</th>
+                                        <th>Tên tài khoản</th>
+                                        <th>Họ và tên</th>
+                                        <th>Có mặt</th>
+                                        <th>Nghỉ có phép</th>
+                                        <th>Nghỉ không phép</th>
+                                        <th>Đi muộn</th>
+                                        <th>Lý do</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {listHocSinh?.map((item, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{index + 1}</td>
+                                                <td>{item?.username}</td>
+                                                <td>{item?.hoTen}</td>
+                                                <td><Checkbox onChange={(e) => {
+                                                    let newList = cloneDeep(listHocSinh)
+                                                    newList[index].trangThai = 1
+                                                    dispatch(setListHocSinh([...newList]))
+                                                }} checked={item?.trangThai === 1}></Checkbox></td>
+                                                <td><Checkbox onChange={(e) => {
+                                                    let newList = cloneDeep(listHocSinh)
+                                                    newList[index].trangThai = 2
+                                                    dispatch(setListHocSinh([...newList]))
+                                                }} checked={item?.trangThai === 2}></Checkbox></td>
+                                                <td><Checkbox onChange={(e) => {
+                                                    let newList = cloneDeep(listHocSinh)
+                                                    newList[index].trangThai = 3
+                                                    dispatch(setListHocSinh([...newList]))
+                                                }} checked={item?.trangThai === 3}></Checkbox></td>
+                                                <td><Checkbox onChange={(e) => {
+                                                    let newList = cloneDeep(listHocSinh)
+                                                    newList[index].trangThai = 4
+                                                    dispatch(setListHocSinh([...newList]))
+                                                }} checked={item?.trangThai === 4}></Checkbox></td>
+                                                <td><Input value={item?.lyDo} onChange={(e) => {
+                                                    let newList = cloneDeep(listHocSinh)
+                                                    newList[index].lyDo = e.target.value
+                                                    dispatch(setListHocSinh([...newList]))
+                                                }} /></td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                            <div className="mt-5 text-center">
+                                <Button type="primary" onClick={() => {
+                                    const data = {
+                                        caHocId: cahoc,
+                                        ngayHoc: ngayHoc.format("YYYY-MM-DD"),
+                                        lstDiemDanhHS: listHocSinh?.map(item => {
+                                            return {
+                                                username: item?.username,
+                                                trangThai: item?.trangThai,
+                                                lyDo: item?.lyDo
+                                            }
+                                        })
+                                    }
+                                    dispatch(diemDanhListAction(data))
+                                }}> Nộp đơn điểm danh</Button>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

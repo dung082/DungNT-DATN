@@ -18,6 +18,8 @@ import {
 } from "../../../reducers/kyThiReducer/kyThiReducer";
 import TableComponent from "../../../assets/Component/TableComponent";
 import { DIEM_THI_COLUMN_CONFIG } from "../../../templates/tableConfig";
+import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
+import PhucKhaoDiemThi from "./PhucKhaoDiemThi";
 export default function DiemThi(props) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(globalState);
@@ -110,14 +112,20 @@ export default function DiemThi(props) {
   ];
 
   useEffect(() => {
-  
+
     dispatch(getDiemThiAction(0, userInfo?.username, "", ""));
     dispatch(getListMonThiAction(userInfo?.lopIdHienTai));
     return () => {
       dispatch(setTypeSearch(0));
     };
   }, []);
-  // const
+
+  const phucKhao = () => {
+    dispatch(openModalAction({
+      title: "Phúc khảo điểm thi",
+      ModalComponent: <PhucKhaoDiemThi />
+    }))
+  }
 
   return (
     <div>
@@ -130,7 +138,7 @@ export default function DiemThi(props) {
           </div>
         </div>
         <div className="flex items-end justify-center">
-          <div className="w-[1100px] grid grid-cols-5">
+          <div className="w-[1100px] flex">
             <div className="p-2">
               <span>Xem theo</span>
               <Select
@@ -142,7 +150,7 @@ export default function DiemThi(props) {
                   setType(e);
                   setMt("");
                 }}
-                // value={namHocSelect}
+              // value={namHocSelect}
               />
             </div>
 
@@ -158,7 +166,7 @@ export default function DiemThi(props) {
                   dispatch(getListKyThiAction(e));
                   dispatch(setKyThi(null));
                 }}
-                // value={namHocSelect}
+              // value={namHocSelect}
               />
             </div>
 
@@ -202,6 +210,14 @@ export default function DiemThi(props) {
                 Tra cứu
               </Button>
             </div>
+            <div className="p-2 flex items-end">
+              <Button
+                type="primary"
+                onClick={phucKhao}
+              >
+                Phúc khảo điểm
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -233,6 +249,7 @@ export default function DiemThi(props) {
                 {diemThi?.kyHoc?.namHoc}
               </span>
             </div>
+
           </div>
         </div>
 
@@ -516,11 +533,10 @@ export default function DiemThi(props) {
                             legend: { display: false },
                             title: {
                               display: true,
-                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${
-                                listMonThi?.find(
-                                  (item) => item.value === monThi
-                                )?.label
-                              } trong các khoảng điểm của lớp`,
+                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonThi?.find(
+                                (item) => item.value === monThi
+                              )?.label
+                                } trong các khoảng điểm của lớp`,
                             },
                             datalabels: {
                               color: "#fff",
@@ -609,11 +625,10 @@ export default function DiemThi(props) {
                             legend: { display: false },
                             title: {
                               display: true,
-                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${
-                                listMonThi?.find(
-                                  (item) => item.value === monThi
-                                )?.label
-                              } trong các khoảng điểm của khối`,
+                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonThi?.find(
+                                (item) => item.value === monThi
+                              )?.label
+                                } trong các khoảng điểm của khối`,
                             },
                             datalabels: {
                               color: "#fff",

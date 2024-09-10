@@ -283,7 +283,7 @@ export default function PageTemplate() {
               </div>
             </Content>
             <Footer className="text-center">
-              Một sản phẩm của Nguyễn Tiến Dũng
+              Trường THPT Hòa Bình
             </Footer>
           </Layout>
         </Layout>

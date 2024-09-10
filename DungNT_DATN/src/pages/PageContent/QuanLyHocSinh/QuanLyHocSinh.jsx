@@ -11,6 +11,8 @@ import ThemHocSinh from "./ThemHocSinh";
 import { Button } from "antd";
 import ThemDiemThi from "./ThemDiem/ThemDiemThi";
 import ThemDiemTongKet from "./ThemDiem/ThemDiemTongKet";
+import SuaDiemTongKet from "./SuaDiem/SuaDiemTongKet";
+import SuaDiemThi from "./SuaDiem/SuaDiemThi";
 export default function QuanLyHocSinh(props) {
     const dispatch = useDispatch();
     const { listHocSinh, pageSize, pageNumber } = useSelector(infoState)
@@ -41,6 +43,20 @@ export default function QuanLyHocSinh(props) {
             title: "Thêm điểm tổng kết",
             DrawerComponent: <ThemDiemTongKet />,
             width: 1000
+        }))
+    }
+
+    const suaDiemTongKet = () => {
+        dispatch(openDrawerAction({
+            title: "Sửa điểm tổng kết",
+            DrawerComponent: <SuaDiemTongKet />,
+        }))
+    }
+
+    const suaDiemThi = () => {
+        dispatch(openDrawerAction({
+            title: "Sửa điểm thi",
+            DrawerComponent: <SuaDiemThi />,
         }))
     }
 
@@ -139,10 +155,11 @@ export default function QuanLyHocSinh(props) {
                     </div>
                 </div>
                 <div className="mt-3 flex justify-end px-5">
-                    <Button type="primary" className="mr-3" onClick={themDiemTongKet}>Thêm điểm tổng kết</Button>
+                    {/* <Button type="primary" className="mr-3" onClick={themDiemTongKet}>Thêm điểm tổng kết</Button>
                     <Button type="primary" className="mr-3" onClick={themDiemThi} >Thêm điểm thi</Button>
-
-                    <Button type="primary" onClick={themHS}>Thêm mới</Button>
+                    <Button type="primary" className="mr-3" onClick={suaDiemTongKet}>Tra cứu điểm tổng kết</Button>
+                    <Button type="primary" className="mr-3" onClick={suaDiemThi} >Tra cứu điểm thi</Button> */}
+                    <Button type="primary" onClick={themHS}>Thêm mới học sinh</Button>
                 </div>
                 <div className="px-5">
                     <TableComponent

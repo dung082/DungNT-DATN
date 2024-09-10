@@ -164,7 +164,7 @@ export default function ChiTietDiemDanh(props) {
           cancelText="hủy"
         >
           <Button
-            disabled={trangThai !== 0 || dayjs() >= dayjs(ngayHoc)}
+            disabled={trangThai !== 0}
             type="primary"
           >
             Cập nhật đơn

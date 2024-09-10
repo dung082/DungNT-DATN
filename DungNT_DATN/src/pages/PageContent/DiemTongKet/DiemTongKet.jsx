@@ -16,6 +16,9 @@ import { globalState } from "../../../reducers/globalReducer/globalReducer";
 import { kyThiState } from "../../../reducers/kyThiReducer/kyThiReducer";
 import TableComponent from "../../../assets/Component/TableComponent";
 import { DIEM_TONG_KET_COLUMN_CONFIG } from "../../../templates/tableConfig";
+import { openDrawerAction } from "../../../reducers/drawerReducer/drawerReducer";
+import PhucKhaoDiemTongKet from "./PhucKhaoDiemTongKet";
+import { openModalAction } from "../../../reducers/modalReducer/modalReducer";
 export default function DiemTongKet(props) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector(globalState);
@@ -116,7 +119,13 @@ export default function DiemTongKet(props) {
       dispatch(setTypeSearch(0));
     };
   }, []);
-  // const
+
+  const phucKhao = () => {
+    dispatch(openModalAction({
+      title: 'Phúc khảo điểm tổng kết',
+      ModalComponent: <PhucKhaoDiemTongKet />
+    }))
+  }
 
   return (
     <div>
@@ -129,7 +138,7 @@ export default function DiemTongKet(props) {
           </div>
         </div>
         <div className="flex items-end justify-center">
-          <div className="w-[1000px] grid grid-cols-5">
+          <div className="w-[1000px] flex">
             <div className="p-2">
               <span>Xem theo</span>
               <Select
@@ -141,7 +150,7 @@ export default function DiemTongKet(props) {
                   setType(e);
                   setMt("");
                 }}
-                // value={namHocSelect}
+              // value={namHocSelect}
               />
             </div>
 
@@ -157,7 +166,7 @@ export default function DiemTongKet(props) {
                   dispatch(getListKyHocAction(e));
                   dispatch(setKyHoc(null));
                 }}
-                // value={namHocSelect}
+              // value={namHocSelect}
               />
             </div>
 
@@ -200,6 +209,9 @@ export default function DiemTongKet(props) {
               >
                 Tra cứu
               </Button>
+            </div>
+            <div className="p-2 flex items-end">
+              <Button onClick={phucKhao} type="primary">Phúc khảo điểm</Button>
             </div>
           </div>
         </div>
@@ -533,11 +545,10 @@ export default function DiemTongKet(props) {
                             legend: { display: false },
                             title: {
                               display: true,
-                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${
-                                listMonTongKet?.find(
-                                  (item) => item.value === monTongKet
-                                )?.label
-                              } trong các khoảng điểm của lớp`,
+                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonTongKet?.find(
+                                (item) => item.value === monTongKet
+                              )?.label
+                                } trong các khoảng điểm của lớp`,
                             },
                             datalabels: {
                               color: "#fff",
@@ -636,11 +647,10 @@ export default function DiemTongKet(props) {
                             legend: { display: false },
                             title: {
                               display: true,
-                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${
-                                listMonTongKet?.find(
-                                  (item) => item.value === monTongKet
-                                )?.label
-                              } trong các khoảng điểm của khối`,
+                              text: `Biểu đồ lượng học sinh đạt điểm thi môn ${listMonTongKet?.find(
+                                (item) => item.value === monTongKet
+                              )?.label
+                                } trong các khoảng điểm của khối`,
                             },
                             datalabels: {
                               color: "#fff",

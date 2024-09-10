@@ -16,6 +16,18 @@ export class DiemTongKetService extends baseService {
     addListDiemTongKet = (data) => {
         return this.post(`DiemTongKet/ThemListDiemTongKet`, data)
     }
+
+    phucKhaoDiemTongKet = (username, namhoc, kyHocId, listMonTongKetId) => {
+        return this.post(`DiemTongKet/PhucKhaoDiemTongKet?username=${username}&namHoc=${namhoc}&hocKyId=${kyHocId}`, listMonTongKetId)
+    }
+
+    layDiemTongKetTheoUser = (username, monTongKetId, kyHocId) => {
+        return this.get(`DiemTongKet/LayDiemTongKetTheoUser?username=${username}&monTongKetId=${monTongKetId}&kyHocId=${kyHocId}`)
+    }
+
+    suaDiemTongKet = (type, diemTongKetId, diem) => {
+        return this.post(`DiemTongKet/SuaDiemTongKet?type=${type}&diemTongKetId=${diemTongKetId}&diem=${diem}`)
+    }
 }
 
 export const diemtongketservice = new DiemTongKetService();

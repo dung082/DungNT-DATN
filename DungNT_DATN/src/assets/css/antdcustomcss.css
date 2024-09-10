@@ -378,3 +378,29 @@ table.table-diem thead tr th {
 .ant-btn.ant-btn-primary {
   background-color :  theme(colors.colorthemes)
 }
+
+.dungnt-custom-table tbody tr td .ant-checkbox-wrapper .ant-checkbox .ant-checkbox-inner {
+  width : 20px;
+  height : 20px;
+  border-color : black
+}
+
+.dungnt-custom-table tbody tr:nth-child(even) {
+  background-color : #fff
+}
+
+.dungnt-custom-table tbody tr {
+  border-bottom :0.5px solid theme(colors.line)
+}
+
+.dungnt-custom-table thead tr th {
+text-align: center
+}
+
+.dungnt-custom-table tbody tr td {
+  text-align: center
+}
+
+.ant-btn-primary.ant-btn-dangerous {
+  background: #ff4d4f;
+}

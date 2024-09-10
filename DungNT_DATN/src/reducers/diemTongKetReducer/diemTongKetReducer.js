@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { diemtongketservice } from "../../services/diemTongKetService/diemTongKetService";
-import { openWarning } from "../../templates/notification";
+import { openNotification, openWarning } from "../../templates/notification";
+import { closeModalAction } from "../modalReducer/modalReducer";
+import { closeDrawerAction } from "../drawerReducer/drawerReducer";
 
 export const diemTongKetSlice = createSlice({
   name: "diemtongket",
@@ -15,7 +17,8 @@ export const diemTongKetSlice = createSlice({
     listMonTongKet: [],
     monTongKet: "",
     listKyHoc: [],
-    listResponse: []
+    listResponse: [],
+    listMonTongKetPK: []
   },
   reducers: {
     setDiemTongKet: (state, action) => {
@@ -48,6 +51,9 @@ export const diemTongKetSlice = createSlice({
     },
     setListResponse: (state, action) => {
       state.listResponse = action.payload;
+    },
+    setListMonTongKetPK: (state, action) => {
+      state.listMonTongKetPK = action.payload;
     }
   },
 });
@@ -118,6 +124,25 @@ export const getListMonTongKetAddAction = () => async (dispatch) => {
   }
 };
 
+export const getListMonTongKetPKAction = () => async (dispatch) => {
+  try {
+    const res = await diemtongketservice.getListMonTongKet();
+    if (res.status === 200) {
+      const list = res.data?.value.map(i => {
+        return {
+          ...i,
+          check: false,
+        }
+      })
+      dispatch(
+        setListMonTongKetPK([...list])
+      );
+    }
+  } catch (err) {
+    console.log();
+  }
+};
+
 export const getListKyHocAction = (namHoc) => async (dispatch) => {
   try {
     const res = await diemtongketservice.getListKyHoc(namHoc);
@@ -158,6 +183,34 @@ export const themListDiemAction = (data) => async (dispatch) => {
   }
 }
 
+export const phucKhaoDiemTongKetAction = (username, namhoc, kyHocId, listMonTongKetId) => async (dispatch) => {
+  try {
+    const res = await diemtongketservice.phucKhaoDiemTongKet(username, namhoc, kyHocId, listMonTongKetId)
+    if (res.status === 200) {
+      openNotification("Thành công", "Bạn đã phúc khảo thành công");
+      dispatch(closeModalAction())
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message ? err?.response?.data?.Message : "Không thể phúc khảo điểm")
+
+  }
+}
+
+export const suaDiemTongKetAction = (type, diemTongKetId, diem) => async (dispatch) => {
+  try {
+    const res = await diemtongketservice.suaDiemTongKet(type, diemTongKetId, diem)
+    if (res.status === 200) {
+      openNotification("Thành công", "Sửa điểm cho học sinh thành công");
+      dispatch(closeDrawerAction())
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message ? err?.response?.data?.Message : "Không thể phúc khảo điểm")
+
+  }
+}
+
 export const {
   setDiemTongKet,
   setAdvanceSearchDiemTongKet,
@@ -168,7 +221,8 @@ export const {
   setListMonTongKet,
   setMonTongKet,
   setListKyHoc,
-  setListResponse
+  setListResponse,
+  setListMonTongKetPK
 } = diemTongKetSlice.actions;
 export const diemTongKetState = (state) => state.diemtongket;
 export default diemTongKetSlice.reducer;

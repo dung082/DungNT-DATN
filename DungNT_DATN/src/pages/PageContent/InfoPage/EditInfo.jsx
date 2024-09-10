@@ -392,6 +392,10 @@ export default function EditInfo({ UserEdit }) {
         <Button type="default" onClick={() => dispatch(closeDrawerAction())}>
           Đóng
         </Button>
+        <Button type="primary" danger className="ml-2" onClick={formik.handleSubmit}>
+          Xóa học sinh
+        </Button>
+
         <Button type="primary" className="ml-2" onClick={formik.handleSubmit}>
           Lưu thông tin
         </Button>

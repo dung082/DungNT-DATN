@@ -3,7 +3,9 @@ import { dantocservice } from "../../services/danTocService/danTocService";
 import { diemthiservice } from "../../services/diemThiService/DiemThiService";
 import { act } from "react";
 import { getListKyThiAction } from "../kyThiReducer/kyThiReducer";
-import { openWarning } from "../../templates/notification";
+import { openNotification, openWarning } from "../../templates/notification";
+import { closeModalAction } from "../modalReducer/modalReducer";
+import { closeDrawerAction } from "../drawerReducer/drawerReducer";
 
 export const diemThiSlice = createSlice({
   name: "diemthi",
@@ -18,6 +20,7 @@ export const diemThiSlice = createSlice({
     listMonThi: [],
     monThi: "",
     listResponse: [],
+    listMonThiPK: []
   },
   reducers: {
     setDiemThi: (state, action) => {
@@ -47,6 +50,9 @@ export const diemThiSlice = createSlice({
     },
     setListResponse: (state, action) => {
       state.listResponse = action.payload;
+    },
+    setListMonThiPK: (state, action) => {
+      state.listMonThiPK = action.payload;
     }
   },
 });
@@ -96,6 +102,26 @@ export const getListMonThiAction = (khoiHoc) => async (dispatch) => {
   }
 };
 
+export const getListMonThiPKAction = (khoiHoc) => async (dispatch) => {
+  try {
+    const res = await diemthiservice.getListMonThi(khoiHoc);
+    if (res.status === 200) {
+      let listSelect = res.data?.value?.map((item) => {
+        return {
+          ...item,
+          check: false
+        };
+      });
+
+      dispatch(
+        setListMonThiPK([...listSelect])
+      );
+    }
+  } catch (err) {
+    console.log();
+  }
+};
+
 export const getListMonThiSelectAction = (khoiHoc) => async (dispatch) => {
   try {
     const res = await diemthiservice.getListMonThi(khoiHoc);
@@ -138,6 +164,34 @@ export const addListDiemAction = (data) => async (dispatch) => {
   }
 }
 
+export const phucKhaoDiemThiAction = (username, namHoc, kyThiId, listMonThiId) => async (dispatch) => {
+  try {
+    const res = await diemthiservice.phucKhaoDiemThi(username, namHoc, kyThiId, listMonThiId)
+    if (res.status === 200) {
+      openNotification("Thành công", "Phúc khảo điểm thành công")
+      dispatch(closeModalAction())
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message ? err?.response?.data?.Message : "Không thể phúc khảo điểm")
+
+  }
+}
+
+export const suaDiemThiAction = (type, diemThiId, diem) => async (dispatch) => {
+  try {
+    const res = await diemthiservice.suaDiemThi(type, diemThiId, diem)
+    if (res.status === 200) {
+      openNotification("Thành công", "Sửa điểm cho học sinh thành công");
+      dispatch(closeDrawerAction())
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message ? err?.response?.data?.Message : "Không thể phúc khảo điểm")
+
+  }
+}
+
 export const {
   setDiemThi,
   setAdvanceSearchDiemThi,
@@ -147,7 +201,8 @@ export const {
   setErrorMessage,
   setListMonThi,
   setMonThi,
-  setListResponse
+  setListResponse,
+  setListMonThiPK
 } = diemThiSlice.actions;
 export const diemThiState = (state) => state.diemthi;
 export default diemThiSlice.reducer;

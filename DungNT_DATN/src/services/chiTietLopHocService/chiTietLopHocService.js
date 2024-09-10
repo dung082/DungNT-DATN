@@ -8,6 +8,10 @@ export class ChiTietLopService extends baseService {
   getHSLopNamHoc = (namhoc, lopId) => {
     return this.get(`ChiTietLopHoc/LayHocSinhTrongLopById?namhoc=${namhoc}&lopId=${lopId}`);
   };
+
+  getHSLopNamHocDiemDanh = (namhoc, lopId) => {
+    return this.get(`ChiTietLopHoc/LayHocSinhTrongLopDiemDanhById?namhoc=${namhoc}&lopId=${lopId}`);
+  };
 }
 
 export const chitietlopservice = new ChiTietLopService();

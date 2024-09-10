@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { diemdanhservice } from "../../services/diemDanhService/diemDanhService";
 import { openNotification, openWarning } from "../../templates/notification";
 import { closeModalAction } from "../modalReducer/modalReducer";
+import { lopservice } from "../../services/lopService/lopService";
+import { chitietlopservice } from "../../services/chiTietLopHocService/chiTietLopHocService";
 
 export const diemDanhSlice = createSlice({
   name: "diemdanh",
@@ -11,6 +13,12 @@ export const diemDanhSlice = createSlice({
     listDiemDanh: [],
     pageNumber: 1,
     pageSize: 10,
+    namhoc: "",
+    lopHoc: "",
+    ngayHoc: "",
+    listLopHoc: [],
+    listHocSinh: [],
+    cahoc: "",
   },
   reducers: {
     setDiemDanh: (state, action) => {
@@ -25,6 +33,24 @@ export const diemDanhSlice = createSlice({
     setAdvanceSearchDiemDanh: (state, action) => {
       state.pageNumber = action.payload.pageNumber
       state.pageSize = action.payload.pageSize
+    },
+    setCaHoc: (state, action) => {
+      state.cahoc = action.payload
+    },
+    setNamHoc: (state, action) => {
+      state.namhoc = action.payload
+    },
+    setLopHoc: (state, action) => {
+      state.lopHoc = action.payload
+    },
+    setNgayHoc: (state, action) => {
+      state.ngayHoc = action.payload
+    },
+    setListLopHoc: (state, action) => {
+      state.listLopHoc = action.payload
+    },
+    setListHocSinh: (state, action) => {
+      state.listHocSinh = action.payload
     }
   },
 });
@@ -139,12 +165,65 @@ export const duyetDonXinNghiAction = (diemDanhId) => async (dispatch) => {
 
 }
 
+export const getListLopHocAction = () => async (dispatch) => {
+  try {
+    const res = await lopservice.getAllLop();
+    if (res.status === 200) {
+      let newList = res.data.value?.map(i => {
+        return {
+          label: i?.tenLop,
+          value: i?.id
+        }
+      })
+      dispatch(setListLopHoc([...newList]));
+    }
+  }
+  catch (err) {
+    console.log(err)
+  }
+}
+
+export const getListHocSinhAction = (namhoc, lopId) => async (dispatch) => {
+  try {
+    const res = await chitietlopservice.getHSLopNamHocDiemDanh(namhoc, lopId);
+    if (res.status === 200) {
+      console.log(res);
+
+      dispatch(setListHocSinh([...res.data.value]));
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", "Không thể lấy học sinh trong lớp")
+  }
+}
+
+export const diemDanhListAction = (data) => async (dispatch) => {
+  try {
+    const res = await diemdanhservice.DiemDanhList(data);
+    if (res.status === 200) {
+      openNotification(
+        "Thành công", "Nộp điểm danh thành công"
+      )
+    }
+  }
+  catch (err) {
+    openWarning("Thất bại", err?.response?.data?.Message ? err?.response?.data?.Message : "Nộp điểm danh thất bại")
+
+  }
+}
+
 
 export const {
   setDiemDanh,
   setListCaHoc,
   setListDiemDanh,
-  setAdvanceSearchDiemDanh
+  setAdvanceSearchDiemDanh,
+  setLopHoc,
+  setNamHoc,
+  setNgayHoc,
+  setListLopHoc,
+  setListHocSinh,
+  setCaHoc
 } = diemDanhSlice.actions;
 export const diemDanhState = (state) => state.diemdanh;
 export default diemDanhSlice.reducer;

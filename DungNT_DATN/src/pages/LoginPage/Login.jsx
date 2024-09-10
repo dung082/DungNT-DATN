@@ -51,20 +51,23 @@ export default function Login() {
     <>
       <div
         className="h-screen w-screen layout-login"
-        // style={{
-        //   background:
-        //     "linear-gradient(#C6D7FF 100% , #F2EEFF 100% , #D2E0FF 100% , #E4DCFF 100%)",
-        // }}
+      // style={{
+      //   background:
+      //     "linear-gradient(#C6D7FF 100% , #F2EEFF 100% , #D2E0FF 100% , #E4DCFF 100%)",
+      // }}
       >
         <div
           className="w-[370px] bg-white absolute top-[50%] left-[50%] p-10 translate-x-[-50%] translate-y-[-50%] rounded-md"
           style={{ boxShadow: " 0px 0px 15px rgba(0, 0, 0, 0.16)" }}
         >
           <div className="logo-login"></div>
-          <div>
+          {/* <div>
             <h1 className="text-center">
-              Đồ án tốt nghiệp của Nguyễn Tiến Dũng
+              Trường THPT Hòa Bình
             </h1>
+          </div> */}
+          <div className="mt-4 text-center">
+            <span className="font-bold text-2xl">ĐĂNG NHẬP</span>
           </div>
           <div className="mt-4">
             <span className="font-bold">Tên đăng nhập</span>
