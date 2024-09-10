@@ -983,5 +983,110 @@ namespace BackEndApi.Repository
 
             return new JsonResult(dtkResponse);
         }
+
+        public async Task<ActionResult> BaoSaiSotDiemTongKet(string username, string namHoc, Guid hocKyId, List<Guid> listMonTongKetId)
+        {
+            var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == username);
+            if (ngd == null)
+            {
+                throw new Exception("Không tồn tại người dùng");
+
+            }
+            var hocky = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == hocKyId);
+            if (hocky == null)
+            {
+                throw new Exception("Không tồn tại học kỳ");
+
+            }
+            string tbaoString = $"Học sinh {ngd.Username} - {ngd.HoTen} phúc khảo môn tổng kết ";
+            foreach (var item in listMonTongKetId)
+            {
+                var monTK = await _context.MonTongKets.FirstOrDefaultAsync(i => i.Id == item);
+                if (monTK == null)
+                {
+                    throw new Exception("Không thể phúc khảo môn học không tồn tại");
+                }
+                tbaoString += monTK.TenMon.ToString();
+                tbaoString += ", ";
+            }
+            tbaoString.Remove(tbaoString.Length - 2);
+            tbaoString += ".";
+            ThongBao thongBao = new ThongBao()
+            {
+                Id = Guid.NewGuid(),
+                Content = tbaoString,
+                Link = "",
+                LopId = null,
+                NamHoc = namHoc,
+                NgayTao = DateTime.Now,
+                Status = 0,
+                Title = "Phúc khảo điểm tổng kết",
+                Username = "admin",
+            };
+            _context.ThongBaos.Add(thongBao);
+            _context.SaveChanges();
+
+            return new JsonResult("Bạn đã phúc khảo thành công.Thầy cô sẽ kiểm tra lại và gửi lại cho bạn thông tin sớm nhất");
+        }
+
+        public async Task<ActionResult> SuaDiemTongKet(int type, Guid diemTongKetId, decimal diem)
+        {
+            var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(i => i.Id == diemTongKetId);
+            if (diemTongKet == null)
+            {
+                throw new Exception("Không thể đổi điểm tổng kết");
+            }
+
+            diemTongKet.Diem = diem;
+            _context.DiemTongKets.Update(diemTongKet);
+            _context.SaveChanges();
+
+            if (type == 1)
+            {
+                var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == diemTongKet.Username);
+                var kyHoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == diemTongKet.KyHocId);
+                var monTongKet = await _context.MonTongKets.FirstOrDefaultAsync(i => i.Id == diemTongKet.MonTongKetId);
+
+                var str = $"Điểm tổng kết môn {monTongKet.TenMon} của kỳ học {kyHoc.TenKyHoc} đã được cập nhật sau đơn phúc khảo của bạn. Vui lòng vào trang xem điểm để xem kết quả.";
+                ThongBao tb = new ThongBao()
+                {
+                    Id = Guid.NewGuid(),
+                    Content = str,
+                    Link = "",
+                    LopId = null,
+                    NamHoc = kyHoc.NamHoc,
+                    NgayTao = DateTime.Now,
+                    Status = 0,
+                    Title = "Cập nhật điểm tổng kết sau phúc khảo",
+                    Username = ngd.Username,
+                };
+                _context.ThongBaos.Add(tb);
+                _context.SaveChanges();
+            }
+            return new JsonResult(diemTongKet);
+        }
+
+        public async Task<ActionResult> LayDiemTongKetTheoUser(string username, Guid monTongKetId, Guid kyHocId)
+        {
+            var ngDung = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == username);
+            if (ngDung == null)
+            {
+                throw new Exception("Người dùng không tồn tại, Không thể lấy điểm tổng kết");
+            }
+            var montongket = await _context.MonTongKets.FirstOrDefaultAsync(i => i.Id == monTongKetId);
+            if (montongket == null)
+            {
+                throw new Exception("Môn tổng kết không tồn tại.Không thể lấy điểm tổng kết");
+            }
+            var kyhoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == kyHocId);
+            if (kyhoc == null)
+            {
+                throw new Exception("Kỳ học không tồn tại.Không thể lấy điểm tổng kết");
+            }
+
+            var diemTongKet = await _context.DiemTongKets.FirstOrDefaultAsync(i => i.Username == username && i.MonTongKetId == monTongKetId && i.KyHocId == kyHocId);
+
+            return new JsonResult(diemTongKet);
+        }
     }
 }

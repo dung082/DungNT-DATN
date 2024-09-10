@@ -57,5 +57,29 @@ namespace BackEndApi.Controllers
             var result = await _iDiemTongKetRepository.ThemListDiemTongKet(diemTongKetDto);
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("PhucKhaoDiemTongKet")]
+        public async Task<ActionResult> PhucKhaoDiemTongKet(string username, string namHoc, Guid hocKyId, List<Guid> listMonTongKetId)
+        {
+            var result = await _iDiemTongKetRepository.BaoSaiSotDiemTongKet(username, namHoc, hocKyId, listMonTongKetId);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("SuaDiemTongKet")]
+        public async Task<ActionResult> SuaDiemTongKet(int type,Guid diemTongKetId , decimal diem)
+        {
+            var result = await _iDiemTongKetRepository.SuaDiemTongKet(type, diemTongKetId , diem);  
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("LayDiemTongKetTheoUser")]
+        public async Task<ActionResult> LayDiemTongKetTheoUser(string username, Guid monTongKetId, Guid kyHocId)
+        {
+            var result = await _iDiemTongKetRepository.LayDiemTongKetTheoUser(username, monTongKetId, kyHocId);
+            return Ok(result);
+        }
     }
 }

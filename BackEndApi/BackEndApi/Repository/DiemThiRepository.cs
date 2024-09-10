@@ -883,6 +883,114 @@ namespace BackEndApi.Repository
 
             return new JsonResult(listDiemThiDtoResponses);
         }
+
+        public async Task<ActionResult> PhucKhaoDiemThi(string username, string namHoc, Guid kyThiId, List<Guid> listMonThiId)
+        {
+            var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == username);
+            if (ngd == null)
+            {
+                throw new Exception("Không tồn tại người dùng");
+
+            }
+            var kythi = await _context.KyThis.FirstOrDefaultAsync(i => i.Id == kyThiId);
+            if (kythi == null)
+            {
+                throw new Exception("Kỳ thi tồn tại học kỳ");
+
+            }
+            string tbaoString = $"Học sinh {ngd.Username} - {ngd.HoTen} phúc khảo môn thi ";
+            foreach (var item in listMonThiId)
+            {
+                var monTK = await _context.MonThis.FirstOrDefaultAsync(i => i.Id == item);
+                if (monTK == null)
+                {
+                    throw new Exception("Không thể phúc khảo môn học không tồn tại");
+                }
+                tbaoString += monTK.TenMonThi.ToString();
+                tbaoString += ", ";
+
+            }
+            tbaoString.Remove(tbaoString.Length - 2);
+            tbaoString += ".";
+
+            ThongBao thongBao = new ThongBao()
+            {
+                Id = Guid.NewGuid(),
+                Content = tbaoString,
+                Link = "",
+                LopId = null,
+                NamHoc = namHoc,
+                NgayTao = DateTime.Now,
+                Status = 0,
+                Title = "Phúc khảo điểm thi",
+                Username = "admin",
+            };
+            _context.ThongBaos.Add(thongBao);
+            _context.SaveChanges();
+
+            return new JsonResult("Bạn đã phúc khảo thành công.Thầy cô sẽ kiểm tra lại và gửi lại cho bạn thông tin sớm nhất");
+        }
+
+        public async Task<ActionResult> SuaDiemThi(int type, Guid diemThiId, decimal diem)
+        {
+            var diemthi = await _context.DiemThis.FirstOrDefaultAsync(i => i.Id == diemThiId);
+            if (diemthi == null)
+            {
+                throw new Exception("Không thể đổi điểm thi");
+            }
+
+            diemthi.Diem = diem;
+            _context.DiemThis.Update(diemthi);
+            _context.SaveChanges();
+
+            if (type == 1)
+            {
+                var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == diemthi.Username);
+                var kyThi = await _context.KyThis.FirstOrDefaultAsync(i => i.Id == diemthi.KyThiId);
+                var kyHoc = await _context.KyHocs.FirstOrDefaultAsync(i => i.Id == kyThi.KyHocId);
+                var monthi = await _context.MonThis.FirstOrDefaultAsync(i => i.Id == diemthi.MonThiId);
+
+                var str = $"Điểm thi môn {monthi.TenMonThi} của kỳ thi {kyThi.TenKyThi} đã được cập nhật sau đơn phúc khảo của bạn. Vui lòng vào trang xem điểm để xem kết quả.";
+                ThongBao tb = new ThongBao()
+                {
+                    Id = Guid.NewGuid(),
+                    Content = str,
+                    Link = "",
+                    LopId = null,
+                    NamHoc = kyHoc.NamHoc,
+                    NgayTao = DateTime.Now,
+                    Status = 0,
+                    Title = "Cập nhật điểm thi sau phúc khảo",
+                    Username = ngd.Username,
+                };
+                _context.ThongBaos.Add(tb);
+                _context.SaveChanges();
+            }
+            return new JsonResult(diemthi);
+        }
+
+        public async Task<ActionResult> LayDiemThiTheoUser(string username, Guid monThiId, Guid kyThiId)
+        {
+            var ngDung = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == username);
+            if (ngDung == null)
+            {
+                throw new Exception("Người dùng không tồn tại, Không thể lấy điểm thi");
+            }
+            var monthi = await _context.MonThis.FirstOrDefaultAsync(i => i.Id == monThiId);
+            if (monthi == null)
+            {
+                throw new Exception("Môn thi không tồn tại.Không thể lấy điểm thi");
+            }
+            var kythi = await _context.KyThis.FirstOrDefaultAsync(i => i.Id == kyThiId);
+            if (kythi == null)
+            {
+                throw new Exception("Kỳ thi không tồn tại.Không thể lấy điểm thi");
+            }
+
+            var diemthi = await _context.DiemThis.FirstOrDefaultAsync(i => i.Username == username && i.MonThiId == monThiId && i.KyThiId == kyThiId);
+
+            return new JsonResult(diemthi);
+        }
     }
 }
 

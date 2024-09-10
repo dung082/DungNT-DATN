@@ -14,5 +14,6 @@ namespace BackEndApi.Interface.IRepository
         public Task<ActionResult> SuaDiemDanh(DiemDanh diemDanh);
         public Task<ActionResult> DuyetDiemDanh(Guid diemDanhId);
         public Task<ActionResult> LayLichDiemDanh(int? type);
+        public Task<ActionResult> DiemDanhList(DiemDanhListDto diemDanhListDto);
     }
 }

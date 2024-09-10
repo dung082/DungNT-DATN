@@ -42,12 +42,20 @@ namespace BackEndApi.Controllers
 
         [HttpGet]
         [Route("LayHocSinhTrongLopById")]
-        public async Task<ActionResult> LayHocSinhTrongLopById(string namhoc,Guid lopId)
+        public async Task<ActionResult> LayHocSinhTrongLopById(string namhoc, Guid lopId)
         {
-            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLopById(namhoc,lopId);
+            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLopById(namhoc, lopId);
             return Ok(hocSinh);
         }
 
 
+
+        [HttpGet]
+        [Route("LayHocSinhTrongLopDiemDanhById")]
+        public async Task<ActionResult> LayHocSinhTrongLopDiemDanhById(string namhoc, Guid lopId)
+        {
+            var hocSinh = await _iChiTietLopHocRepository.LayHocSinhTrongLopDiemDanhById(namhoc, lopId);
+            return Ok(hocSinh);
+        }
     }
 }

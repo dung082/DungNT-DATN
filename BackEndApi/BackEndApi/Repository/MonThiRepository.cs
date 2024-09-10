@@ -27,6 +27,23 @@ namespace BackEndApi.Repository
             return new JsonResult(listLop);
         }
 
+        public async Task<ActionResult> LayMonThiTheoUser(string username, string namhoc)
+        {
+            var ctl = await _context.ChiTietLops.FirstOrDefaultAsync(i => i.Username == username && i.NamHoc == namhoc);
+            if (ctl == null)
+            {
+                throw new Exception("Không tồn tại học sinh trong năm học");
+            }
+            var lop = await _context.Lops.FirstOrDefaultAsync(item => item.Id == ctl.LopId);
+            if (lop == null)
+            {
+                throw new Exception("Không có lớp thi");
+            }
+            var listLop = await _context.MonThis.Where(item => item.KhoiThi == null || item.KhoiThi == lop.KhoiHoc || item.KhoiThi == "").ToListAsync();
+            return new JsonResult(listLop);
+
+        }
+
         public async Task<ActionResult> ThemMonThi(MonThiDTO monThiDTO)
         {
             MonThi monThi = new MonThi()

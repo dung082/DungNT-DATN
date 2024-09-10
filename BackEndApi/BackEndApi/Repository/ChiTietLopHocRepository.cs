@@ -135,6 +135,42 @@ namespace BackEndApi.Repository
             return new JsonResult(lstNgD);
         }
 
+        public async Task<ActionResult> LayHocSinhTrongLopDiemDanhById(string namhoc, Guid lopId)
+        {
+            var lisths = await _context.ChiTietLops.Where(i => i.NamHoc == namhoc && i.LopId == lopId).ToListAsync();
+            List<NguoiDung> lstNgD = new List<NguoiDung>();
+            List<DiemDanhListView> listDiemDanhListView = new List<DiemDanhListView>();
+            if (lisths.Count == 0)
+            {
+                throw new Exception("Không có học sinh trong lớp vào năm học này");
+            }
+            else
+            {
+                foreach (var item in lisths)
+                {
+                    var ngd = await _context.NguoiDungs.FirstOrDefaultAsync(i => i.Username == item.Username);
+                    if (ngd != null)
+                    {
+                        DiemDanhListView ddListView = new DiemDanhListView()
+                        {
+                            Id = ngd.Id,
+                            Username = ngd.Username,
+                            GioiTinh = ngd.GioiTinh,
+                            HoTen = ngd.HoTen,
+                            NgaySinh = ngd.NgaySinh,
+                            TrangThai = 1,
+                            LyDo = ""
+                        };
+                        listDiemDanhListView.Add(ddListView);
+                    }
+                }
+            }
+
+            listDiemDanhListView = listDiemDanhListView.OrderBy(u => u.HoTen.Split()[u.HoTen.Split().Length - 1]).ToList();
+
+            return new JsonResult(listDiemDanhListView);
+        }
+
         public IActionResult ThemHocSinhVaoLop(ChiTietLopHocDto chiTietLopHocDto)
         {
             if (String.IsNullOrWhiteSpace(chiTietLopHocDto.LopId.ToString()))

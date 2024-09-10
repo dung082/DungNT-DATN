@@ -64,5 +64,13 @@ namespace BackEndApi.Controllers
             var result = await _iDiemDanhRepository.LayLichDiemDanh(type);
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("DiemDanhList")]
+        public async Task<ActionResult> DiemDanhList(DiemDanhListDto diemDanhListDto)
+        {
+            var result = await _iDiemDanhRepository.DiemDanhList(diemDanhListDto);
+            return Ok(result);
+        }
     }
 }

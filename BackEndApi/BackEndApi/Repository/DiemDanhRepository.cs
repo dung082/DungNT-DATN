@@ -25,6 +25,41 @@ namespace BackEndApi.Repository
             return new JsonResult(true);
         }
 
+        public async Task<ActionResult> DiemDanhList(DiemDanhListDto diemDanhListDto)
+        {
+            var cahoc = await _context.CaHocs.FirstOrDefaultAsync(i => i.Id == diemDanhListDto.CaHocId);
+            if (cahoc == null)
+            {
+                throw new Exception("Ca học không tồn tại");
+            }
+
+            foreach (var item in diemDanhListDto.lstDiemDanhHS)
+            {
+                var dd = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.CaHocId == diemDanhListDto.CaHocId && i.Username == i.Username && DateOnly.FromDateTime(i.NgayHoc) == DateOnly.FromDateTime(diemDanhListDto.NgayHoc));
+                if (dd == null)
+                {
+                    DiemDanh diemDanh = new DiemDanh()
+                    {
+                        Id = Guid.NewGuid(),
+                        LyDo = item.LyDo,
+                        CaHocId = diemDanhListDto.CaHocId,
+                        NgayHoc = diemDanhListDto.NgayHoc,
+                        Username = item.Username,
+                        TrangThai = item.TrangThai,
+                    };
+                    _context.DiemDanhs.Add(diemDanh);
+                }
+                else
+                {
+                    dd.TrangThai = item.TrangThai;
+                    dd.LyDo = item.LyDo;
+                    _context.DiemDanhs.Update(dd);
+                }
+            }
+            _context.SaveChanges();
+            return new JsonResult(true);
+        }
+
         public async Task<ActionResult> DuyetDiemDanh(Guid diemDanhId)
         {
             var diemDanh = await _context.DiemDanhs.FirstOrDefaultAsync(i => i.Id == diemDanhId);
